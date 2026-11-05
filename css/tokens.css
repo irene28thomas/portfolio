@@ -1,0 +1,31 @@
+:root {
+      --canvas-bg: #F8F6F0;
+      --canvas-card: #FFFFFF;
+      --canvas-elevated: #FFFDF9;
+      --canvas-subtle: #EFECE3;
+      --canvas-accent-tint: #F3EFE6;
+      --ink-primary: #181716;
+      --ink-secondary: #57544F;
+      --ink-muted: #87837B;
+      --accent-terracotta: #D84E29;
+      --accent-terracotta-glow: rgba(216, 78, 41, 0.3);
+      --accent-forest: #1A382B;
+      --accent-marigold: #F3A427;
+      --accent-clay: #B86542;
+      --border-light: rgba(24, 23, 22, 0.09);
+      --border-card: rgba(24, 23, 22, 0.12);
+      --border-accent: rgba(216, 78, 41, 0.4);
+      --shadow-soft: 0 8px 24px rgba(24, 23, 22, 0.05);
+      --shadow-medium: 0 16px 36px rgba(24, 23, 22, 0.08);
+      --shadow-dramatic: 0 25px 60px -12px rgba(24, 23, 22, 0.15);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 28px;
+      --radius-full: 999px;
+      --font-display: 'Syne', sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }

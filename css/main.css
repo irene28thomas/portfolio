@@ -1,0 +1,33 @@
+/* ==========================================================================
+   IRENE THOMAS — CREATIVE SHOWCASE MASTER DESIGN SYSTEM
+   Modular Architecture
+   ========================================================================== */
+
+/* 1. Design Tokens, Resets & Themes */
+@import "tokens.css";
+@import "layout/reset.css";
+@import "theme-dark.css";
+
+/* 2. Global Layout & Kinetic Elements */
+@import "layout/hud-vectors.css";
+@import "layout/nav-spine.css";
+@import "layout/header.css";
+@import "layout/footer.css";
+
+/* 3. Reusable Components & Modals */
+@import "components/lightbox.css";
+@import "components/image-transitions.css";
+
+/* 4. Sector-Isolated Styles */
+@import "sectors/sec01-hero.css";
+@import "sectors/sec02-matrix.css";
+@import "sectors/sec03-branding.css";
+@import "sectors/sec04-ecommerce.css";
+@import "sectors/sec05-cinema.css";
+@import "sectors/sec06-posters.css";
+@import "sectors/sec07-promos.css";
+@import "sectors/sec08-dossier.css";
+
+/* 5. Mobile Elevation Suite */
+@import "components/mobile-capsule.css";
+@import "responsive/mobile-experience.css";

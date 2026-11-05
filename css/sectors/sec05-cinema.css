@@ -1,0 +1,225 @@
+/* ========= CINEMA SECTION ========= */
+    .cinema-universe-section {
+      position: relative; padding: 84px 0 clamp(95px, 14vh, 140px);
+      margin-bottom: 0;
+      transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .frame-cinema-stage { width: 100%; max-width: none; margin: 0 auto; padding: 0; }
+    .cinema-split-stage {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: clamp(28px, 3.2vw, 48px); align-items: center;
+    }
+    @media (max-width: 960px) {
+      .cinema-split-stage {
+        grid-template-columns: 1fr;
+      }
+    }
+    .cinema-video-column { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+    .cinema-portrait-player {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden;
+      background: #000; aspect-ratio: 9 / 16;
+      height: clamp(440px, 58vh, 580px); width: auto; max-height: none;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+    }
+    .cinema-portrait-player video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .cinema-player-overlay {
+      position: absolute; bottom: 12px; left: 12px; right: 12px;
+      display: flex; gap: 8px; z-index: 10;
+    }
+    .btn-cinema-audio, .btn-cinema-expand {
+      background: rgba(0,0,0,0.6); color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 6px 12px; border-radius: var(--radius-full);
+      font-size: 11px; font-weight: 700; cursor: pointer;
+      font-family: var(--font-mono); transition: all 0.2s ease;
+    }
+    .btn-cinema-audio:hover, .btn-cinema-expand:hover {
+      background: var(--accent-terracotta); border-color: var(--accent-terracotta);
+    }
+    .cinema-video-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cinema-spec-pill {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+      color: #A0A0A8; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 5px 10px; border-radius: var(--radius-full);
+    }
+
+    .cinema-storyboard-column { display: flex; flex-direction: column; gap: 14px; }
+    .storyboard-header-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .storyboard-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+    .storyboard-spec-badge {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+      color: #A0A0A8; background: rgba(255,255,255,0.06);
+      padding: 6px 12px; border-radius: var(--radius-full);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-storyboard-toggle {
+      background: rgba(255,255,255,0.08); color: #EDE8DE;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 8px 14px; border-radius: var(--radius-full);
+      font-size: 11px; font-weight: 700; cursor: pointer;
+      font-family: var(--font-mono); transition: all 0.2s ease;
+    }
+    .btn-storyboard-toggle:hover { background: var(--accent-terracotta); border-color: var(--accent-terracotta); }
+    .storyboard-panoramic-view {
+      border-radius: var(--radius-md); overflow: hidden;
+      width: 100%; height: auto; max-height: none; aspect-ratio: 2000 / 915;
+      position: relative; cursor: zoom-in;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .storyboard-panoramic-view.is-pan-mode {
+      overflow-x: auto; max-height: none;
+    }
+    .storyboard-panoramic-view.is-pan-mode img {
+      width: auto; max-width: none; height: 360px;
+    }
+    .storyboard-panoramic-view img { width: 100%; height: auto; object-fit: contain; display: block; }
+    .storyboard-narrative-card { display: flex; flex-direction: column; gap: 12px; }
+    .scene-markers-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+    .scene-marker {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 12px; border-radius: var(--radius-full);
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      color: #A0A0A8; cursor: pointer; transition: all 0.2s ease;
+    }
+    .scene-marker:hover, .scene-marker.active {
+      background: var(--accent-terracotta); border-color: var(--accent-terracotta); color: #fff;
+    }
+    .storyboard-caption-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; margin-top: 16px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-family: var(--font-mono); font-size: 11px; color: #888690;
+      flex-wrap: wrap; margin-bottom: 40px; padding-right: clamp(140px, 14vw, 220px);
+    }
+
+
+    /* ========= GENERATIVE AI STUDIO GRID (FULL PORTRAIT + SLIDE-DOWN CAPTION REVEAL) ========= */
+    .ai-studio-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(18px, 2vw, 28px);
+      width: 100%;
+      max-width: none;
+      margin: 0 auto clamp(95px, 14vh, 140px);
+    }
+    @media (max-width: 1100px) {
+      .ai-studio-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 600px) {
+      .ai-studio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .ai-concept-card {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      background: #141519;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: zoom-in;
+      transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.38s ease;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.48);
+    }
+    .ai-concept-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-terracotta);
+      box-shadow: 0 24px 55px rgba(0, 0, 0, 0.68), 0 0 20px var(--accent-terracotta-glow);
+    }
+    .ai-card-media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0B0D11;
+      z-index: 1;
+    }
+    .ai-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ai-concept-card:hover .ai-card-media img {
+      transform: scale(1.045);
+    }
+    .ai-engine-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 3;
+      background: rgba(14, 15, 19, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      letter-spacing: 0.6px;
+    }
+    /* Bottom Dark Panel: Slides down on hover so description clips out while Title stays visible with clean bottom breathing gap */
+    .ai-card-body {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 4;
+      background: linear-gradient(180deg, rgba(14, 15, 19, 0.93) 0%, rgba(10, 11, 14, 0.98) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 18px 18px 20px;
+      transform: translate3d(0, 0, 0);
+      transition: transform 0.44s cubic-bezier(0.22, 1, 0.36, 1), background 0.35s ease;
+    }
+    .ai-card-header-keep {
+      min-height: 54px;
+      padding-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .ai-brand-label {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--accent-terracotta);
+      letter-spacing: 0.9px;
+      margin-bottom: 4px;
+    }
+    .ai-card-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin: 0;
+      line-height: 1.25;
+    }
+    .ai-card-prompt {
+      font-size: 12px;
+      color: #9A9CA6;
+      line-height: 1.48;
+      margin: 14px 0 0;
+      transition: opacity 0.26s ease, transform 0.35s ease;
+    }
+    .ai-concept-card:hover .ai-card-body {
+      transform: translate3d(0, calc(100% - 96px), 0);
+      background: linear-gradient(180deg, rgba(14, 15, 19, 0.88) 0%, rgba(10, 11, 14, 0.96) 100%);
+    }
+    .ai-concept-card:hover .ai-card-prompt {
+      opacity: 0;
+      transform: translateY(6px);
+    }

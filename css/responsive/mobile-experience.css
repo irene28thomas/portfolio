@@ -1,0 +1,1409 @@
+/* ==========================================================================
+   IRENE THOMAS — MOBILE RHYTHMIC CADENCE & HORIZONTAL MANGA ARCHITECTURE
+   Responsive Engine: Active strictly on viewports <= 860px
+   Preserves 100% desktop presentation while eliminating mobile image squishing
+   ========================================================================== */
+
+@media (max-width: 860px) {
+
+  /* ========= GLOBAL MOBILE ROOT CONSTRAINTS ========= */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+  }
+
+  .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Universal horizontal scrollbar suppression for tactile tracks */
+  .mobile-manga-track::-webkit-scrollbar,
+  .stream-track::-webkit-scrollbar,
+  .floating-cards-cluster::-webkit-scrollbar,
+  .posters-masonry-grid::-webkit-scrollbar,
+  .promo-gallery-grid::-webkit-scrollbar,
+  .manual-thumbnail-strip::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* Rhythmic Chapter Ticker Pill */
+  .mobile-cadence-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent-terracotta, #D84E29);
+    background: rgba(216, 78, 41, 0.08);
+    border: 1px solid rgba(216, 78, 41, 0.25);
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+    align-self: flex-start;
+  }
+  .mobile-cadence-pill::before {
+    content: "➔";
+    font-size: 9px;
+  }
+
+  /* ========= SECTOR 01: HERO ATELIER ========= */
+  .hero-atelier {
+    padding: 85px 0 35px !important;
+    min-height: auto !important;
+  }
+  .hero-layout-split {
+    display: grid !important;
+    grid-template-columns: 1fr clamp(115px, 33vw, 145px) !important;
+    column-gap: 10px !important;
+    row-gap: 16px !important;
+    align-items: start !important;
+  }
+  .hero-text-col {
+    display: contents !important;
+  }
+  .hero-meta-badge {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    margin-bottom: 2px !important;
+  }
+  .hero-main-title {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    font-size: clamp(19px, 5.2vw, 25px) !important;
+    line-height: 1.08 !important;
+    margin: 0 !important;
+    align-self: center !important;
+  }
+  /* Mask text with the portrait image texture */
+  .hero-main-title .accent-italic {
+    background-image: url('../assets/optimized/new_additions/PP.jpg') !important;
+    background-position: center 25% !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+    display: inline-block !important;
+    filter: contrast(1.3) brightness(1.25) !important;
+    text-shadow: none !important;
+    font-style: italic !important;
+    -webkit-text-stroke: 0.4px rgba(255, 255, 255, 0.4) !important;
+  }
+  .hero-visual-col {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+  }
+  .portrait-image-crop {
+    width: 100% !important;
+    max-width: clamp(115px, 33vw, 145px) !important;
+    max-width: 100% !important;
+    aspect-ratio: 3 / 4 !important;
+    height: auto !important;
+    max-height: 195px !important;
+    margin: 0 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25) !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  }
+  .portrait-image-crop img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 20% !important;
+    display: block !important;
+  }
+  .portrait-badge-overlay {
+    display: none !important;
+  }
+  .hero-bio-lead {
+    grid-column: 1 / -1 !important;
+    grid-row: 3 !important;
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+  }
+  .hero-pills-row {
+    grid-column: 1 / -1 !important;
+    grid-row: 4 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-top: 4px !important;
+  }
+  .hero-pill {
+    padding: 6px 14px !important;
+    font-size: 11.5px !important;
+  }
+
+  /* ========= SECTOR 02: CONTINUUM MATRIX (UNIFIED SOLID COLOR & INFINITE LOOP) ========= */
+  .diagonal-stream-section {
+    padding: 40px 0 60px !important;
+    overflow: hidden !important;
+  }
+  .diagonal-stage-viewport {
+    padding: 10px 0 20px !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  .diagonal-tracks-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+    transform: none !important;
+    background: transparent !important;
+  }
+
+  /* Buttery-smooth horizontal rails */
+  .stream-track,
+  .stream-track-left,
+  .stream-track-center,
+  .stream-track-right {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x proximity !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 14px !important;
+    padding: 4px 16px 14px !important;
+    margin: 0 !important;
+    padding-top: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    scrollbar-width: none !important;
+  }
+  .stream-track::-webkit-scrollbar,
+  .stream-track-left::-webkit-scrollbar,
+  .stream-track-center::-webkit-scrollbar,
+  .stream-track-right::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Ensure the three rows have the EXACT same solid color & no shadow drop mismatch */
+  .stream-card {
+    scroll-snap-align: center !important;
+    border-radius: 18px !important;
+    margin: 0 !important;
+    background: #141518 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+    overflow: hidden !important;
+  }
+  body.theme-dark-cinema .stream-card {
+    background: #141518 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* Distinct Asymmetric Widths to Break Rigid Table Appearance */
+  .stream-track-left .stream-card {
+    flex: 0 0 255px !important;
+    width: 255px !important;
+  }
+  .stream-track-center .stream-card {
+    flex: 0 0 220px !important;
+    width: 220px !important;
+  }
+  .stream-track-right .stream-card {
+    flex: 0 0 270px !important;
+    width: 270px !important;
+  }
+
+  .card-inner-media {
+    background: #101114 !important;
+    width: 100% !important;
+  }
+  .stream-track-left .card-inner-media {
+    height: 270px !important;
+  }
+  .stream-track-center .card-inner-media {
+    height: 250px !important;
+  }
+  .stream-track-right .card-inner-media {
+    height: 280px !important;
+  }
+  .tall-card .card-inner-media,
+  .medium-card .card-inner-media,
+  .wide-card .card-inner-media,
+  .video-card .card-inner-media {
+    width: 100% !important;
+  }
+  .card-inner-media img,
+  .card-inner-media video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+  .stream-card-overlay {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 18px 14px 14px !important;
+    background: linear-gradient(180deg, transparent 0%, rgba(18, 19, 23, 0.94) 55%, #121317 100%) !important;
+    color: #fff !important;
+  }
+  .card-title {
+    font-size: 15px !important;
+  }
+  .card-meta {
+    font-size: 11px !important;
+  }
+
+  /* ========= SECTOR 03: NIVARA BRAND ARCHITECTURE (FORCED HORIZONTAL) ========= */
+  #branding {
+    padding: 36px 0 !important;
+  }
+  .frame-brand-identity {
+    padding: 12px !important;
+    margin-bottom: 24px !important;
+  }
+  .brand-identity-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+  .brand-mock-main {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 11 !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22) !important;
+  }
+  .brand-mock-main img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .brand-process-side {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+  .process-thumb-card {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 10 !important;
+    max-height: none !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16) !important;
+  }
+  .process-thumb-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    background: #FFFFFF !important;
+  }
+  .brand-meta-card {
+    padding: 8px 10px !important;
+    border-radius: 10px !important;
+    background: var(--canvas-subtle, #18191D) !important;
+    border: 1px solid var(--border-light) !important;
+  }
+  .brand-meta-card h3 {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    margin: 3px 0 4px !important;
+  }
+  .brand-meta-card p {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0 !important;
+  }
+  .brand-meta-card span[style*="font-family:var(--font-mono)"] {
+    font-size: 8.5px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .brand-meta-card div[style*="border-top"] {
+    display: none !important;
+  }
+
+  /* Brand Guidelines Spreads Lookbook */
+  .manual-spread-viewport {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16/10 !important;
+    min-height: 210px !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    background: #0B0B0E !important;
+  }
+  .manual-spread-viewport img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+  .manual-thumbnail-strip {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 8px !important;
+    padding: 10px 0 !important;
+  }
+  .manual-thumb-pill {
+    flex: 0 0 84px !important;
+    width: 84px !important;
+    height: 54px !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* ========= SECTOR 04: HARDWARE COLLATERAL (ON BACKGROUND + COMPACT PILLS + SWIPE) ========= */
+  .frame-app-slider-studio {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-bottom: 40px !important;
+    border-radius: 0 !important;
+  }
+  .studio-slider-topbar {
+    margin-bottom: 16px !important;
+    gap: 8px !important;
+  }
+  .studio-title {
+    font-size: 20px !important;
+  }
+  .studio-desc {
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+  }
+  .studio-resolution-badge {
+    padding: 4px 10px !important;
+    font-size: 9.5px !important;
+  }
+  .studio-banner-stage-wrapper {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 14px !important;
+    position: relative !important;
+    overflow: visible !important;
+    touch-action: pan-y pinch-zoom;
+  }
+  .studio-banner-frame {
+    position: relative !important;
+    max-width: 100% !important;
+    aspect-ratio: 3 / 2 !important;
+    border-radius: 14px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3) !important;
+    overflow: hidden !important;
+  }
+  .hw-arrow {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+    background: rgba(18, 19, 23, 0.85) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    color: #FFFFFF !important;
+    font-size: 22px !important;
+    font-weight: 300 !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
+    user-select: none !important;
+  }
+  .hw-arrow:active {
+    transform: translateY(-50%) scale(0.92) !important;
+    background: var(--accent-terracotta) !important;
+    border-color: var(--accent-terracotta) !important;
+  }
+  .hw-arrow-prev {
+    left: 10px !important;
+    padding-right: 2px !important;
+  }
+  .hw-arrow-next {
+    right: 10px !important;
+    padding-left: 2px !important;
+  }
+
+  /* Compact Brand Change Pill Rail */
+  .studio-suite-selector-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 8px !important;
+    padding: 4px 0 12px !important;
+    margin: 0 !important;
+  }
+  .studio-suite-selector-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+  .studio-suite-card {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    padding: 7px 14px !important;
+    border-radius: 999px !important;
+    background: var(--canvas-card, #FFFFFF) !important;
+    border: 1px solid var(--border-card, rgba(255, 255, 255, 0.12)) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+    scroll-snap-align: start !important;
+  }
+  body.theme-dark-cinema .studio-suite-card {
+    background: #18191D !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+  .suite-card-thumb {
+    display: none !important;
+  }
+  .suite-card-info {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+  .suite-card-num {
+    font-size: 9.5px !important;
+    font-weight: 800 !important;
+    color: var(--accent-terracotta) !important;
+  }
+  .suite-card-name {
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    color: var(--ink-primary) !important;
+  }
+  body.theme-dark-cinema .suite-card-name {
+    color: #FFFFFF !important;
+  }
+  .studio-suite-card.active {
+    background: var(--accent-terracotta) !important;
+    border-color: var(--accent-terracotta) !important;
+    box-shadow: 0 4px 14px var(--accent-terracotta-glow) !important;
+  }
+  .studio-suite-card.active .suite-card-num,
+  .studio-suite-card.active .suite-card-name {
+    color: #FFFFFF !important;
+  }
+
+  /* ========= SECTOR 04: KINETIC RETAIL DISPLAY GIFS (SIDE BY SIDE IN PORTRAIT) ========= */
+  .motion-gif-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    margin-bottom: 40px !important;
+  }
+  .gif-card-stage {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  .gif-media-frame {
+    width: 100% !important;
+    aspect-ratio: 750 / 880 !important;
+    height: auto !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  .gif-card-stage-reel {
+    grid-column: 1 / -1 !important;
+    width: min(280px, 82vw) !important;
+    margin: 8px auto 0 !important;
+  }
+  .gif-card-stage-reel .reel-video-container {
+    aspect-ratio: 9 / 16 !important;
+    height: auto !important;
+  }
+  .gif-media-frame img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+  .gif-live-chip {
+    display: none !important;
+  }
+  .gif-meta-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 2px !important;
+  }
+  .gif-meta-row h4 {
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 2px !important;
+  }
+  .gif-meta-row p {
+    font-size: 10.5px !important;
+    line-height: 1.3 !important;
+    color: var(--ink-secondary) !important;
+  }
+
+  /* STOREFRONT METADATA & SPECS SIDE BY SIDE */
+  .switcher-specs-right {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+  .switcher-specs-right .spec-node {
+    padding: 8px 10px !important;
+    min-width: 0 !important;
+  }
+  .switcher-specs-right .spec-k {
+    font-size: 9px !important;
+    white-space: nowrap !important;
+  }
+  .switcher-specs-right .spec-v {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ========= SECTOR 04: OMNICHANNEL SOCIAL (3D TILTED TABLETOP PERSPECTIVE) ========= */
+  .social-simulator-section {
+    margin-top: 36px !important;
+    margin-bottom: 50px !important;
+    scroll-margin-top: 65px;
+    padding: 0 !important;
+  }
+  .social-showcase-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+    gap: 20px !important;
+    overflow: visible !important;
+  }
+  .panel-left-col {
+    width: 100% !important;
+    min-height: auto !important;
+  }
+  .social-section-headline {
+    font-size: 24px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 10px !important;
+  }
+  .social-section-subhead {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 16px !important;
+  }
+  .panel-brand-selector {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+  }
+  .brand-tab-btn {
+    padding: 7px 12px !important;
+    font-size: 10.5px !important;
+  }
+  .social-campaign-spec-card {
+    max-width: 100% !important;
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 12px 14px !important;
+  }
+  .spec-campaign-title {
+    font-size: 15px !important;
+  }
+  .spec-campaign-desc {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* 3D Tilted Tabletop Perspective Stage: Dynamically expands as you scroll towards it */
+  .panel-right-col {
+    width: 100% !important;
+    overflow: visible !important;
+    perspective: 1100px !important;
+    perspective-origin: 50% 35% !important;
+    margin: 10px 0 24px !important;
+  }
+  .floating-cards-cluster {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: clamp(520px, 138vw, 630px) !important;
+    margin: 0 auto !important;
+    transform-style: preserve-3d !important;
+    display: block !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    transform: scale(var(--scroll-scale, 1)) !important;
+    transform-origin: center 40% !important;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    will-change: transform !important;
+  }
+  .floating-card {
+    position: absolute !important;
+    box-sizing: border-box !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    padding: 8px !important;
+    background: var(--canvas-card, #FFFFFF) !important;
+    border: 1px solid var(--border-card, rgba(255, 255, 255, 0.12)) !important;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease !important;
+    cursor: zoom-in !important;
+  }
+  body.theme-dark-cinema .floating-card {
+    background: #18191D !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+  }
+  .floating-card .card-header-bar {
+    padding: 2px 4px 6px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  .floating-card .card-profile-tag {
+    font-size: 9px !important;
+    gap: 4px !important;
+  }
+  .floating-card .profile-avatar-circle {
+    width: 15px !important;
+    height: 15px !important;
+    font-size: 7px !important;
+  }
+  .floating-card .card-ratio-tag {
+    font-size: 7.5px !important;
+    padding: 2px 5px !important;
+  }
+  .floating-card .card-footer-actions {
+    padding: 4px 4px 2px !important;
+  }
+  .floating-card .like-count-label,
+  .floating-card .card-footer-actions span {
+    font-size: 8px !important;
+  }
+  .floating-card .svg-icon,
+  .floating-card .svg-icon-filled {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  /* Card 1: 1:1 Feed Post (Left Card) - Dynamically scales with viewport */
+  .floating-card-left {
+    top: 10px !important;
+    left: 0px !important;
+    width: clamp(200px, 56vw, 270px) !important;
+    z-index: 2 !important;
+    transform: rotateX(16deg) rotateY(10deg) rotateZ(-5deg) translateZ(calc(var(--scroll-progress, 0) * 12px)) !important;
+    transform-origin: center center !important;
+    box-shadow: 0 18px 36px -6px rgba(0, 0, 0, 0.45), 0 8px 16px rgba(0, 0, 0, 0.25) !important;
+  }
+  .floating-card-left .card-media-frame {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    height: auto !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    background: #181716 !important;
+  }
+
+  /* Card 2: 9:16 Vertical Reel (Center Card in HTML) - Dynamically scales with viewport */
+  .floating-card-center {
+    top: 0px !important;
+    right: 0px !important;
+    width: clamp(175px, 48vw, 230px) !important;
+    z-index: 1 !important;
+    transform: rotateX(14deg) rotateY(-8deg) rotateZ(3deg) translateZ(calc(var(--scroll-progress, 0) * 6px)) !important;
+    transform-origin: center center !important;
+    box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.48), 0 10px 18px rgba(0, 0, 0, 0.25) !important;
+  }
+  .floating-card-center .card-media-frame {
+    width: 100% !important;
+    aspect-ratio: 9 / 16 !important;
+    height: auto !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    background: #181716 !important;
+  }
+
+  /* Card 3: 16:9 Landscape Banner (Right Card in HTML) - Centered & spanning 94vw */
+  .floating-card-right {
+    top: clamp(240px, 64vw, 300px) !important;
+    left: 50% !important;
+    width: clamp(300px, 94vw, 440px) !important;
+    z-index: 4 !important;
+    transform: translateX(-50%) rotateX(16deg) rotateY(2deg) rotateZ(-1deg) translateZ(calc(30px + var(--scroll-progress, 0) * 15px)) !important;
+    transform-origin: center center !important;
+    box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.55), 0 12px 24px rgba(0, 0, 0, 0.3) !important;
+  }
+  .floating-card-right .card-media-frame {
+    width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    height: auto !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    background: #181716 !important;
+  }
+
+  .floating-card:active,
+  .floating-card:hover {
+    transform: translateY(-4px) scale(1.02) !important;
+    z-index: 10 !important;
+  }
+
+  /* Sector 04B: Vertical Motion Reel Player (Balanced Compact Mobile Layout) */
+  .reel-showcase-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 20px !important;
+    width: 100% !important;
+    margin-bottom: 40px !important;
+  }
+  .vertical-motion-reel-card {
+    width: min(220px, 58vw) !important;
+    margin: 0 auto 16px !important;
+    border-radius: 16px !important;
+    scroll-margin-top: 65px;
+  }
+  .reel-video-container {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 9 / 16 !important;
+    max-height: 380px !important;
+  }
+  .reel-context-content {
+    text-align: center !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+  .reel-context-content h4 {
+    font-size: 18px !important;
+  }
+  .reel-context-content p {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+  .reel-context-content > div[style*="grid"] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+    text-align: left !important;
+  }
+  .reel-context-content .spec-node {
+    padding: 8px 10px !important;
+  }
+  .reel-context-content .spec-k {
+    font-size: 8.5px !important;
+  }
+  .reel-context-content .spec-v {
+    font-size: 10.5px !important;
+  }
+
+  /* ========= SECTOR 05: CINEMA STUDIO (BARNEY DALE 2D ANIMATION) ========= */
+  #section-barney {
+    padding: 45px 0 !important;
+    scroll-margin-top: 65px;
+  }
+  .cinema-split-stage {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .cinema-video-column {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .cinema-portrait-player {
+    width: min(280px, 78vw) !important;
+    max-height: 500px !important;
+    aspect-ratio: 9 / 16 !important;
+    margin: 0 auto !important;
+    border-radius: 18px !important;
+  }
+  .cinema-video-stage video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  /* Generative AI Studio: Compact 2x2 Grid */
+  .ai-studio-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    margin-bottom: 40px !important;
+  }
+  .ai-concept-card {
+    border-radius: 12px !important;
+  }
+  .ai-card-body {
+    padding: 10px !important;
+  }
+  .ai-brand-label {
+    font-size: 8px !important;
+  }
+  .ai-card-title {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    margin: 4px 0 !important;
+  }
+  .ai-card-prompt {
+    display: none !important;
+  }
+
+  /* Storyboard Panorama Hero & Keyframe Filmstrip */
+  .storyboard-panoramic-view {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 180px !important;
+    border-radius: 16px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .storyboard-panoramic-view img {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 180px !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+  .storyboard-strip-track {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 10px !important;
+    padding: 10px 0 !important;
+  }
+  .storyboard-frame-thumb {
+    flex: 0 0 110px !important;
+    width: 110px !important;
+    height: 68px !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* ========= SECTOR 06: EXHIBITION POSTERS (GALLERY WALL) ========= */
+  #section-posters {
+    padding: 40px 0 !important;
+    scroll-margin-top: 65px;
+  }
+  .poster-filter-bar {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 8px !important;
+    padding-bottom: 10px !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .btn-poster-filter {
+    flex: 0 0 auto !important;
+    padding: 7px 14px !important;
+    font-size: 11px !important;
+  }
+  .poster-gallery-grid,
+  .posters-masonry-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x proximity !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    gap: 14px !important;
+    padding: 10px 16px 20px !important;
+    margin: 0 -16px !important;
+  }
+  .poster-gallery-grid::-webkit-scrollbar,
+  .posters-masonry-grid::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .poster-gallery-grid .poster-card,
+  .posters-masonry-grid .poster-card {
+    flex: 0 0 240px !important;
+    width: 240px !important;
+    height: auto !important;
+    scroll-snap-align: center !important;
+    border-radius: 6px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .poster-gallery-grid .poster-card-paper,
+  .posters-masonry-grid .poster-card-paper {
+    height: auto !important;
+    aspect-ratio: 1 / 1.414 !important;
+    width: 100% !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5) !important;
+  }
+  .poster-gallery-grid .poster-card-paper img,
+  .posters-masonry-grid .poster-card-paper img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .poster-card-meta {
+    padding: 12px 14px 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+  .poster-title {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    white-space: normal !important;
+    line-height: 1.35 !important;
+    color: var(--ink-primary, #181716) !important;
+  }
+  .promo-card-title {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    white-space: normal !important;
+    line-height: 1.35 !important;
+    color: var(--ink-primary, #181716) !important;
+  }
+  .spatial-meta-panel h4 {
+    color: var(--ink-primary, #181716) !important;
+  }
+  body.theme-dark-cinema .poster-title,
+  body.theme-dark-cinema .promo-card-title,
+  body.theme-dark-cinema .spatial-meta-panel h4 {
+    color: #FFFFFF !important;
+  }
+  body.theme-dark-cinema .poster-gallery-grid .poster-card,
+  body.theme-dark-cinema .promo-card {
+    background: #18191D !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45) !important;
+  }
+
+  /* ========= SECTOR 07: RETAIL PROMOS & CRM SIMULATOR ========= */
+  #section-promos {
+    padding: 40px 0 !important;
+    scroll-margin-top: 65px;
+  }
+  .promo-gallery-grid,
+  .promos-matrix {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 16px !important;
+    padding: 10px 16px 20px !important;
+    margin: 0 -16px !important;
+  }
+  .promo-card {
+    flex: 0 0 220px !important;
+    width: 220px !important;
+    height: auto !important;
+    scroll-snap-align: center !important;
+    border-radius: 10px !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .promo-card-thumb {
+    height: auto !important;
+    aspect-ratio: 1 / 1.95 !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    border-radius: 10px !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45) !important;
+  }
+  .promo-card-content {
+    padding: 12px 14px 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+  .promo-card-thumb img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  /* The Open Championship Tournament Luxury Suite - Raw on Canvas */
+  .spatial-merch-showcase {
+    display: flex !important;
+    flex-direction: column !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    gap: 18px !important;
+    margin-bottom: 40px !important;
+  }
+  .spatial-hero-box {
+    border-radius: 14px !important;
+    border: 1px solid rgba(243, 164, 39, 0.25) !important;
+    background: #0E141B !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+  }
+  .spatial-overlay-badge {
+    background: rgba(10, 16, 24, 0.9) !important;
+    border: 1px solid rgba(243, 164, 39, 0.35) !important;
+    color: #F3A427 !important;
+    font-size: 8.5px !important;
+    padding: 5px 10px !important;
+    bottom: 10px !important;
+    left: 10px !important;
+  }
+  .spatial-meta-panel .hero-meta-badge {
+    color: #F3A427 !important;
+    background: rgba(243, 164, 39, 0.12) !important;
+    border: 1px solid rgba(243, 164, 39, 0.28) !important;
+  }
+  .spatial-meta-panel h4 {
+    color: #FFFFFF !important;
+    font-size: 19px !important;
+    line-height: 1.3 !important;
+  }
+  .spatial-meta-panel p {
+    color: #A6B4C4 !important;
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+  }
+  .spatial-meta-panel .spec-node {
+    background: rgba(14, 22, 34, 0.65) !important;
+    border: 1px solid rgba(243, 164, 39, 0.22) !important;
+    padding: 10px 12px !important;
+  }
+  .spatial-meta-panel .spec-k {
+    color: #F3A427 !important;
+    font-size: 8.5px !important;
+  }
+  .spatial-meta-panel .spec-v {
+    color: #FFFFFF !important;
+    font-size: 11px !important;
+  }
+
+  /* Curated Luxury Brand Tri-Set Lookbooks (1 Landscape Spread Top + 2 Portrait Companion Folios Below) */
+  .brand-tri-set-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    margin-bottom: 40px !important;
+  }
+  .brand-tri-set-grid .tri-col-unit:first-child {
+    grid-column: 1 / -1 !important;
+  }
+  .brand-tri-set-grid .tri-col-unit {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .tri-col-tag {
+    font-size: 8.5px !important;
+  }
+  .tri-poster-card {
+    border-radius: 12px !important;
+  }
+  .tri-card-landscape {
+    aspect-ratio: 16 / 10 !important;
+    width: 100% !important;
+  }
+  .tri-card-portrait {
+    aspect-ratio: 3 / 4 !important;
+    width: 100% !important;
+  }
+  .tri-card-landscape img,
+  .tri-card-portrait img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .tri-poster-caption {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+  .tri-landscape-spec-plate {
+    padding: 10px 12px !important;
+    margin-top: 6px !important;
+  }
+
+  /* CRM Browser Simulator */
+  .frame-crm-stage,
+  .crm-browser-stage {
+    width: 100% !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
+  }
+  .browser-integrated-tabs,
+  .crm-browser-tabs-row {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: 6px !important;
+  }
+  .crm-browser-tab-btn {
+    flex: 0 0 auto !important;
+    padding: 7px 12px !important;
+    font-size: 10.5px !important;
+  }
+
+  /* ========= SECTOR 08: EXECUTIVE CREDENTIALS & CONTACT DOSSIER ========= */
+  #resume,
+  .section-editorial-dossier {
+    padding: 28px 18px 80px !important;
+    margin: 0 0 50px !important;
+    border-radius: 20px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    scroll-margin-top: 65px;
+  }
+  .dossier-curator-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 20px !important;
+    padding-bottom: 22px !important;
+    margin-bottom: 24px !important;
+  }
+  .dossier-signatory-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+    padding: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: 14px !important;
+    margin-bottom: 0 !important;
+    overflow: hidden !important;
+  }
+  .dossier-portrait-wrap {
+    width: 72px !important;
+    height: 88px !important;
+    border-radius: 10px !important;
+    flex-shrink: 0 !important;
+  }
+  .dossier-signatory-meta {
+    flex: 1 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  .dossier-role-eyebrow {
+    font-size: 8.5px !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 3px !important;
+    display: block !important;
+  }
+  .dossier-name {
+    font-size: 20px !important;
+    line-height: 1.1 !important;
+    margin: 2px 0 6px !important;
+  }
+  .dossier-location-badge {
+    font-size: 9.5px !important;
+    margin-bottom: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+  .dossier-contact-mini {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    margin-top: 4px !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+  .mini-contact-sep {
+    display: none !important;
+  }
+  .mini-contact-link {
+    font-size: 10px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+    max-width: 100% !important;
+    color: var(--accent-terracotta, #D84E29) !important;
+  }
+  .dossier-headline-col {
+    max-width: 100% !important;
+  }
+  .dossier-archive-stamp {
+    font-size: 9.5px !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 8px !important;
+  }
+  .dossier-main-heading {
+    font-size: 22px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 10px !important;
+  }
+  .dossier-sub-lead {
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+  }
+  .dossier-download-cta-box {
+    width: 100% !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+  .btn-dossier-download {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 12px 16px !important;
+    font-size: 11px !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+  }
+  .dossier-avail-badge {
+    font-size: 9.5px !important;
+    text-align: center !important;
+    display: block !important;
+  }
+
+  /* Two-Part Editorial Grid Stack */
+  .editorial-dossier-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+    width: 100% !important;
+  }
+  .dossier-chronology-column,
+  .dossier-pedigree-column {
+    width: 100% !important;
+  }
+  .entry-role-title {
+    font-size: 18px !important;
+  }
+  .entry-institution {
+    font-size: 13.5px !important;
+  }
+  .entry-scope-meta {
+    font-size: 10.5px !important;
+    padding: 6px 10px !important;
+  }
+  .entry-narrative {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+  }
+  .tooling-tabular-row {
+    padding: 8px 0 !important;
+  }
+  .tabular-category {
+    font-size: 10px !important;
+  }
+  .tabular-tools {
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Core Design Disciplines - Compact 2-column card layout */
+  .disciplines-monograph-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  .disc-item {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .disc-item strong {
+    font-size: 11.5px !important;
+    line-height: 1.25 !important;
+    display: block !important;
+  }
+  .disc-item p {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+    color: var(--ink-secondary) !important;
+    margin-top: 3px !important;
+  }
+
+  .education-tabular-entry {
+    flex-direction: column !important;
+    gap: 2px !important;
+    margin-bottom: 12px !important;
+  }
+  .edu-year {
+    min-width: auto !important;
+    font-size: 10.5px !important;
+  }
+  .edu-body strong {
+    font-size: 13.5px !important;
+  }
+  .edu-body p {
+    font-size: 12px !important;
+  }
+  .dossier-footer-stamp {
+    padding: 12px 14px !important;
+    gap: 10px !important;
+  }
+}
+
+  /* Complete Horizontal Overflow Immunity & Dock Clearance */
+  html, body {
+    overflow-x: clip !important;
+    max-width: 100vw !important;
+  }
+  .hero-atelier, .stream-showcase-section, .bridge-ticker, #ambient-vector-canvas-wrap, #bg-vector-astrolabe {
+    overflow: hidden !important;
+    max-width: 100vw !important;
+  }
+  .container {
+    padding-bottom: 75px !important;
+  }

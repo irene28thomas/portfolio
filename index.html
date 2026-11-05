@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Irene Thomas — Graphic Designer & Art Director | Creative Showcase</title>
+  <meta name="description" content="Visual portfolio of Irene Thomas, Graphic Designer & Art Director in Dubai. Featuring commercial e-commerce campaigns, brand identity systems, and motion design.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
+
+    <link rel="preload" as="image" href="assets/optimized/new_additions/PP.jpg" fetchpriority="high">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- High-Performance Bundled Design System -->
+  <link rel="stylesheet" href="css/bundle.css?v=20261103_v22">
+  <link rel="stylesheet" href="css/layout/pinned-burn.css">
+</head>
+<body>
+
+  <!-- =======================================================================
+       SILVER PALACE LIVE MULTI-HOLE SVG MASK & FILTER
+       ======================================================================= -->
+  <svg width="0" height="0" class="pinned-burn-svg-defs" aria-hidden="true" style="position:fixed; top:0; left:0; width:0; height:0; pointer-events:none; z-index:-1;">
+    <defs>
+      <filter id="multi-hole-paper-filter" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+        <feTurbulence id="burn-turb-main" type="fractalNoise" baseFrequency="0.011 0.016" numOctaves="3" seed="11" result="noiseMain" />
+        <feTurbulence id="burn-turb-fine" type="turbulence" baseFrequency="0.032 0.042" numOctaves="2" seed="29" result="noiseFine" />
+        <feOffset id="burn-noise-offset" in="noiseMain" dx="0" dy="0" result="noiseMoved" />
+        <feDisplacementMap in="SourceGraphic" in2="noiseMoved" scale="120" xChannelSelector="R" yChannelSelector="G" result="warpedPrimary" />
+        <feDisplacementMap in="warpedPrimary" in2="noiseFine" scale="36" xChannelSelector="B" yChannelSelector="R" result="warpedFinal" />
+        <feComponentTransfer in="warpedFinal">
+          <feFuncR type="discrete" tableValues="0 1" />
+          <feFuncG type="discrete" tableValues="0 1" />
+          <feFuncB type="discrete" tableValues="0 1" />
+        </feComponentTransfer>
+      </filter>
+
+      <mask id="silver-palace-burn-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080">
+        <g filter="url(#multi-hole-paper-filter)">
+          <rect id="mask-bg-rect" x="-1000" y="-1000" width="6000" height="6000" fill="black" />
+          <path id="mask-intact-body" d="" fill="white" />
+          <g id="mask-multi-holes"></g>
+        </g>
+      </mask>
+    </defs>
+  </svg>
+
+  <!-- Fullscreen Canvas: Procedural Burning Paper Transition & Dust Particles -->
+  <canvas id="disintegration-canvas"></canvas>
+  <div id="ambient-cursor-spotlight"></div>
+  <div id="magnetic-cursor-badge">EXAMINE</div>
+
+  <!-- Custom Interactive Drafting Reticle Cursor -->
+  <div id="custom-atelier-cursor" aria-hidden="true">
+    <div class="cursor-reticle-ring" id="cursor-reticle-ring">
+      <span class="reticle-tick tick-t"></span>
+      <span class="reticle-tick tick-r"></span>
+      <span class="reticle-tick tick-b"></span>
+      <span class="reticle-tick tick-l"></span>
+    </div>
+    <div class="cursor-reticle-dot" id="cursor-reticle-dot"></div>
+  </div>
+
+  <!-- Left Margin Architectural Gallery Rail & Stage Telemetry -->
+  <aside class="left-margin-atelier-rail" id="left-margin-atelier-rail" aria-label="Stage Telemetry & Quick Stepper">
+    <button type="button" class="left-rail-step-btn" onclick="stepPortfolioStage(-1)" title="Previous Showcase Stage">▲</button>
+    <div class="left-rail-art-window" id="left-rail-art-window" title="Active Stage Artwork">
+      <img id="left-rail-art-img" src="assets/optimized/new_additions/PP.jpg" alt="Stage Preview" decoding="async">
+      <span class="left-rail-art-frame"></span>
+    </div>
+    <div class="left-rail-stage-counter" id="left-rail-stage-counter">01 / 16</div>
+    <div class="left-rail-spine-line"></div>
+    <div class="left-rail-vertical-label" id="left-rail-vertical-label">OVERVIEW // PORTFOLIO MONOGRAPH</div>
+    <div class="left-rail-spine-line"></div>
+    <div class="left-rail-coords" id="left-rail-coords">Y: 0000</div>
+    <button type="button" class="left-rail-step-btn" onclick="stepPortfolioStage(1)" title="Next Showcase Stage">▼</button>
+  </aside>
+
+  <!-- Hybrid Header Top Hover Sensor & Collapsed Micro-Beacon Pill -->
+  <div class="header-hover-sensor" id="header-hover-sensor">
+    <button type="button" class="header-collapsed-pill" id="header-collapsed-pill" aria-label="Expand Top Header">
+      <span class="collapsed-pill-star">✦</span>
+      <span class="collapsed-pill-brand">IRENE THOMAS</span>
+      <span class="collapsed-pill-sep">//</span>
+      <span class="collapsed-pill-sector" id="collapsed-pill-sector">SEC 01 • OVERVIEW</span>
+      <span class="collapsed-pill-chevron">▾</span>
+    </button>
+  </div>
+
+  <!-- Dynamic Background HUD & Kinetic Vectors -->
+  <div id="ambient-vector-canvas-wrap" aria-hidden="true">
+    <svg class="bg-kinetic-vector-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="vectorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="var(--accent-terracotta)" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="var(--accent-marigold)" stop-opacity="0.05"/>
+        </linearGradient>
+      </defs>
+      <!-- Moving orbital circles & crosshairs -->
+      <g id="bg-vector-astrolabe" transform="translate(860, 480)">
+        <circle r="360" fill="none" stroke="rgba(216, 78, 41, 0.08)" stroke-width="1.5" stroke-dasharray="6 8"/>
+        <circle r="240" fill="none" stroke="rgba(24, 23, 22, 0.05)" stroke-width="1"/>
+        <line x1="-400" y1="0" x2="400" y2="0" stroke="rgba(216, 78, 41, 0.06)" stroke-width="1"/>
+        <line x1="0" y1="-400" x2="0" y2="400" stroke="rgba(216, 78, 41, 0.06)" stroke-width="1"/>
+      </g>
+      <!-- Horizontal and vertical drafting guidelines -->
+      <line id="bg-vector-guide-h" x1="0" y1="500" x2="1000" y2="500" stroke="rgba(24, 23, 22, 0.04)" stroke-width="1" stroke-dasharray="12 16"/>
+      <line id="bg-vector-guide-v" x1="880" y1="0" x2="880" y2="1000" stroke="rgba(216, 78, 41, 0.07)" stroke-width="1"/>
+    </svg>
+
+    <!-- Background Kinetic Sector Watermark & Coordinate Readout -->
+    <div class="bg-sector-hud" id="bg-sector-hud">
+      <div class="bg-hud-coords">
+        <span class="hud-coord-item">ARCHIVAL DOSSIER</span>
+        <span class="hud-coord-separator">•</span>
+        <span class="hud-coord-item" id="hud-scroll-pct">00% REACH</span>
+      </div>
+      <div class="bg-hud-large-display">
+        <span class="bg-hud-num" id="bg-hud-num">01</span>
+        <div class="bg-hud-text-col">
+          <span class="bg-hud-label">SECTOR CODE</span>
+          <span class="bg-hud-title" id="bg-hud-title">OVERVIEW</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROUNDED ARCHITECTURAL TOP HEADER (ANCHORED DIRECTLY TO CANVAS BACKGROUND GRID) -->
+  <header class="grounded-atelier-header" id="grounded-header">
+    <div class="header-grounded-left">
+      <a href="#hero" class="grounded-brand-monogram" onclick="handleRailClick(event, 'hero')">
+        <span class="monogram-star">✦</span>
+        <span class="monogram-text">IRENE THOMAS</span>
+        <span class="monogram-pipe">/</span>
+        <span class="monogram-role">DUBAI // ART DIRECTOR &amp; GRAPHIC DESIGNER</span>
+      </a>
+    </div>
+    <div class="header-grounded-center" id="header-grounded-center">
+      <div class="header-active-sector-display" id="header-active-sector-display">
+        <span class="header-sector-badge">CURRENT VIEW</span>
+        <span class="header-sector-pipe">/</span>
+        <span class="header-sector-code" id="header-sector-code">01</span>
+        <span class="header-sector-name" id="header-sector-name">OVERVIEW</span>
+      </div>
+    </div>
+    <div class="header-grounded-right">
+      <a href="#resume" class="btn-header-contact" onclick="handleRailClick(event, 'resume')">
+        <span>GET IN TOUCH</span>
+        <span class="header-contact-arrow">↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- GROUNDED ARCHITECTURAL BACKGROUND NAVIGATION (NOT A FLOATING PILL) -->
+  <nav class="grounded-nav-system" id="grounded-nav" aria-label="Sector Spine">
+    <div class="grounded-drafting-spine" id="grounded-spine-track" title="Click or Drag to Navigate">
+      <div class="grounded-spine-progress" id="grounded-spine-progress"></div>
+      <div class="grounded-reticle-beacon" id="grounded-beacon"></div>
+    </div>
+    <!-- Scroll percentage removed per design review -->
+    <div class="grounded-ticks-container">
+      <a href="#hero" class="grounded-nav-node active" data-sector="hero" onclick="handleRailClick(event, 'hero')">
+        <div class="grounded-nav-label">
+          <span class="grounded-label-text">01 // OVERVIEW</span>
+          <span class="grounded-label-hairline"></span>
+        </div>
+        <span class="grounded-tick-num">01</span>
+        <span class="grounded-tick-mark"></span>
+      </a>
+      <a href="#stream-works" class="grounded-nav-node" data-sector="stream-works" onclick="handleRailClick(event, 'stream-works')">
+        <div class="grounded-nav-label">
+          <span class="grounded-label-text">02 // CONTINUUM MATRIX</span>
+          <span class="grounded-label-hairline"></span>
+        </div>
+        <span class="grounded-tick-num">02</span>
+        <span class="grounded-tick-mark"></span>
+      </a>
+      <a href="#branding" class="grounded-nav-node" data-sector="branding" onclick="handleRailClick(event, 'branding')">
+        <div class="grounded-nav-label">
+          <span class="grounded-label-text">03 // BRAND ARCHITECTURE</span>
+          <span class="grounded-label-hairline"></span>
+        </div>
+        <span class="grounded-tick-num">03</span>
+        <span class="grounded-tick-mark"></span>
+      </a>
+      <a href="#ecommerce" class="grounded-nav-node" data-sector="ecommerce" onclick="handleRailClick(event, 'ecommerce')">
+        <div class="grounded-nav-label">
+          <span class="grounded-label-text">04 // DIGITAL COMMERCE</span>
+          <span class="grounded-label-hairline"></span>
+        </div>
+        <span class="grounded-tick-num">04</span>
+        <span class="grounded-tick-mark"></span>
+      </a>
+      <a href="#section-barney" class="grounded-nav-node" data-sector="section-barney" onclick="handleRailClick(event, 'section-barney')">
+        <div class="grounded-nav-label">
+          <span class="grounded-label-text">05 // CINEMA STUDIO</span>
+          <span class="grounded-label-hairline"></span>
+        </div>
+        <span class="grounded-tick-num">05</span>
+        <span class="grounded-tick-mark"></span>
+      </a>
+      <a href="#section-posters" class="grounded-nav-node" data-sector="section-posters" onclick="handleRailClick(event, 'section-posters')">
+        <div class="grounded-nav-label">
+          <span class="grounded-label-text">06 // EXHIBITION POSTERS</span>
+          <span class="grounded-label-hairline"></span>
+        </div>
+        <span class="grounded-tick-num">06</span>
+        <span class="grounded-tick-mark"></span>
+      </a>
+      <a href="#section-promos" class="grounded-nav-node" data-sector="section-promos" onclick="handleRailClick(event, 'section-promos')">
+        <div class="grounded-nav-label">
+          <span class="grounded-label-text">07 // RETAIL ACTIVATIONS</span>
+          <span class="grounded-label-hairline"></span>
+        </div>
+        <span class="grounded-tick-num">07</span>
+        <span class="grounded-tick-mark"></span>
+      </a>
+      <a href="#resume" class="grounded-nav-node" data-sector="resume" onclick="handleRailClick(event, 'resume')">
+        <div class="grounded-nav-label">
+          <span class="grounded-label-text">08 // CREDENTIALS</span>
+          <span class="grounded-label-hairline"></span>
+        </div>
+        <span class="grounded-tick-num">08</span>
+        <span class="grounded-tick-mark"></span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- DYNAMIC ARCHITECTURAL FLOATING THUMB CAPSULE & SECTOR SHEET (MOBILE ONLY) -->
+  <div class="mobile-thumb-capsule" id="mobile-thumb-capsule" aria-label="Mobile Navigation Dock">
+    <button type="button" class="thumb-cap-btn prev" id="thumb-cap-prev" aria-label="Previous Sector" onclick="jumpToAdjacentSector(-1)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="thumb-cap-core" id="thumb-cap-core" onclick="toggleMobileSectorSheet()" title="Tap to open Sector Index">
+      <span class="thumb-cap-star">✦</span>
+      <span class="thumb-cap-num" id="thumb-cap-num">01</span>
+      <span class="thumb-cap-sep">/</span>
+      <span class="thumb-cap-title" id="thumb-cap-title">OVERVIEW</span>
+      <span class="thumb-cap-pct" id="thumb-cap-pct">0%</span>
+    </div>
+    <button type="button" class="thumb-cap-btn next" id="thumb-cap-next" aria-label="Next Sector" onclick="jumpToAdjacentSector(1)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <!-- EXPANDABLE MOBILE ARCHITECTURAL SECTOR SHEET -->
+  <div class="mobile-sector-sheet-overlay" id="mobile-sector-sheet" onclick="closeMobileSectorSheet(event)">
+    <div class="mobile-sector-sheet-panel" onclick="event.stopPropagation()">
+      <div class="sheet-drag-handle"></div>
+      <div class="sheet-header-row">
+        <div>
+          <span class="sheet-eyebrow">ARCHITECTURAL SECTOR DIRECTORY</span>
+          <h3 class="sheet-headline">Direct Showcase Navigation</h3>
+        </div>
+        <button type="button" class="sheet-close-btn" onclick="toggleMobileSectorSheet()" aria-label="Close Directory">✕</button>
+      </div>
+      <div class="sheet-sectors-list" id="sheet-sectors-list">
+        <!-- Rendered dynamically via JS -->
+      </div>
+    </div>
+  </div>
+
+
+  
+  <!-- LAYER 8 (Z-INDEX 10): Sector 08 + Footer -->
+  <div id="layer-8" class="pinned-burn-layer pinned-burn-layer-8">
+    <div class="layer-ambient-art-canvas" aria-hidden="true">
+      <div class="ambient-art-blur-plate" id="ambient-blur-8" style="background-image: url('assets/optimized/new_additions/PP.jpg');"></div>
+      <div class="ambient-art-ghost-plate" id="ambient-ghost-8" style="background-image: url('assets/optimized/new_additions/PP.jpg');"></div>
+      <div class="ambient-drafting-grid"></div>
+    </div>
+    <div id="track-8" class="pinned-burn-track">
+      <div class="container" id="frames-layer-8">
+<section class="section-editorial-dossier" id="resume">
+      <!-- Monograph Archival Header -->
+      <div class="dossier-curator-header">
+        <div class="dossier-signatory-card">
+          <div class="dossier-portrait-wrap" onclick="openLightboxWithImage('assets/real_works/new_additions/PP.jpg', 'Irene Thomas // Creative Director & Graphic Designer', 'DUBAI SPORTS CITY // THE ELS CLUB', '1 / 1.33')">
+            <img src="assets/optimized/new_additions/PP.jpg" alt="Irene Thomas Official Portrait" class="dossier-portrait-img" decoding="async">
+            <span class="dossier-portrait-tag">CURATOR</span>
+          </div>
+          <div class="dossier-signatory-meta">
+            <span class="dossier-role-eyebrow">LEAD GRAPHIC DESIGNER &amp; ART DIRECTOR</span>
+            <h3 class="dossier-name">Irene Thomas</h3>
+            <div class="dossier-location-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>DUBAI, UNITED ARAB EMIRATES</span>
+            </div>
+            <div class="dossier-contact-mini">
+              <a href="mailto:irene28thomas@gmail.com" class="mini-contact-link">irene28thomas@gmail.com</a>
+              <span class="mini-contact-sep">•</span>
+              <a href="tel:+971563482737" class="mini-contact-link">+971 56 348 2737</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="dossier-headline-col">
+          <div class="dossier-archive-stamp">
+            <span class="stamp-star">✦</span>
+            <span>ARCHIVE REFERENCE: IT-DXB-2026 // EXECUTIVE MONOGRAPH &amp; CURRICULUM VITAE</span>
+          </div>
+          <h2 class="dossier-main-heading">Executive Design Leadership &amp; Strategic Practice</h2>
+          <p class="dossier-sub-lead">
+            4.5+ years directing multidisciplinary retail marketing, luxury cosmetic brand identities, and high-conversion omnichannel campaigns across Dubai and the GCC.
+          </p>
+        </div>
+
+        <div class="dossier-download-cta-box">
+          <a href="Irene_Resume_2026.pdf" download class="btn-dossier-download" onmouseenter="playUiSound(1100)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            <span>DOWNLOAD COMPLETE C.V. (PDF)</span>
+          </a>
+          <span class="dossier-avail-badge">● DUBAI RESIDENCE VISA // IMMEDIATE COMMENCEMENT</span>
+        </div>
+      </div>
+
+      <!-- Executive Impact Metrics Strip -->
+      <div class="dossier-impact-metrics-strip">
+        <div class="impact-metric-cell">
+          <span class="impact-metric-val">4.5+ YRS</span>
+          <span class="impact-metric-label">GCC Retail &amp; Campaign Direction</span>
+        </div>
+        <div class="impact-metric-cell">
+          <span class="impact-metric-val">250+</span>
+          <span class="impact-metric-label">Storefront, CRM &amp; Launch Assets</span>
+        </div>
+        <div class="impact-metric-cell">
+          <span class="impact-metric-val">10+ TIER-1</span>
+          <span class="impact-metric-label">Global Licensed Brand Guidelines</span>
+        </div>
+        <div class="impact-metric-cell">
+          <span class="impact-metric-val">360° SUITE</span>
+          <span class="impact-metric-label">Print, Motion, Web &amp; Gen-AI</span>
+        </div>
+      </div>
+
+      <!-- Spacious Two-Column Architectural Editorial Grid -->
+      <div class="editorial-dossier-grid">
+        <!-- LEFT: Career Chronology Timeline Spine -->
+        <div class="dossier-chronology-column">
+          <div class="column-section-label">PART I // VERIFIED CAREER TRAJECTORY</div>
+
+          <div class="chronology-timeline-spine">
+            <!-- Role 1: eGolf Megastore -->
+            <article class="chronology-entry primary-role">
+              <div class="chronology-node-dot"></div>
+              <header class="entry-header">
+                <div class="entry-period-badge">2021 — PRESENT // 4.5+ YRS • LEAD ROLE</div>
+                <h3 class="entry-role-title">Lead Graphic Designer</h3>
+                <div class="entry-institution">eGolf Megastore • Dubai, United Arab Emirates</div>
+              </header>
+              <p class="entry-narrative">
+                Sole creative lead directing GCC retail seasons (Black Friday, Ramadan, The Open Championship), delivering 250+ omnichannel storefront sliders, mobile app campaigns, 5,000px CRM dispatches, and in-store 3D activations.
+              </p>
+              <div class="entry-brand-ledger">
+                <span class="ledger-k">BRAND CUSTODY //</span>
+                <span class="ledger-v">Nike Golf · TaylorMade · Callaway · PUMA · BOSS · G/FORE · PXG · Vessel</span>
+              </div>
+            </article>
+
+            <!-- Role 2: FDCI Fashion Week -->
+            <article class="chronology-entry">
+              <div class="chronology-node-dot"></div>
+              <header class="entry-header">
+                <div class="entry-period-badge">2019 — 2022</div>
+                <h3 class="entry-role-title">Creative Event Assistant</h3>
+                <div class="entry-institution">FDCI Fashion Week • New Delhi, India</div>
+              </header>
+              <p class="entry-narrative">
+                Directed backstage runway scenography, VIP press coordination, and spatial exhibition staging for national couture showcases.
+              </p>
+            </article>
+
+            <!-- Role 3: NCDPD -->
+            <article class="chronology-entry">
+              <div class="chronology-node-dot"></div>
+              <header class="entry-header">
+                <div class="entry-period-badge">2019</div>
+                <h3 class="entry-role-title">Graphic Design Intern</h3>
+                <div class="entry-institution">National Centre for Design &amp; Product Development (NCDPD) • Delhi</div>
+              </header>
+              <p class="entry-narrative">
+                Executed publication layout, vector color separation, and offset CMYK pre-press verification for national design exhibitions.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <!-- RIGHT: Spacious Interactive Capabilities & Academic Pedigree Column -->
+        <div class="dossier-pedigree-column">
+          <div class="dossier-tab-header-bar">
+            <span class="column-section-label" style="margin-bottom:0; border-bottom:none; padding-bottom:0;">PART II // CAPABILITIES &amp; PEDIGREE</span>
+            <div class="dossier-interactive-tabs" role="tablist">
+              <button type="button" class="dossier-tab-btn active" onclick="switchDossierTab('arsenal', this)">01 // ARSENAL &amp; AI</button>
+              <button type="button" class="dossier-tab-btn" onclick="switchDossierTab('disciplines', this)">02 // 4 CORE DISCIPLINES</button>
+            </div>
+          </div>
+
+          <!-- Tab Panel 1: Production Arsenal & AI Workflows -->
+          <div class="dossier-tab-panel is-active" id="dossier-panel-arsenal">
+            <div class="tooling-cluster-group">
+              <div class="tooling-tabular-row">
+                <div class="tabular-category">CREATIVE DIRECTION &amp; PRINT</div>
+                <div class="tabular-spec-line">Adobe Photoshop CC &nbsp;·&nbsp; Illustrator CC &nbsp;·&nbsp; InDesign CC &nbsp;·&nbsp; Offset CMYK Pre-Press</div>
+              </div>
+              <div class="tooling-tabular-row">
+                <div class="tabular-category">MOTION &amp; 2D CINEMA</div>
+                <div class="tabular-spec-line">Adobe After Effects CC &nbsp;·&nbsp; Premiere Pro &nbsp;·&nbsp; 2D Character Rigging &nbsp;·&nbsp; 60FPS Story Reels</div>
+              </div>
+              <div class="tooling-tabular-row">
+                <div class="tabular-category">GENERATIVE AI DIRECTIVE</div>
+                <div class="tabular-spec-line tabular-spec-accent">Adobe Firefly Gen-3 &nbsp;·&nbsp; Higgsfield AI &nbsp;·&nbsp; Luxury Retail Staging Synthesis</div>
+              </div>
+              <div class="tooling-tabular-row">
+                <div class="tabular-category">DIGITAL COMMERCE &amp; CRM</div>
+                <div class="tabular-spec-line">Responsive Multi-Ratio Architecture &nbsp;·&nbsp; 5,000px Direct-Mail Wireframes &nbsp;·&nbsp; UI/UX Hierarchy</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab Panel 2: 4 Core Design Disciplines -->
+          <div class="dossier-tab-panel" id="dossier-panel-disciplines">
+            <div class="disciplines-monograph-grid">
+              <div class="disc-item">
+                <span class="disc-num">01</span>
+                <div>
+                  <strong>Brand Architecture &amp; Print</strong>
+                  <p>Geometric logo systems, 13-spread styleguides, packaging dielines &amp; foil debossing.</p>
+                </div>
+              </div>
+              <div class="disc-item">
+                <span class="disc-num">02</span>
+                <div>
+                  <strong>Digital Commerce Systems</strong>
+                  <p>Multi-ratio storefront sliders, mobile app campaigns &amp; 5,000px CRM wireframes.</p>
+                </div>
+              </div>
+              <div class="disc-item">
+                <span class="disc-num">03</span>
+                <div>
+                  <strong>2D Narrative Motion</strong>
+                  <p>Directed character animation, 12-keyframe storyboards &amp; kinetic display ads.</p>
+                </div>
+              </div>
+              <div class="disc-item">
+                <span class="disc-num">04</span>
+                <div>
+                  <strong>Spatial Retail Takeovers</strong>
+                  <p>Large-format showroom wraps, 3D ceiling hanging rigs &amp; tournament collateral.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Always-Visible Academic Foundation & Verification Ledger -->
+          <div class="pedigree-academic-footer">
+            <div class="column-section-label">PART III // ACADEMIC CREDENTIALS &amp; RESIDENCY</div>
+            <div class="education-cards-grid">
+              <div class="education-tabular-entry">
+                <div class="edu-year">2025 // DUBAI</div>
+                <div class="edu-body">
+                  <strong>SAE Institute, Dubai</strong>
+                  <p>Advanced Graphic Design &amp; Digital Media</p>
+                </div>
+              </div>
+              <div class="education-tabular-entry">
+                <div class="edu-year">2018 — 2021 // B.A. HONORS</div>
+                <div class="edu-body">
+                  <strong>K.R. Mangalam University</strong>
+                  <p>Bachelor of Arts in Fashion Design</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="dossier-footer-stamp">
+              <div class="seal-icon">✦</div>
+              <div>
+                <strong>VERIFIED PROFILE &amp; IMMEDIATE GCC AVAILABILITY</strong>
+                <p>Languages: English, Hindi, Malayalam • Based in Al Khail Gate, Dubai, UAE</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="atelier-footer" id="contact">
+      <div class="footer-huge-name">IRENE THOMAS</div>
+      <p style="color:var(--ink-secondary); font-size:15px; max-width:540px; margin:0 auto 24px;">
+        Available for Art Direction, Senior Graphic Design roles, and high-impact brand consultations in Dubai &amp; GCC.
+      </p>
+      <div class="footer-links-row">
+        <a href="mailto:irene28thomas@gmail.com" class="footer-pill-btn">✉️ irene28thomas@gmail.com</a>
+        <a href="tel:+971563482737" class="footer-pill-btn">📞 +971 56 348 2737</a>
+        <a href="Irene_Resume_2026.pdf" download class="footer-pill-btn">📄 Download Resume (PDF)</a>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--ink-muted);">
+        © 2026 IRENE THOMAS • DUBAI, UNITED ARAB EMIRATES • DESIGNED &amp; ENGINEERED AS BESPOKE SHOWCASE
+      </div>
+    </footer>
+      </div><!-- #frames-layer-8 -->
+    </div><!-- #track-8 -->
+  </div><!-- #layer-8 -->
+
+  <!-- LAYER 5-7 (Z-INDEX 20): Sectors 05 to 07 -->
+  <div id="layer-5-7" class="pinned-burn-layer pinned-burn-layer-57">
+    <div class="layer-ambient-art-canvas" aria-hidden="true">
+      <div class="ambient-art-blur-plate" id="ambient-blur-57" style="background-image: url('assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg');"></div>
+      <div class="ambient-art-ghost-plate" id="ambient-ghost-57" style="background-image: url('assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg');"></div>
+      <div class="ambient-drafting-grid"></div>
+    </div>
+    <div id="track-5-7" class="pinned-burn-track">
+      <div class="container" id="frames-layer-57">
+<!-- 05: CINEMA SECTION -->
+    <section class="cinema-universe-section" id="section-barney">
+      <div class="section-headline-row" style="padding-top:0;">
+        <div>
+          <span class="section-eyebrow">[05 // NARRATIVE ANIMATION &amp; 2D CINEMA]</span>
+          <h2 class="section-title">Barney Dale: The Cloud — Directed 2D Short</h2>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:13px; color:var(--ink-secondary);">
+          2D CHARACTER ANIMATION &amp; 12-FRAME SEQUENTIAL STORYBOARD
+        </div>
+      </div>
+
+      <div class="frame-cinema-stage">
+        <div class="cinema-split-stage">
+          <div class="cinema-video-column">
+            <div class="cinema-portrait-player" data-cursor="PLAY CINEMA">
+              <video autoplay muted loop playsinline preload="metadata" id="video-barney">
+                <source src="assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4" type="video/mp4">
+              </video>
+              <div class="cinema-player-overlay">
+                <button type="button" class="btn-cinema-expand" onclick="openLightboxWithVideo('assets/real_works/Barney_Dale__The_Cloud_story_arc.mp4', 'Barney Dale: The Cloud // Full Animated Short', 'AFTER EFFECTS 2D ANIMATION'); event.stopPropagation();">⛶ Fullscreen View</button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="cinema-storyboard-column">
+            <div class="storyboard-header-bar">
+              <div>
+                <span style="font-family:var(--font-mono); font-size:11px; color:var(--accent-terracotta); text-transform:uppercase; font-weight:700; letter-spacing:0.5px;">
+                  COMPLETE STORY ARC &amp; SCENE PACING
+                </span>
+                <h3 style="font-family:var(--font-display); font-size:22px; color:#fff; margin-top:4px;">
+                  12-Keyframe Production Storyboard
+                </h3>
+              </div>
+
+            </div>
+            <div class="img-upload-box storyboard-panoramic-view" id="box-storyboard" onclick="handleStoryboardBoxClick(event)" >
+              <img loading="lazy" src="assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg" alt="Barney Dale The Cloud 12-Frame Storyboard" id="img-storyboard-main" decoding="async">
+            </div>
+            <div class="storyboard-narrative-card">
+
+              <div class="storyboard-caption-footer">
+                <span>2D CHARACTER ANIMATION // NARRATIVE DIRECTED SHORT</span>
+                <span>SAE INSTITUTE DUBAI // VISUAL STORYTELLING</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06: POSTER GALLERY (PINNED HORIZONTAL PARALLAX EXHIBITION RUNWAY) -->
+    <div class="poster-horizontal-runway" id="poster-horizontal-runway">
+      <div class="poster-horizontal-pin-stage" id="poster-horizontal-pin-stage">
+        <div class="poster-parallax-bg-text" id="poster-parallax-bg-text" aria-hidden="true">
+          SPECTRUM OF THE MIND // EXHIBITION ARCHIVE // SAE DUBAI
+        </div>
+
+        <div class="section-headline-row" id="section-posters">
+          <div>
+            <span class="section-eyebrow">[06 // FINE ART EXHIBITION &amp; PRINT — HORIZONTAL PARALLAX GALLERY]</span>
+            <h2 class="section-title">The Spectrum of the Mind: Exhibition Poster Tri-Set</h2>
+          </div>
+          <div class="poster-runway-hud">
+            <span class="poster-scroll-hint">⇄ SCROLL TO GLIDE ACROSS EXHIBITION</span>
+            <div class="poster-horiz-progress-track">
+              <div class="poster-horiz-progress-bar" id="poster-horiz-progress-bar"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="poster-exhibition-section">
+          <div class="poster-filter-bar">
+            <button type="button" class="btn-poster-filter active" onclick="filterPosterGallery('all', this)">All Works (10)</button>
+            <button type="button" class="btn-poster-filter" onclick="filterPosterGallery('set-3', this)">Set 03: Typographic Pacing (4)</button>
+            <button type="button" class="btn-poster-filter" onclick="filterPosterGallery('set-4', this)">Set 04: Visual Metaphor (3)</button>
+            <button type="button" class="btn-poster-filter" onclick="filterPosterGallery('set-5', this)">Set 05: Color Psychology (3)</button>
+          </div>
+          <div class="poster-horizontal-viewport" id="poster-horizontal-viewport">
+            <div class="poster-gallery-grid" id="poster-grid">
+              <!-- Set 4 -->
+              <div class="poster-card poster-item set-4 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 4-01.jpg', 'The Cognitive Maze (Set 4-01)', 'FINE ART EXHIBITION')">
+                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 4-01.jpg" alt="Poster Set 4-01" decoding="async"></div>
+                <div class="poster-card-meta"><span class="poster-set-tag">SET 04 // METAPHOR</span><div class="poster-title">The Cognitive Maze</div></div>
+              </div>
+              <div class="poster-card poster-item set-4 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 4-02.jpg', 'Silent Pressure (Set 4-02)', 'FINE ART EXHIBITION')">
+                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 4-02.jpg" alt="Poster Set 4-02" decoding="async"></div>
+                <div class="poster-card-meta"><span class="poster-set-tag">SET 04 // METAPHOR</span><div class="poster-title">Silent Pressure</div></div>
+              </div>
+              <div class="poster-card poster-item set-4 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 4-03.jpg', 'Inner Equilibrium (Set 4-03)', 'FINE ART EXHIBITION')">
+                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 4-03.jpg" alt="Poster Set 4-03" decoding="async"></div>
+                <div class="poster-card-meta"><span class="poster-set-tag">SET 04 // METAPHOR</span><div class="poster-title">Inner Equilibrium</div></div>
+              </div>
+              <!-- Set 3 -->
+              <div class="poster-card poster-item set-3 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 3-01.jpg', 'Permission to Pause (Set 3-01)', 'FINE ART EXHIBITION')">
+                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-01.jpg" alt="Poster Set 3-01" decoding="async"></div>
+                <div class="poster-card-meta"><span class="poster-set-tag">SET 03 // TYPOGRAPHY</span><div class="poster-title">Permission to Pause</div></div>
+              </div>
+              <div class="poster-card poster-item set-3 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 3-03.jpg', 'Rhythm of Rest (Set 3-03)', 'FINE ART EXHIBITION')">
+                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-03.jpg" alt="Poster Set 3-03" decoding="async"></div>
+                <div class="poster-card-meta"><span class="poster-set-tag">SET 03 // TYPOGRAPHY</span><div class="poster-title">Rhythm of Rest</div></div>
+              </div>
+              <div class="poster-card poster-item set-3 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 3-04.jpg', 'Perspective Shift (Set 3-04)', 'FINE ART EXHIBITION')">
+                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-04.jpg" alt="Poster Set 3-04" decoding="async"></div>
+                <div class="poster-card-meta"><span class="poster-set-tag">SET 03 // TYPOGRAPHY</span><div class="poster-title">Perspective Shift</div></div>
+              </div>
+              <div class="poster-card poster-item set-3 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 3-06.jpg', 'Clarity Through Contrast (Set 3-06)', 'FINE ART EXHIBITION')">
+                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-06.jpg" alt="Poster Set 3-06" decoding="async"></div>
+                <div class="poster-card-meta"><span class="poster-set-tag">SET 03 // TYPOGRAPHY</span><div class="poster-title">Clarity Through Contrast</div></div>
+              </div>
+              <!-- Set 5 -->
+              <div class="poster-card poster-item set-5 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 5-01.jpg', 'Emotional Spectrum (Set 5-01)', 'FINE ART EXHIBITION')">
+                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 5-01.jpg" alt="Poster Set 5-01" decoding="async"></div>
+                <div class="poster-card-meta"><span class="poster-set-tag">SET 05 // PSYCHOLOGY</span><div class="poster-title">Emotional Spectrum</div></div>
+              </div>
+              <div class="poster-card poster-item set-5 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 5-02.jpg', 'De-Stigmatization (Set 5-02)', 'FINE ART EXHIBITION')">
+                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 5-02.jpg" alt="Poster Set 5-02" decoding="async"></div>
+                <div class="poster-card-meta"><span class="poster-set-tag">SET 05 // PSYCHOLOGY</span><div class="poster-title">De-Stigmatization</div></div>
+              </div>
+              <div class="poster-card poster-item set-5 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 5-03.jpg', 'Resilience Archetype (Set 5-03)', 'FINE ART EXHIBITION')">
+                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 5-03.jpg" alt="Poster Set 5-03" decoding="async"></div>
+                <div class="poster-card-meta"><span class="poster-set-tag">SET 05 // PSYCHOLOGY</span><div class="poster-title">Resilience Archetype</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07: RETAIL CAMPAIGN BANNERS -->
+    <div class="section-headline-row" id="section-promos">
+      <div>
+        <span class="section-eyebrow">[07 // PERFORMANCE RETAIL CAMPAIGNS]</span>
+        <h2 class="section-title">eGolf Megastore: Commercial Campaign Banners</h2>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:13px; color:var(--ink-secondary);">
+        EGOLF MEGASTORE // VERTICAL PROMOSHEET BANNERS (750 × 1500)
+      </div>
+    </div>
+
+    <div class="promo-gallery-grid">
+      <div class="promo-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/PUMA x PTC New Collection.jpg', 'PUMA x PTC Palm Tree Crew // Dubai Lifestyle Launch', 'RETAIL LAUNCH')">
+        <div class="promo-card-thumb"><img loading="lazy" src="assets/optimized/promosheet_banners/PUMA x PTC New Collection.jpg" alt="PUMA x PTC" decoding="async"></div>
+        <div class="promo-card-content">
+          <span class="promo-card-tag">APPAREL CAPSULE</span>
+          <div class="promo-card-title">PUMA x PTC Collection</div>
+          <div class="promo-card-desc">Dubai lifestyle release collateral</div>
+        </div>
+      </div>
+
+      <div class="promo-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/Bettinardi the Antidote Putter Series.jpg', 'Bettinardi The Antidote Series // Precision Milled Putters', 'EQUIPMENT CAMPAIGN')">
+        <div class="promo-card-thumb"><img loading="lazy" src="assets/optimized/promosheet_banners/Bettinardi the Antidote Putter Series.jpg" alt="Bettinardi The Antidote" decoding="async"></div>
+        <div class="promo-card-content">
+          <span class="promo-card-tag">PRECISION CLUBS</span>
+          <div class="promo-card-title">Bettinardi The Antidote</div>
+          <div class="promo-card-desc">Milled putter launch banner</div>
+        </div>
+      </div>
+
+      <div class="promo-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/Callaway 2026 Chrome Tour Golf Balls.jpg', 'Callaway 2026 Chrome Tour // Performance Tier', 'BALL PERFORMANCE')">
+        <div class="promo-card-thumb"><img loading="lazy" src="assets/optimized/promosheet_banners/Callaway 2026 Chrome Tour Golf Balls.jpg" alt="Callaway Chrome Tour" decoding="async"></div>
+        <div class="promo-card-content">
+          <span class="promo-card-tag">TOUR EQUIPMENT</span>
+          <div class="promo-card-title">Callaway Chrome Tour</div>
+          <div class="promo-card-desc">Aerodynamic performance tier</div>
+        </div>
+      </div>
+
+      <div class="promo-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/TaylorMade TP5 TP5x Golf Balls.jpg', 'TaylorMade TP5 / TP5x Multi-Layer Speed Core', 'BALL PROMOTION')">
+        <div class="promo-card-thumb"><img loading="lazy" src="assets/optimized/promosheet_banners/TaylorMade TP5 TP5x Golf Balls.jpg" alt="TaylorMade TP5" decoding="async"></div>
+        <div class="promo-card-content">
+          <span class="promo-card-tag">PREMIUM BALLS</span>
+          <div class="promo-card-title">TaylorMade TP5 / TP5x</div>
+          <div class="promo-card-desc">Multi-layer speed core promo</div>
+        </div>
+      </div>
+
+      <div class="promo-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/Vessel Nightfire Collection.jpg', 'Vessel Nightfire Luxury Gear Edit', 'LUXURY GEAR')">
+        <div class="promo-card-thumb"><img loading="lazy" src="assets/optimized/promosheet_banners/Vessel Nightfire Collection.jpg" alt="Vessel Nightfire" decoding="async"></div>
+        <div class="promo-card-content">
+          <span class="promo-card-tag">LUXURY GEAR</span>
+          <div class="promo-card-title">Vessel Nightfire Edit</div>
+          <div class="promo-card-desc">Premium staff bags &amp; luggage</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARADIGM 3: THE OPEN CHAMPIONSHIP IN-STORE SPATIAL GALLERY -->
+    <div class="section-headline-row" id="stage-open-major">
+      <div>
+        <span class="section-eyebrow">[PARADIGM 3 // 3D RETAIL MERCHANDISING ARCHITECTURE]</span>
+        <h3 class="section-title" style="font-size: clamp(22px, 2.6vw, 34px);">The Open Championship: Major Tournament Takeover</h3>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--ink-secondary); text-align:right;">
+        SPATIAL 3D HANGING BANNERS &amp; IN-STORE ACTIVATION
+      </div>
+    </div>
+
+    <div class="spatial-merch-showcase">
+      <div class="spatial-hero-box" onclick="openLightboxWithImage('assets/real_works/new_additions/The Open Major Offers 2026 Hanging Banner mockup.jpg', 'The Open Championship // In-Store 3D Hanging Banner Mockup', 'SPATIAL RETAIL ACTIVATION')">
+        <img loading="lazy" src="assets/optimized/new_additions/The Open Major Offers 2026 Hanging Banner mockup.jpg" alt="The Open Hanging Banner Mockup" decoding="async">
+        <div class="spatial-overlay-badge">
+          <span>SPATIAL CEILING HANGING RIG // eGOLF MEGASTORE AL WASL</span>
+        </div>
+      </div>
+      <div class="spatial-meta-panel">
+        <div class="hero-meta-badge">[SPATIAL ACTIVATION METRICS]</div>
+        <h4 style="font-family: var(--font-display); font-size: 22px; font-weight: 800; margin-top: 6px;">
+          Immersive Retail Transformation for Golf's Oldest Major
+        </h4>
+        <p style="font-size: 13.5px; color: var(--ink-secondary); line-height: 1.6; margin-top: 8px;">
+          Engineered ceiling-suspended double-sided banner structures, floor vinyl navigation trails, and dedicated tournament apparel gondolas across all major UAE showrooms during The Open Championship week.
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+          <div class="spec-node">
+            <span class="spec-k">DIMENSIONS</span>
+            <span class="spec-v">2.4m &times; 1.2m Double Sided</span>
+          </div>
+          <div class="spec-node">
+            <span class="spec-k">SUBSTRATE</span>
+            <span class="spec-v">Blockout Vinyl &amp; Tension Rod</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARADIGM 5: GENERATIVE AI CONCEPT LAB & RETAIL STAGING (MOVED INTO SECTOR 07 RETAIL ACTIVATIONS) -->
+    <div class="section-headline-row" id="stage-ai-studio">
+      <div>
+        <span class="section-eyebrow">[PARADIGM 5 // GENERATIVE AI RETAIL CONCEPTING]</span>
+        <h3 class="section-title" style="font-size: clamp(22px, 2.6vw, 34px); color: #FFFFFF;">Generative AI Studio: Retail Concept Staging</h3>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:12px; color:#A09E97; text-align:right;">
+        ADOBE FIREFLY &amp; HIGGSFIELD CONCEPT WORKFLOWS // HOVER TO REVEAL ARTWORK
+      </div>
+    </div>
+
+    <div class="ai-studio-grid">
+      <!-- AI Work 1: Boss Luxury Concept -->
+      <div class="ai-concept-card" onclick="openLightboxWithImage('assets/real_works/new_additions/689352046_18580395709020262_5220540874800235796_n.jpg', 'Hugo Boss Luxury Golf Activation // AI Retail Concept', 'ADOBE FIREFLY GEN-3 // ARCHITECTURAL LIGHTING')">
+        <div class="ai-card-media">
+          <img loading="lazy" src="assets/optimized/new_additions/689352046_18580395709020262_5220540874800235796_n.jpg" alt="Boss AI Concept" decoding="async">
+          <span class="ai-engine-tag">ADOBE FIREFLY</span>
+        </div>
+        <div class="ai-card-body">
+          <div class="ai-card-header-keep">
+            <div class="ai-brand-label">HUGO BOSS GOLF</div>
+            <h4 class="ai-card-title">Minimalist Architectural Retail Concept</h4>
+          </div>
+          <p class="ai-card-prompt"><em>Prompt:</em> "Ultra-high luxury retail display for Hugo Boss golf apparel, polished concrete podium, volumetric rim lighting, cinematic depth of field."</p>
+        </div>
+      </div>
+
+      <!-- AI Work 2: Nike Jordan Golf Flatlay -->
+      <div class="ai-concept-card" onclick="openLightboxWithImage('assets/real_works/new_additions/690140026_18580395751020262_7846448488869614368_n.jpg', 'Nike Air Jordan Golf // Luxury Merchandising Flatlay', 'GENERATIVE AI CONCEPT LAB // RETAIL COMPOSITION')">
+        <div class="ai-card-media">
+          <img loading="lazy" src="assets/optimized/new_additions/690140026_18580395751020262_7846448488869614368_n.jpg" alt="Nike Jordan Flatlay AI" decoding="async">
+          <span class="ai-engine-tag">HIGGSFIELD AI</span>
+        </div>
+        <div class="ai-card-body">
+          <div class="ai-card-header-keep">
+            <div class="ai-brand-label">NIKE AIR JORDAN</div>
+            <h4 class="ai-card-title">Editorial Tour Merchandising Flatlay</h4>
+          </div>
+          <p class="ai-card-prompt"><em>Prompt:</em> "Overhead knolling flatlay of Jordan golf shoes, premium leather accessories, golf tee grid, soft diffused editorial lighting."</p>
+        </div>
+      </div>
+
+      <!-- AI Work 3: Vessel Alpine Plinth -->
+      <div class="ai-concept-card" onclick="openLightboxWithImage('assets/real_works/new_additions/708881960_18585805291020262_4494170539801241625_n.jpg', 'Vessel Luxury Bags // Alpine Stone Plinth Activation', 'GENERATIVE CONCEPT LAB // DRAMATIC LIGHTING')">
+        <div class="ai-card-media">
+          <img loading="lazy" src="assets/optimized/new_additions/708881960_18585805291020262_4494170539801241625_n.jpg" alt="Vessel Alpine Concept" decoding="async">
+          <span class="ai-engine-tag">ADOBE FIREFLY</span>
+        </div>
+        <div class="ai-card-body">
+          <div class="ai-card-header-keep">
+            <div class="ai-brand-label">VESSEL LUXURY</div>
+            <h4 class="ai-card-title">Alpine Plinth Extreme Conditions Staging</h4>
+          </div>
+          <p class="ai-card-prompt"><em>Prompt:</em> "Vessel tour golf bag poised on an Icelandic volcanic basalt column, dramatic side storm lighting, water repellent mist particles."</p>
+        </div>
+      </div>
+
+      <!-- AI Work 4: Mother's Day Retail Activation -->
+      <div class="ai-concept-card" onclick="openLightboxWithImage('assets/real_works/new_additions/730713355_18593578669020262_6603178947951019414_n.jpg', 'eGolf Megastore // Mother\'s Day Luxury Gifting Activation', 'GENERATIVE BOTANICAL STAGING // RETAIL CAMPAIGN')">
+        <div class="ai-card-media">
+          <img loading="lazy" src="assets/optimized/new_additions/730713355_18593578669020262_6603178947951019414_n.jpg" alt="Mother's Day Concept 1" decoding="async">
+          <span class="ai-engine-tag">FIREFLY GEN-3</span>
+        </div>
+        <div class="ai-card-body">
+          <div class="ai-card-header-keep">
+            <div class="ai-brand-label">SEASONAL CAMPAIGN</div>
+            <h4 class="ai-card-title">Mother's Day Botanical Retail Installation</h4>
+          </div>
+          <p class="ai-card-prompt"><em>Prompt:</em> "Curated luxury pastel golf gift arrangement, delicate white ranunculus blossoms, warm morning sunlight, premium satin ribbons."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARADIGM 4: LUXURY BRAND POSTER TRI-SET LOOKBOOK -->
+    <div class="section-headline-row" id="stage-tri-sets">
+      <div>
+        <span class="section-eyebrow">[PARADIGM 4 // LUXURY BRAND POSTER TRI-SETS]</span>
+        <h3 class="section-title" style="font-size: clamp(22px, 2.6vw, 34px);">Curated Luxury Brand Tri-Set Lookbooks</h3>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--ink-secondary); text-align:right;">
+        GFORE • GALVIN GREEN • GREYSON • J.LINDEBERG • NIKE • UNDER ARMOUR
+      </div>
+    </div>
+
+      <!-- Brand Tri-Set Tabs -->
+      <div class="console-brand-rail" style="margin-bottom: 24px;" id="tri-set-brand-nav">
+        <button type="button" class="console-brand-tab active" onclick="switchBrandTriSet('gfore', this)">
+          <span class="tab-index">01</span><span class="tab-label">G/FORE Luxury</span>
+        </button>
+        <button type="button" class="console-brand-tab" onclick="switchBrandTriSet('greyson', this)">
+          <span class="tab-index">02</span><span class="tab-label">Greyson Clothiers</span>
+        </button>
+        <button type="button" class="console-brand-tab" onclick="switchBrandTriSet('nike', this)">
+          <span class="tab-index">03</span><span class="tab-label">Nike Golf Tour</span>
+        </button>
+        <button type="button" class="console-brand-tab" onclick="switchBrandTriSet('galvingreen', this)">
+          <span class="tab-index">04</span><span class="tab-label">Galvin Green</span>
+        </button>
+        <button type="button" class="console-brand-tab" onclick="switchBrandTriSet('jlindeberg', this)">
+          <span class="tab-index">05</span><span class="tab-label">J.Lindeberg</span>
+        </button>
+      </div>
+
+    <!-- Active Tri-Set Asymmetrical Grid: 1 Landscape Master Spread + 2 Companion A4 Vertical Folios -->
+    <div class="brand-tri-set-grid" id="brand-tri-set-grid">
+      <!-- Col 1: A4 Landscape Master Campaign Spread -->
+      <div class="tri-col-unit">
+        <div class="tri-col-tag">A4 MASTER DOUBLE SPREAD // LANDSCAPE 1920 × 1357</div>
+        <div class="tri-poster-card tri-card-landscape" onclick="openLightboxFromTriSet(0)">
+          <img id="tri-img-0" src="assets/optimized/new_additions/A4 Posters - New Arrivals (2)/GFORE/GFORE_A4 Mens Landscape.jpg" alt="Landscape Spread" decoding="async">
+          <div class="tri-poster-overlay"><span class="tri-zoom-btn">🔍 INSPECT A4 SPREAD</span></div>
+        </div>
+        <div class="tri-poster-caption" id="tri-caption-0">G/FORE // Pastel Summer Capsule (A4 Landscape)</div>
+        <div class="tri-landscape-spec-plate">
+          <div class="spec-plate-title">PRINT SPECIFICATION // 300 DPI OFFSET CMYK</div>
+          <p class="spec-plate-desc">
+            High-fidelity editorial lookbook engineered for international luxury golf retail distribution across Dubai &amp; GCC flagships. Art direction by Irene Thomas.
+          </p>
+        </div>
+      </div>
+
+      <!-- Col 2: Companion Portrait Lookbook 01 -->
+      <div class="tri-col-unit">
+        <div class="tri-col-tag">PORTRAIT FOLIO 01 // A4 1357 × 1920</div>
+        <div class="tri-poster-card tri-card-portrait" onclick="openLightboxFromTriSet(1)">
+          <img id="tri-img-1" src="assets/optimized/new_additions/A4 Posters - New Arrivals (2)/GFORE/GFORE_A4 Mens.jpg" alt="Portrait Lookbook 1" decoding="async">
+          <div class="tri-poster-overlay"><span class="tri-zoom-btn">🔍 INSPECT A4</span></div>
+        </div>
+        <div class="tri-poster-caption" id="tri-caption-1">G/FORE // Gallivanter Street Lookbook 01</div>
+      </div>
+
+      <!-- Col 3: Companion Portrait Lookbook 02 -->
+      <div class="tri-col-unit">
+        <div class="tri-col-tag">PORTRAIT FOLIO 02 // A4 1357 × 1920</div>
+        <div class="tri-poster-card tri-card-portrait" onclick="openLightboxFromTriSet(2)">
+          <img id="tri-img-2" src="assets/optimized/new_additions/A4 Posters - New Arrivals (2)/GFORE/GFORE_A4 Womens.jpg" alt="Portrait Lookbook 2" decoding="async">
+          <div class="tri-poster-overlay"><span class="tri-zoom-btn">🔍 INSPECT A4</span></div>
+        </div>
+        <div class="tri-poster-caption" id="tri-caption-2">G/FORE // Disruptive Luxury Tour 02</div>
+      </div>
+    </div>
+
+    <!-- PARADIGM 6: FULL-LENGTH CRM DIRECT-MAIL DRAWER -->
+    <div class="section-headline-row" id="stage-crm">
+      <div>
+        <span class="section-eyebrow">[PARADIGM 6 // HIGH-CONVERSION CRM ARCHITECTURE]</span>
+        <h3 class="section-title" style="font-size: clamp(22px, 2.6vw, 34px);">Full-Length CRM Newsletter Campaigns</h3>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--ink-secondary); text-align:right;">
+        5,000PX DIRECT MARKETING WIREFRAMES
+      </div>
+    </div>
+
+    <!-- Architectural Browser Dispatch Window with Integrated Campaign Tabs -->
+    <div class="frame-browser-stage frame-crm-stage">
+      <div class="crm-browser-header-suite">
+        <div class="crm-browser-tabs-row">
+          <div class="crm-chrome-dots">
+            <span class="b-dot dot-red"></span>
+            <span class="b-dot dot-yellow"></span>
+            <span class="b-dot dot-green"></span>
+          </div>
+          <!-- Integrated Browser Tabs Inside Window Chrome -->
+          <div class="browser-integrated-tabs" id="crm-tabs-row">
+            <button type="button" class="crm-browser-tab-btn active" onclick="switchCrmEmail('emailer1', this)">
+              <span class="crm-tab-dot"></span>
+              <span>VIP Seasonal Launch</span>
+            </button>
+            <button type="button" class="crm-browser-tab-btn" onclick="switchCrmEmail('emailer2', this)">
+              <span class="crm-tab-dot"></span>
+              <span>Major Tournaments</span>
+            </button>
+            <button type="button" class="crm-browser-tab-btn" onclick="switchCrmEmail('vessel_crm', this)">
+              <span class="crm-tab-dot"></span>
+              <span>Vessel Luxury Bags</span>
+            </button>
+          </div>
+        </div>
+        <div class="crm-browser-subbar">
+          <div class="crm-subject-display">
+            <span class="crm-subject-tag">SUBJECT LINE:</span>
+            <span id="crm-subject-line">Subject: Exclusive New Season Drops &amp; VIP Arrivals at eGolf Megastore</span>
+          </div>
+          <div class="crm-quick-nav-controls">
+            <button type="button" class="crm-jump-btn" onclick="scrollCrmFrameTo('top')">↑ TOP</button>
+            <button type="button" class="crm-jump-btn" onclick="scrollCrmFrameTo('mid')">↕ MID</button>
+            <button type="button" class="crm-jump-btn" onclick="scrollCrmFrameTo('bottom')">↓ BOTTOM</button>
+            <button type="button" class="crm-jump-btn crm-jump-btn-expand" onclick="openActiveCrmLightbox()">⤢ FULL 5,000PX</button>
+          </div>
+        </div>
+      </div>
+      <div class="browser-scroll-viewport crm-browser-scroll" id="crm-scroll-frame" onclick="openActiveCrmLightbox()" title="Scroll inside window or Click to Inspect Original Master (5,000px)">
+        <img id="crm-active-img" src="assets/optimized/new_additions/crm_vip_launch_1500w.webp" alt="Full-Length CRM Email Dispatch" decoding="async">
+      </div>
+      <div class="crm-sandbox-footer-bar">
+        <span>SANDBOX VIEWPORT BOUNDARY // SCROLL INSIDE WINDOW OR USE JUMP CONTROLS</span>
+        <span>SCROLL DOWN FURTHER TO ENTER SECTOR 08 DOSSIER ↓</span>
+      </div>
+    </div>
+      </div><!-- #frames-layer-57 -->
+    </div><!-- #track-5-7 -->
+  </div><!-- #layer-5-7 -->
+
+  <!-- LAYER 1-4 (Z-INDEX 30): Sectors 01 to 04 -->
+  <div id="layer-1-4" class="pinned-burn-layer pinned-burn-layer-14">
+    <div class="layer-ambient-art-canvas" aria-hidden="true">
+      <div class="ambient-art-blur-plate" id="ambient-blur-14" style="background-image: url('assets/optimized/new_additions/PP.jpg');"></div>
+      <div class="ambient-art-ghost-plate" id="ambient-ghost-14" style="background-image: url('assets/optimized/new_additions/PP.jpg');"></div>
+      <div class="ambient-drafting-grid"></div>
+    </div>
+    <div id="track-1-4" class="pinned-burn-track">
+<!-- ===== HERO ===== -->
+  <div class="container">
+    <section class="hero-atelier" id="hero">
+      <div class="kinetic-section-watermark" aria-hidden="true">
+        <div class="watermark-massive-text" id="wm-hero">ELEVATED // DUBAI 2026 // VISUAL IDENTITY</div>
+      </div>
+
+      <div class="hero-layout-split">
+        <div class="hero-text-col">
+          <div class="hero-meta-badge">
+            <span>• eGolf Megastore Dubai</span>
+            <span>• Active Graphic Designer (5 Yrs)</span>
+          </div>
+          <h1 class="hero-main-title">
+            Elevated <br>
+            <span class="accent-italic">Campaigns</span> <br>
+            &amp; Visual Identity
+          </h1>
+          <p class="hero-bio-lead">
+            Versatile Graphic Designer with nearly 5 years creating multi-channel retail marketing collateral, e-commerce landing pages, and international tournament activations in Dubai. Combining strong typographic balance with generative AI creative workflows.
+          </p>
+          <div class="hero-pills-row">
+            <span class="hero-pill">📍 Al Khail Gate, Dubai, UAE</span>
+            <a href="tel:+971563482737" class="hero-pill">📞 +971 56 348 2737</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="hero-pill">LI: Irene Thomas</a>
+            <a href="https://behance.net" target="_blank" rel="noopener" class="hero-pill">Be: Irene Thomas</a>
+          </div>
+        </div>
+
+        <div class="hero-visual-col">
+          <div class="portrait-image-crop img-upload-box" id="container-atelier-portrait">
+            <img src="assets/optimized/new_additions/PP.jpg" alt="Irene Thomas - Graphic Designer" id="img-atelier-portrait" decoding="async">
+            <div class="portrait-badge-overlay">THE ELS CLUB // DUBAI SPORTS CITY</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== DIAGONAL CONTINUUM MATRIX ===== -->
+  <section class="diagonal-stream-section full-bleed" id="stream-works">
+    <div class="kinetic-section-watermark" aria-hidden="true">
+      <div class="watermark-massive-text" id="wm-matrix">SPATIAL CONTINUUM // CURATED ARCHIVE // 2021 — 2026</div>
+    </div>
+
+    <div class="stream-bridge-ribbon">
+      <div class="bridge-ticker">
+        <span>✦ BRAND ARCHITECTURE</span>
+        <span>✦ EGOLF MEGASTORE (DUBAI)</span>
+        <span>✦ NIKE CO-BRANDED ACTIVATIONS</span>
+        <span>✦ TAYLORMADE EQUIPMENT</span>
+        <span>✦ CALLAWAY QUANTUM SERIES</span>
+        <span>✦ BOSS CAPSULES</span>
+        <span>✦ PXG GEN8 IRONS</span>
+        <span>✦ 2D NARRATIVE MOTION CINEMA</span>
+        <span>✦ FINE ART POSTER TRI-SETS</span>
+        <span>✦ GENERATIVE AI WORKFLOWS</span>
+        <span aria-hidden="true">✦ BRAND ARCHITECTURE</span>
+        <span aria-hidden="true">✦ EGOLF MEGASTORE (DUBAI)</span>
+        <span aria-hidden="true">✦ NIKE CO-BRANDED ACTIVATIONS</span>
+        <span aria-hidden="true">✦ TAYLORMADE EQUIPMENT</span>
+        <span aria-hidden="true">✦ CALLAWAY QUANTUM SERIES</span>
+        <span aria-hidden="true">✦ BOSS CAPSULES</span>
+        <span aria-hidden="true">✦ PXG GEN8 IRONS</span>
+        <span aria-hidden="true">✦ 2D NARRATIVE MOTION CINEMA</span>
+        <span aria-hidden="true">✦ FINE ART POSTER TRI-SETS</span>
+        <span aria-hidden="true">✦ GENERATIVE AI WORKFLOWS</span>
+      </div>
+    </div>
+
+    <div class="diagonal-stream-header">
+      <div class="stream-header-inner">
+        <span class="stream-eyebrow">CURATED WORKS // 2021 — 2026</span>
+        <h2 class="stream-title">Spatial Stream &amp; Dynamic Art Direction</h2>
+        <p class="stream-lead">
+          A seamless visual continuum bridging high-conversion omnichannel retail collateral for eGolf Megastore with museum-grade typographic editions, luxury cosmetic branding, and 2D narrative motion cinema.
+        </p>
+      </div>
+    </div>
+
+    <div class="diagonal-stage-viewport">
+      <div class="diagonal-tracks-container" id="parallax-tracks-container">
+        <!-- Track 1: Left -->
+        <div class="stream-track stream-track-left" id="track-left">
+          <div class="stream-card tall-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 4-01.jpg', 'The Cognitive Maze (Set 4-01)', 'FINE ART EXHIBITION')">
+            <div class="card-inner-media">
+              <img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 4-01.jpg" alt="Mental Health Awareness Poster Set 4-01" decoding="async">
+            </div>
+            <div class="stream-card-overlay">
+              <span class="card-tag">EXHIBITION PRINT</span>
+              <h4 class="card-title">The Cognitive Maze</h4>
+              <p class="card-meta">Typographic hierarchy &amp; visual metaphor</p>
+            </div>
+          </div>
+          <div class="stream-card medium-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/Callaway 2026 Chrome Tour Golf Balls.jpg', 'Callaway 2026 Chrome Tour // Campaign Launch', 'RETAIL LAUNCH')">
+            <div class="card-inner-media">
+              <img loading="lazy" src="assets/optimized/promosheet_banners/Callaway 2026 Chrome Tour Golf Balls.jpg" alt="Callaway Chrome Tour" decoding="async">
+            </div>
+            <div class="stream-card-overlay">
+              <span class="card-tag">COMMERCIAL LAUNCH</span>
+              <h4 class="card-title">Callaway Chrome Tour</h4>
+              <p class="card-meta">Omnichannel performance retail collateral</p>
+            </div>
+          </div>
+          <div class="stream-card tall-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 3-04.jpg', 'Perspective Shift (Set 3-04)', 'FINE ART EXHIBITION')">
+            <div class="card-inner-media">
+              <img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-04.jpg" alt="Perspective Shift Poster" decoding="async">
+            </div>
+            <div class="stream-card-overlay">
+              <span class="card-tag">EXHIBITION PRINT</span>
+              <h4 class="card-title">Perspective Shift</h4>
+              <p class="card-meta">Asymmetric typographic pacing</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 2: Center -->
+        <div class="stream-track stream-track-center" id="track-center">
+          <div class="stream-card video-card living-motion-card img-upload-box" onclick="openLightboxWithVideo('assets/real_works/Barney_Dale__The_Cloud_story_arc.mp4', 'Barney Dale: The Cloud // Animated Short', 'AFTER EFFECTS 2D ANIMATION')">
+            <div class="card-inner-media video-media-wrap">
+              <video autoplay muted loop playsinline id="stream-ambient-video">
+                <source src="assets/real_works/Barney_Dale__The_Cloud_story_arc.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="stream-card-overlay">
+              <span class="card-tag live-badge">● LIVING MOTION</span>
+              <h4 class="card-title">Barney Dale: The Cloud</h4>
+              <p class="card-meta">2D character animation &amp; emotional pacing</p>
+            </div>
+          </div>
+          <div class="stream-card wide-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/brand_identity/Brand Identity_NIVARA_Version Irene-05.jpg', 'Nivara Botanicals // Structural Packaging & Bag System', 'BRAND IDENTITY')">
+            <div class="card-inner-media">
+              <img loading="lazy" src="assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-05.jpg" alt="Nivara Packaging" decoding="async">
+            </div>
+            <div class="stream-card-overlay">
+              <span class="card-tag">STRUCTURAL PACKAGING</span>
+              <h4 class="card-title">Nivara Botanical Packaging</h4>
+              <p class="card-meta">Tactile debossing &amp; fine paper specifications</p>
+            </div>
+          </div>
+          <div class="stream-card medium-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/Galvin_Green_New_Collection.gif', 'Galvin Green // Kinetic Performance Apparel Campaign', 'DIGITAL DISPLAY AD')">
+            <div class="card-inner-media">
+              <img loading="lazy" src="assets/optimized/Galvin_Green_New_Collection.gif" alt="Galvin Green Animated Campaign" decoding="async">
+            </div>
+            <div class="stream-card-overlay">
+              <span class="card-tag live-badge">● KINETIC DISPLAY</span>
+              <h4 class="card-title">Galvin Green New Season</h4>
+              <p class="card-meta">Motion typography for high-conversion display networks</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 3: Right -->
+        <div class="stream-track stream-track-right" id="track-right">
+          <div class="stream-card tall-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/PUMA x PTC New Collection.jpg', 'PUMA x PTC // Dubai Launch Campaign', 'RETAIL LAUNCH')">
+            <div class="card-inner-media">
+              <img loading="lazy" src="assets/optimized/promosheet_banners/PUMA x PTC New Collection.jpg" alt="PUMA x PTC Collection" decoding="async">
+            </div>
+            <div class="stream-card-overlay">
+              <span class="card-tag">OMNICHANNEL LAUNCH</span>
+              <h4 class="card-title">PUMA x PTC Palm Tree Crew</h4>
+              <p class="card-meta">E-commerce storefront &amp; app launch collateral</p>
+            </div>
+          </div>
+          <div class="stream-card tall-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/magazine_edit/CTRL+ALT_Layout.jpg', 'CTRL+ALT Magazine // Editorial Spread Art Direction', 'EDITORIAL PRINT')">
+            <div class="card-inner-media">
+              <img loading="lazy" src="assets/optimized/magazine_edit/CTRL+ALT_Layout.jpg" alt="CTRL+ALT Editorial" decoding="async">
+            </div>
+            <div class="stream-card-overlay">
+              <span class="card-tag">EDITORIAL PUBLICATION</span>
+              <h4 class="card-title">CTRL+ALT Magazine</h4>
+              <p class="card-meta">Editorial rhythm &amp; avant-garde typographic layout</p>
+            </div>
+          </div>
+          <div class="stream-card medium-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/LAB_Golf_DF3__Back_in_stock.gif', 'L.A.B. Golf DF3 // Dynamic Restock Campaign', 'KINETIC AD')">
+            <div class="card-inner-media">
+              <img loading="lazy" src="assets/optimized/LAB_Golf_DF3__Back_in_stock.gif" alt="LAB Golf DF3" decoding="async">
+            </div>
+            <div class="stream-card-overlay">
+              <span class="card-tag live-badge">● KINETIC DISPLAY</span>
+              <h4 class="card-title">L.A.B. Golf DF3 Restock</h4>
+              <p class="card-meta">Animated retail conversion banners</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-connector-strip">
+      <div class="connector-line"></div>
+      <span class="connector-label">TRANSITION TO DEEP DIVE ARCHIVES ↓</span>
+    </div>
+  </section>
+
+  <!-- ===== DEEP DIVE SECTIONS ===== -->
+  <div class="container" id="frames">
+
+    <!-- 03: BRAND IDENTITY -->
+    <div class="section-headline-row" id="branding">
+      <div>
+        <span class="section-eyebrow">[03 // BRAND ARCHITECTURE &amp; TACTILE PRINT]</span>
+        <h2 class="section-title">Nivara Botanical Cosmetics: Master Suite</h2>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:13px; color:var(--ink-secondary);">
+        SAE INSTITUTE DUBAI // MASTER BRAND IDENTITY
+      </div>
+    </div>
+
+    <div class="frame-brand-identity">
+      <div class="brand-identity-grid">
+        <div class="img-upload-box brand-mock-main" onclick="openLightboxWithImage('assets/real_works/Logo_Mock.jpg', 'Nivara Luxury Cosmetics Packaging Mockup', 'BRAND PACKAGING')">
+          <img loading="lazy" src="assets/optimized/Logo_Mock.jpg" alt="Luxury Brand Logo Mockup" decoding="async">
+        </div>
+        <div class="brand-process-side">
+          <div class="img-upload-box process-thumb-card" onclick="openLightboxWithImage('assets/real_works/Nivara_Logo_Trials_05.jpg', 'Nivara Geometric Logo Construction Trials', 'GEOMETRIC IDENTITY')">
+            <img loading="lazy" src="assets/optimized/Nivara_Logo_Trials_05.jpg" alt="Logo Construction &amp; Geometry Trials" decoding="async">
+          </div>
+          <div class="brand-meta-card">
+            <div>
+              <span style="font-family:var(--font-mono); font-size:11px; color:var(--accent-terracotta); font-weight:700; text-transform:uppercase;">
+                CREATIVE STRATEGY &amp; CRAFT
+              </span>
+              <h3 style="font-family:var(--font-display); font-size:20px; margin:6px 0 10px;">
+                Embossed Mark &amp; Symmetric Geometry
+              </h3>
+              <p style="color:var(--ink-secondary); font-size:13px; line-height:1.6;">
+                Exploration of geometric symmetry, bespoke letterforms, and tactile print production including metallic debossing and textured fine paper packaging.
+              </p>
+            </div>
+            <div style="border-top:1px solid var(--border-light); padding-top:14px; font-family:var(--font-mono); font-size:12px; color:var(--ink-primary);">
+              BRAND SCOPE: <strong>Complete Visual Identity, Geometric Grid Anatomy, Embossed Foil Packaging</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ELEVATED NIVARA 13-SPREAD ATELIER BRAND MANUAL CONSOLE -->
+    <div class="brand-manual-console" id="stage-brand-manual">
+      <div class="manual-nav-bar">
+        <div class="manual-bar-meta">
+          <span class="manual-eyebrow-tag">SAE INSTITUTE DUBAI // MASTER BRAND BOOK</span>
+          <h3 class="manual-console-title">Nivara Brand Guidelines Manual (13 Spreads)</h3>
+        </div>
+        <div class="manual-controls-atelier">
+          <div class="folio-progress-dial">
+            <span class="folio-tag">FOLIO</span>
+            <span class="folio-current" id="manual-counter-num">01</span>
+            <div class="folio-scrubber-track">
+              <div class="folio-scrubber-fill" id="folio-scrubber-fill" style="width: 7.7%;"></div>
+            </div>
+            <span class="folio-total">13 SPREADS</span>
+          </div>
+          <button type="button" class="atelier-folio-btn prev-btn" onclick="stepManualSpread(-1)" title="Previous Spread (←)">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>PREV</span>
+          </button>
+          <button type="button" class="atelier-folio-btn next-btn" onclick="stepManualSpread(1)" title="Next Spread (→)">
+            <span>NEXT</span>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="atelier-folio-btn expand-btn" onclick="openActiveManualLightbox()" >
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 6V2H6M14 6V2H10M2 10V14H6M14 10V14H10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>EXPAND SPREAD</span>
+            
+          </button>
+        </div>
+      </div>
+
+      <div class="manual-spread-stage-wrap">
+        <button type="button" class="folio-hover-arrow left" onclick="stepManualSpread(-1)" aria-label="Previous Spread">❮</button>
+        <div class="manual-spread-viewport" onclick="openActiveManualLightbox()" >
+          
+          <img loading="lazy" src="assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-01.jpg" alt="Nivara Brand Guidelines Spread" id="img-manual-active" decoding="async">
+        </div>
+        <button type="button" class="folio-hover-arrow right" onclick="stepManualSpread(1)" aria-label="Next Spread">❯</button>
+      </div>
+
+      <div class="manual-spread-caption-bar">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="manual-caption-active" id="manual-spread-indicator">SPREAD 01: BRAND PHILOSOPHY &amp; STORY</span>
+        </div>
+        <span>SAE INSTITUTE DUBAI // NIVARA BOTANICAL COSMETICS</span>
+      </div>
+
+      <div class="manual-thumbnail-strip" id="manual-thumb-strip"></div>
+    </div>
+
+    <!-- 04: E-COMMERCE BROWSER STAGE (2-COLUMN EDITORIAL SPLIT LIKE CRM) -->
+    <div class="section-headline-row" id="ecommerce">
+      <div>
+        <span class="section-eyebrow">[04 // DIGITAL COMMERCE ARCHITECTURE]</span>
+        <h2 class="section-title">eGolf Megastore: New Season Flagship Launch</h2>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:13px; color:var(--ink-secondary);">
+        OMNICHANNEL CAMPAIGN // DUBAI, UAE
+      </div>
+    </div>
+
+    <div class="frame-browser-stage frame-ecom-stage">
+      <div class="ecom-browser-header-suite">
+        <div class="ecom-browser-tabs-row">
+          <div class="crm-chrome-dots">
+            <span class="b-dot dot-red"></span>
+            <span class="b-dot dot-yellow"></span>
+            <span class="b-dot dot-green"></span>
+          </div>
+          <div class="ecom-integrated-tabs" id="ecom-tabs-row">
+            <button type="button" class="ecom-browser-tab-btn active" onclick="scrollEcomSandbox('top', this)">
+              <span class="crm-tab-dot"></span>
+              <span>01 // Hero Fold &amp; Seasonal Drop</span>
+            </button>
+            <button type="button" class="ecom-browser-tab-btn" onclick="scrollEcomSandbox('pin1', this)">
+              <span class="crm-tab-dot"></span>
+              <span>02 // Checklist Merchandising (Pin #1)</span>
+            </button>
+            <button type="button" class="ecom-browser-tab-btn" onclick="scrollEcomSandbox('pin2', this)">
+              <span class="crm-tab-dot"></span>
+              <span>03 // Multi-Brand Matrix (Pin #2)</span>
+            </button>
+            <button type="button" class="ecom-browser-tab-btn" onclick="scrollEcomSandbox('bottom', this)">
+              <span class="crm-tab-dot"></span>
+              <span>04 // Lower Conversion Fold</span>
+            </button>
+          </div>
+        </div>
+        <div class="ecom-browser-subbar">
+          <div class="ecom-url-display">
+            <span class="crm-subject-tag">LIVE STOREFRONT URL:</span>
+            <span id="ecom-url-line">https://egolfmegastore.ae/campaigns/new-arrivals-flagship</span>
+          </div>
+          <div class="crm-quick-nav-controls">
+            <button type="button" class="ecom-jump-btn" onclick="scrollEcomSandbox('top')">↑ TOP</button>
+            <button type="button" class="ecom-jump-btn" onclick="scrollEcomSandbox('pin1')">◎ PIN 1</button>
+            <button type="button" class="ecom-jump-btn" onclick="scrollEcomSandbox('pin2')">◎ PIN 2</button>
+            <button type="button" class="ecom-jump-btn" onclick="scrollEcomSandbox('bottom')">↓ END</button>
+            <button type="button" class="ecom-jump-btn ecom-jump-btn-expand" onclick="openLightboxWithImage('assets/optimized/New_Arrivals_Landing_Page_V1.jpg', 'eGolf Megastore // New Season Omnichannel Landing Page', 'E-COMMERCE STOREFRONT UX/UI', '1440 / 5286')">⛶ FULL ARCHITECTURE</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="browser-scroll-viewport" id="ecom-scroll-frame">
+        <div class="hotspot-pin" style="top: 18%; left: 35%;">
+          1
+          <div class="hotspot-card-tooltip">
+            <strong>Checklist Merchandising Architecture:</strong> Streamlined visual hierarchy engineered to guide high-intent GCC golfers directly to seasonal essentials.
+          </div>
+        </div>
+        <div class="hotspot-pin" style="top: 42%; left: 62%;">
+          2
+          <div class="hotspot-card-tooltip">
+            <strong>Multi-Brand Grid Hierarchy:</strong> Responsive product grouping matrix tailored for premium international tour equipment.
+          </div>
+        </div>
+        <div class="img-upload-box" style="height:auto;" onclick="openLightboxWithImage('assets/optimized/New_Arrivals_Landing_Page_V1.jpg', 'eGolf Megastore // New Season Omnichannel Landing Page', 'E-COMMERCE UX/UI')">
+          <img src="assets/optimized/New_Arrivals_Landing_Page_V1.jpg" alt="eGolf New Arrivals Landing Page V1" style="object-fit:contain; width:100%; height:auto;" decoding="async">
+        </div>
+      </div>
+
+      <div class="ecom-sandbox-footer-bar">
+        <span>INTERACTIVE STOREFRONT SANDBOX // SCROLL FULL 5,286PX LANDING PAGE</span>
+        <span>CLICK ARTWORK FOR FULLSCREEN LIGHTBOX ↗</span>
+      </div>
+    </div>
+
+    <!-- APP SLIDERS (3:2 STUDIO STAGE) -->
+    <div class="section-headline-row" id="stage-hardware">
+      <div>
+        <span class="section-eyebrow">[COMMERCIAL CAMPAIGN ACTIVATIONS // GOLF HARDWARE]</span>
+        <h3 class="section-title" style="font-size: clamp(22px, 2.5vw, 32px);">Hardware &amp; Equipment Launch Collateral</h3>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:13px; color:var(--ink-secondary);">
+        OMNICHANNEL CAMPAIGN SUITE
+      </div>
+    </div>
+
+    <div class="frame-app-slider-studio">
+      <div class="studio-slider-topbar">
+        <div>
+          <span class="studio-eyebrow">FLAGSHIP HARDWARE RELEASES</span>
+          <h4 class="studio-title" id="slider-active-title">Callaway Quantum Series</h4>
+          <p class="studio-desc" id="slider-active-desc">Directional lighting &amp; aggressive typography crafted for premier GCC golf retail launch campaigns.</p>
+        </div>
+        <div class="studio-resolution-badge">
+          <span class="badge-dot">●</span>
+          <span>COMMERCIAL CAMPAIGN</span>
+        </div>
+      </div>
+
+      <!-- Studio Stage with Strict 3:2 Display Frame -->
+      <div class="studio-banner-stage-wrapper">
+        <div class="studio-banner-frame" onclick="openLightboxFromSlider()" title="Click to Inspect Native 900×600 Master">
+          <button type="button" class="hw-arrow hw-arrow-prev" onclick="prevHardwareSlider(event)" aria-label="Previous Slide">‹</button>
+          <img loading="lazy" src="assets/optimized/Callaway_Quantum_Series_900x600.jpg" alt="Golf Brand Slider" id="img-active-slider" decoding="async">
+          <button type="button" class="hw-arrow hw-arrow-next" onclick="nextHardwareSlider(event)" aria-label="Next Slide">›</button>
+        </div>
+      </div>
+
+      <!-- 3:2 Hardware Launch Suite Mini-Grid -->
+      <div class="studio-suite-selector-grid">
+        <div class="studio-suite-card active" onclick="switchBannerSlider('assets/real_works/Callaway_Quantum_Series_900x600.jpg', 'Callaway Quantum Series', 'Dynamic gold & black directional lighting layout designed for eGolf mobile app and web slider.', this)">
+          <div class="suite-card-thumb">
+            <img src="assets/optimized/Callaway_Quantum_Series_900x600.jpg" alt="Callaway Quantum" decoding="async">
+          </div>
+          <div class="suite-card-info">
+            <span class="suite-card-num">01 // CALLAWAY</span>
+            <span class="suite-card-name">Quantum Series</span>
+          </div>
+        </div>
+
+        <div class="studio-suite-card" onclick="switchBannerSlider('assets/real_works/TaylorMade_Qi4D_Series_900x600.jpg', 'TaylorMade Qi4D Series', 'High-contrast typography and carbon-fiber aesthetic for TaylorMade flagship launch.', this)">
+          <div class="suite-card-thumb">
+            <img src="assets/optimized/TaylorMade_Qi4D_Series_900x600.jpg" alt="TaylorMade Qi4D" decoding="async">
+          </div>
+          <div class="suite-card-info">
+            <span class="suite-card-num">02 // TAYLORMADE</span>
+            <span class="suite-card-name">Qi4D Carbon Suite</span>
+          </div>
+        </div>
+
+        <div class="studio-suite-card" onclick="switchBannerSlider('assets/real_works/PXG_GEN8_Irons_900x600.jpg', 'PXG GEN8 Irons', 'Industrial darkness and chrome metallic finish spotlighting precision golf engineering.', this)">
+          <div class="suite-card-thumb">
+            <img src="assets/optimized/PXG_GEN8_Irons_900x600.jpg" alt="PXG GEN8" decoding="async">
+          </div>
+          <div class="suite-card-info">
+            <span class="suite-card-num">03 // PXG GOLF</span>
+            <span class="suite-card-name">GEN8 Precision Irons</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOTION / GIF LAB & SHORT-FORM STORY REEL (UNIFIED 3-COLUMN VERTICAL MOTION STAGE) -->
+    <div class="section-headline-row" id="motion">
+      <div>
+        <span class="section-eyebrow">[KINETIC DISPLAY ADVERTISING &amp; 9:16 SOCIAL MOTION]</span>
+        <h3 class="section-title" style="font-size: clamp(22px, 2.5vw, 32px);">Kinetic Retail Display &amp; Motion Collateral</h3>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:13px; color:var(--ink-secondary);">
+        FULL-HEIGHT ANIMATED CONVERSION BANNERS &amp; 60FPS STORY REEL
+      </div>
+    </div>
+
+    <div class="motion-gif-grid">
+      <!-- Motion Piece 01: Galvin Green (750x900 Native Portrait GIF) -->
+      <div class="gif-card-stage">
+        <div class="img-upload-box gif-media-frame" onclick="openLightboxWithImage('assets/real_works/Galvin_Green_New_Collection.gif', 'Galvin Green // Kinetic Performance Apparel', 'ANIMATED DISPLAY AD')">
+          <img loading="lazy" src="assets/optimized/Galvin_Green_New_Collection.gif" alt="Galvin Green Animated Campaign" decoding="async">
+        </div>
+        <div class="gif-meta-row">
+          <div>
+            <h4 style="font-family:var(--font-display); font-size:18px;">Galvin Green New Season</h4>
+            <p style="font-size:12px; color:var(--ink-secondary);">Apparel collection launch banner (750 × 900)</p>
+          </div>
+          <span class="gif-live-chip">● ACTIVE GIF</span>
+        </div>
+      </div>
+
+      <!-- Motion Piece 02: L.A.B. Golf DF3 (750x850 Native Portrait GIF) -->
+      <div class="gif-card-stage">
+        <div class="img-upload-box gif-media-frame" onclick="openLightboxWithImage('assets/real_works/LAB_Golf_DF3__Back_in_stock.gif', 'L.A.B. Golf DF3 // Dynamic Restock Campaign', 'ANIMATED DISPLAY AD')">
+          <img loading="lazy" src="assets/optimized/LAB_Golf_DF3__Back_in_stock.gif" alt="LAB Golf DF3 Restock Campaign" decoding="async">
+        </div>
+        <div class="gif-meta-row">
+          <div>
+            <h4 style="font-family:var(--font-display); font-size:18px;">L.A.B. Golf DF3 Restock</h4>
+            <p style="font-size:12px; color:var(--ink-secondary);">High-frequency retail conversion (750 × 850)</p>
+          </div>
+          <span class="gif-live-chip">● ACTIVE GIF</span>
+        </div>
+      </div>
+
+      <!-- Motion Piece 03: Part Sale 2026 Dynamic Apparel Story Reel (1080x1920 60FPS MP4) -->
+      <div class="gif-card-stage gif-card-stage-reel">
+        <div class="vertical-motion-reel-card">
+          <div class="reel-video-container">
+            <video id="apparel-story-video" playsinline loop muted autoplay preload="metadata">
+              <source src="assets/real_works/new_additions/PART SALE 2026 Apparel Story.mp4" type="video/mp4">
+            </video>
+            <div class="reel-controls-overlay">
+              <button type="button" class="reel-btn" onclick="toggleReelPlayback()">
+                <span id="reel-play-icon">⏸ PAUSE</span>
+              </button>
+              <div class="reel-status-indicator">
+                <span class="reel-status-dot"></span>
+                <span>LIVE STORY</span>
+              </div>
+              <button type="button" class="reel-btn" onclick="toggleReelAudio()">
+                <span id="reel-audio-icon">🔇 UNMUTE</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="gif-meta-row">
+          <div>
+            <h4 style="font-family:var(--font-display); font-size:18px;">Part Sale 2026: Apparel Story Reel</h4>
+            <p style="font-size:12px; color:var(--ink-secondary);">Multi-brand GCC clearance reel (9:16 • 60FPS MP4)</p>
+          </div>
+          <span class="gif-live-chip">● 60FPS REEL</span>
+        </div>
+      </div>
+    </div>
+
+    
+    <!-- PARADIGM 1: OMNICHANNEL RESPONSIVE DEVICE SWITCHER STUDIO -->
+    <div class="section-headline-row" id="stage-storefront-sliders">
+      <div>
+        <span class="section-eyebrow">[OMNICHANNEL BREAKPOINT ARCHITECTURE // 3 RATIOS]</span>
+        <h3 class="section-title" style="font-size: clamp(22px, 2.6vw, 34px);">Responsive Storefront Sliders &amp; Multi-Device Ecosystem</h3>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--ink-secondary); text-align:right;">
+        1920×600 WEB • 900×600 APP • 640×427 MOBILE
+      </div>
+    </div>
+
+    <div class="device-switcher-studio" id="device-switcher-studio">
+      <!-- Studio Workstation Console Rail: Crisp Architectural Brand Rail + Integrated Viewport Controller -->
+      <div class="storefront-console-rail">
+        <div class="console-rail-top">
+          <div class="console-label-tag">
+            <span class="console-tag-dot">✦</span>
+            <span>CURATED STOREFRONT CAMPAIGNS</span>
+          </div>
+          <div class="console-brand-rail" id="slider-brand-nav">
+            <button type="button" class="console-brand-tab active" onclick="selectSliderCampaign('adidas', this)">
+              <span class="tab-index">01</span><span class="tab-label">Adidas Golf</span>
+            </button>
+            <button type="button" class="console-brand-tab" onclick="selectSliderCampaign('jlindeberg', this)">
+              <span class="tab-index">02</span><span class="tab-label">J.Lindeberg</span>
+            </button>
+            <button type="button" class="console-brand-tab" onclick="selectSliderCampaign('vessel', this)">
+              <span class="tab-index">03</span><span class="tab-label">Vessel 'Driven'</span>
+            </button>
+            <button type="button" class="console-brand-tab" onclick="selectSliderCampaign('nicklaus', this)">
+              <span class="tab-index">04</span><span class="tab-label">Jack Nicklaus</span>
+            </button>
+            <button type="button" class="console-brand-tab" onclick="selectSliderCampaign('palms', this)">
+              <span class="tab-index">05</span><span class="tab-label">TM Palms</span>
+            </button>
+            <button type="button" class="console-brand-tab" onclick="selectSliderCampaign('sailors', this)">
+              <span class="tab-index">06</span><span class="tab-label">TM Sailors</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="console-rail-viewport-dock">
+          <div class="viewport-dock-label">HARDWARE BREAKPOINT CALIPER:</div>
+          <div class="device-mode-toggle-group" id="device-mode-toggle-group">
+            <button type="button" class="device-toggle-btn active" data-device="desktop" onclick="setSliderDevice('desktop', this)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              <span>DESKTOP 1920×600</span>
+            </button>
+            <button type="button" class="device-toggle-btn" data-device="app" onclick="setSliderDevice('app', this)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="3"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+              <span>eGOLF APP 900×600</span>
+            </button>
+            <button type="button" class="device-toggle-btn" data-device="mobile" onclick="setSliderDevice('mobile', this)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2.5"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+              <span>MOBILE 640×427</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Storefront Multi-Slide Peek Carousel Outer Stage -->
+      <div class="device-carousel-outer-stage" id="device-carousel-outer-stage">
+        <!-- Outside Navigation Arrows (Hovering directly over adjacent peek slides) -->
+        <button type="button" class="slider-arrow-outside slider-arrow-outside-prev" id="slider-outside-prev" aria-label="Previous Brand Slider" onclick="cycleSliderCampaign(-1);" title="Previous Campaign (Scroll or Click)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button type="button" class="slider-arrow-outside slider-arrow-outside-next" id="slider-outside-next" aria-label="Next Brand Slider" onclick="cycleSliderCampaign(1);" title="Next Campaign (Scroll or Click)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
+        <!-- Viewport Stage Frame -->
+        <div class="device-stage-viewport device-desktop" id="slider-device-viewport">
+          <div class="device-carousel-track" id="device-carousel-track">
+            
+            <!-- Slide 01: Adidas Golf -->
+            <div class="carousel-slide-housing is-center" data-brand="adidas" data-index="0" onclick="handleCarouselSlideClick(0)">
+              <div class="device-screen-bezel">
+                <img class="carousel-slide-img" src="assets/optimized/new_additions/Adidas New Collection _ Slider Desktop 1920x600.jpg" alt="Adidas Golf" decoding="async">
+                <div class="slide-peek-label">01 Adidas Golf</div>
+                <div class="device-screen-overlay">
+                  <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 02: J.Lindeberg -->
+            <div class="carousel-slide-housing is-next" data-brand="jlindeberg" data-index="1" onclick="handleCarouselSlideClick(1)">
+              <div class="device-screen-bezel">
+                <img class="carousel-slide-img" src="assets/optimized/new_additions/JLindeberg 30Y Collection Slider Web 1920x600.jpg" alt="J.Lindeberg" decoding="async">
+                <div class="slide-peek-label">02 J.Lindeberg</div>
+                <div class="device-screen-overlay">
+                  <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 03: Vessel Driven -->
+            <div class="carousel-slide-housing is-hidden" data-brand="vessel" data-index="2" onclick="handleCarouselSlideClick(2)">
+              <div class="device-screen-bezel">
+                <img class="carousel-slide-img" src="assets/optimized/new_additions/Vessel New Collection Golf Bags Slider Web 1920x600.jpg" alt="Vessel Driven" decoding="async">
+                <div class="slide-peek-label">03 Vessel Driven</div>
+                <div class="device-screen-overlay">
+                  <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 04: Jack Nicklaus -->
+            <div class="carousel-slide-housing is-hidden" data-brand="nicklaus" data-index="3" onclick="handleCarouselSlideClick(3)">
+              <div class="device-screen-bezel">
+                <img class="carousel-slide-img" src="assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Desktop 1920x600.jpg" alt="Jack Nicklaus" decoding="async">
+                <div class="slide-peek-label">04 Jack Nicklaus</div>
+                <div class="device-screen-overlay">
+                  <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 05: TM Palms -->
+            <div class="carousel-slide-housing is-hidden" data-brand="palms" data-index="4" onclick="handleCarouselSlideClick(4)">
+              <div class="device-screen-bezel">
+                <img class="carousel-slide-img" src="assets/optimized/new_additions/TaylorMade Palms and Pastels Staff Bag Slider 1920x600.jpg" alt="TM Palms" decoding="async">
+                <div class="slide-peek-label">05 TM Palms</div>
+                <div class="device-screen-overlay">
+                  <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 06: TM Sailors -->
+            <div class="carousel-slide-housing is-prev" data-brand="sailors" data-index="5" onclick="handleCarouselSlideClick(5)">
+              <div class="device-screen-bezel">
+                <img class="carousel-slide-img" src="assets/optimized/new_additions/TaylorMade Sailors Point Collection Slider 1920x600.jpg" alt="TM Sailors" decoding="async">
+                <div class="slide-peek-label">06 TM Sailors</div>
+                <div class="device-screen-overlay">
+                  <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Carousel HUD Status Pill Docked inside stage -->
+          <div class="slider-carousel-hud">
+            <span class="carousel-counter-badge" id="slider-carousel-counter">01 / 06</span>
+            <div class="carousel-dots-rail" id="slider-carousel-dots">
+              <span class="carousel-dot active" onclick="event.stopPropagation(); selectSliderCampaignByIndex(0);" title="01 Adidas Golf"></span>
+              <span class="carousel-dot" onclick="event.stopPropagation(); selectSliderCampaignByIndex(1);" title="02 J.Lindeberg"></span>
+              <span class="carousel-dot" onclick="event.stopPropagation(); selectSliderCampaignByIndex(2);" title="03 Vessel Driven"></span>
+              <span class="carousel-dot" onclick="event.stopPropagation(); selectSliderCampaignByIndex(3);" title="04 Jack Nicklaus"></span>
+              <span class="carousel-dot" onclick="event.stopPropagation(); selectSliderCampaignByIndex(4);" title="05 TM Palms"></span>
+              <span class="carousel-dot" onclick="event.stopPropagation(); selectSliderCampaignByIndex(5);" title="06 TM Sailors"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Campaign Metadata & Specs Footer -->
+      <div class="device-switcher-footer">
+        <div class="switcher-meta-left">
+          <span class="switcher-badge" id="slider-res-badge">1920 × 600 PX // 3.2:1 RATIO</span>
+          <h4 class="switcher-campaign-title" id="slider-campaign-title">Adidas Golf: New Season Global Collection</h4>
+          <p class="switcher-campaign-desc" id="slider-campaign-desc">Earthy minimalist studio staging with soft shadow gradients and architectural typography, tailored for high-conversion web retail storefront.</p>
+        </div>
+        <div class="switcher-specs-right">
+          <div class="spec-node">
+            <span class="spec-k">FOCAL ANCHOR</span>
+            <span class="spec-v" id="slider-spec-anchor">Dual Staged Polos + Center Text Lockup</span>
+          </div>
+          <div class="spec-node">
+            <span class="spec-k">COLOR PALETTE</span>
+            <span class="spec-v" id="slider-spec-palette">Warm Clay • Olive Sage • Crisp White</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARADIGM 2 & 7: 3-RATIO SOCIAL AD SIMULATOR & MOTION REEL -->
+    <div class="social-simulator-section" id="stage-social-simulator">
+      <div class="social-showcase-panel">
+        <!-- LEFT COLUMN: Editorial Typography & Brand Controls -->
+        <div class="panel-left-col">
+          <div class="panel-top-meta">
+            <div class="social-editorial-eyebrow">
+              <span class="eyebrow-reticle">✦</span>
+              <span>CAMPAIGN ARCHITECTURE // MULTI-RATIO MATRIX</span>
+            </div>
+            <h3 class="social-section-headline">Omnichannel Social Media Deployments</h3>
+            <p class="social-section-subhead">
+              Multi-ratio campaign asset architecture deployed simultaneously across Meta Feed, TikTok Reels, and Google Display networks.
+            </p>
+
+            <!-- Campaign Selector Brand Tabs -->
+            <div class="panel-brand-selector" id="social-campaign-nav">
+              <button type="button" class="brand-tab-btn active" onclick="selectSocialCampaign('taylormade', this)">
+                <span class="tab-num">01</span> TaylorMade Hi-Toe 5
+              </button>
+              <button type="button" class="brand-tab-btn" onclick="selectSocialCampaign('mclaren', this)">
+                <span class="tab-num">02</span> McLaren Series 3
+              </button>
+              <button type="button" class="brand-tab-btn" onclick="selectSocialCampaign('puma', this)">
+                <span class="tab-num">03</span> PUMA Desert Palm
+              </button>
+              <button type="button" class="brand-tab-btn" onclick="selectSocialCampaign('flash', this)">
+                <span class="tab-num">04</span> Flash Deals Weekend
+              </button>
+            </div>
+
+            <!-- Active Brand Metadata Readout (Fixed Height to prevent page layout shift) -->
+            <div class="social-campaign-spec-card">
+              <div class="spec-card-header">
+                <span class="spec-active-indicator">● ACTIVE CAMPAIGN</span>
+                <span class="spec-ratio-badges">1:1 • 9:16 • 16:9</span>
+              </div>
+              <div class="spec-card-body">
+                <h4 class="spec-campaign-title" id="panel-social-title">TaylorMade Hi-Toe 5 Wedges Launch</h4>
+                <p class="spec-campaign-desc" id="panel-social-desc">
+                  Primary multi-channel anchor engineered for regional highway LED displays across Dubai and flagship web portal banners. High-contrast clubhead reflection and kinetic typography.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: 3D Floating Cards -->
+        <div class="panel-right-col" id="social-stage-viewport">
+          <div class="floating-cards-cluster">
+            
+            <!-- LEFT CARD (1:1 Feed Master, Tilted CCW) -->
+            <div class="floating-card floating-card-left" id="card-social-1-1" onclick="openLightboxFromSocial('1-1')">
+              <div class="card-ratio-floating-pill">1:1 FEED MASTER</div>
+              <div class="card-media-frame frame-1-1">
+                <img id="img-social-1-1" src="assets/optimized/new_additions/TaylorMade Hi-Toe 5 Wedges Ad 1080x1080.jpg" alt="1:1 Feed Master" decoding="async">
+              </div>
+            </div>
+
+            <!-- CENTER CARD (9:16 Story, Taller, Tilted slightly CCW, Placed behind) -->
+            <div class="floating-card floating-card-center" id="card-social-9-16" onclick="openLightboxFromSocial('9-16')">
+              <div class="card-ratio-floating-pill">9:16 VERTICAL STORY</div>
+              <div class="card-media-frame frame-9-16">
+                <img id="img-social-9-16" src="assets/optimized/new_additions/TaylorMade Hi-Toe 5 Wedges Ad 1080x1920.jpg" alt="9:16 Story Ad" decoding="async">
+              </div>
+            </div>
+
+            <!-- RIGHT CARD (16:9 Display Banner, Tilted CW, pushed forward and downward) -->
+            <div class="floating-card floating-card-right" id="card-social-16-9" onclick="openLightboxFromSocial('16-9')">
+              <div class="card-ratio-floating-pill">16:9 DISPLAY NETWORK</div>
+              <div class="card-media-frame frame-16-9">
+                <img id="img-social-16-9" src="assets/optimized/new_additions/TaylorMade Hi-Toe 5 Wedges Ad 1920x1080.jpg" alt="16:9 Campaign Banner" decoding="async">
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div><!-- #frames container close -->
+    </div><!-- #track-1-4 -->
+  </div><!-- #layer-1-4 -->
+
+  <!-- MINIMALIST IMMERSIVE LIGHTBOX (BLURRED BG, NO HEADER, CLEAN TITLE BELOW) -->
+  <div id="storyboard-lightbox" class="storyboard-lightbox" onclick="closeStoryboardLightbox()">
+    <button type="button" class="lightbox-close-minimal" onclick="closeStoryboardLightbox()" title="Close Inspection (Esc)">✕</button>
+    <div class="lightbox-stage-minimal" id="lightbox-stage" onclick="event.stopPropagation()">
+      <div class="lightbox-media-container" id="lightbox-media-container">
+        <!-- Shimmering Skeleton Loader Element -->
+        <div class="lightbox-skeleton-loader" id="lightbox-skeleton">
+          <div class="skeleton-shimmer-sweep"></div>
+          <div class="skeleton-hud-reticle">
+            <span class="skeleton-glyph">✦</span>
+            <span class="skeleton-status">ARCHIVAL MASTER DECODING</span>
+          </div>
+        </div>
+        <!-- Target Media Display -->
+        <img src="" alt="High-Res Asset Inspection" id="lightbox-full-img" decoding="async">
+      </div>
+      <div class="lightbox-caption-minimal" id="lightbox-caption-box">
+        <h3 class="lightbox-media-title" id="lightbox-title-text">Asset Inspection</h3>
+        <p class="lightbox-media-sub" id="lightbox-sub-text">HIGH RESOLUTION MASTER</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- APPLICATION DATA MODELS                                                  -->
+  <!-- ========================================================================= -->
+  <script src="js/data/sectors.data.js"></script>
+  <script src="js/data/brand-manual.data.js"></script>
+  <script src="js/data/campaigns.data.js"></script>
+  <script src="js/data/social.data.js"></script>
+  <script src="js/data/lookbooks.data.js"></script>
+
+  <!-- ========================================================================= -->
+  <!-- CORE UTILITIES & ENGINES (BurningPaperEngine, setScrollProgress, hud-animating) -->
+  <!-- ========================================================================= -->
+  <script src="js/core/utils.js"></script>
+  <script src="js/core/particles.js"></script>
+  <script src="js/core/cursor.js"></script>
+  <script src="js/core/navigation.js"></script>
+
+  <!-- ========================================================================= -->
+  <!-- INTERACTIVE MODULES & CONTROLLERS                                        -->
+  <!-- ========================================================================= -->
+  <script src="js/modules/lightbox.js"></script>
+  <script src="js/modules/brand-console.js"></script>
+  <script src="js/modules/device-switcher.js"></script>
+  <script src="js/modules/social-deck.js?v=20261103_v22"></script>
+  <script src="js/modules/lookbook-crm.js"></script>
+  <script src="js/modules/mobile-sheet.js"></script>
+  <script src="js/modules/poster-filter.js"></script>
+
+  <!-- ========================================================================= -->
+  <!-- APPLICATION INITIALIZER                                                  -->
+  <!-- ========================================================================= -->
+  <script src="js/app.js"></script>
+<script src="js/core/pinned-burn-engine.js"></script>
+</body>
+</html>

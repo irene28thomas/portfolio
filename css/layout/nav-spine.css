@@ -1,0 +1,222 @@
+/* ========= MAIN LAYOUT & SAFE GUTTER (NO NAV OVERLAP) ========= */
+    .container { max-width: min(1480px, 92vw); width: 100%; margin: 0 auto; padding-left: clamp(20px, 3.5vw, 48px); padding-right: clamp(40px, 5.5vw, 68px); position: relative; z-index: 5; }
+    .full-bleed { position: relative; z-index: 5; }
+
+    /* ========= DEDICATED GROUNDED ARCHITECTURAL NAVIGATION DOCK ========= */
+    /* FLOATING ARCHITECTURAL EDITORIAL TIMELINE (DESKTOP) */
+    .grounded-nav-system {
+      position: fixed;
+      right: 28px;
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-50%);
+      width: auto;
+      height: auto;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border-left: none;
+      z-index: 950;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 14px;
+      user-select: none;
+    }
+    body.theme-dark-cinema .grounded-nav-system {
+      background: transparent;
+      border-left: none;
+    }
+
+    /* Vertical Drafting Axis - Interactive Alternate Scrollbar Track */
+    .grounded-drafting-spine {
+      position: absolute;
+      top: 34px;
+      bottom: 34px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      background: rgba(24, 23, 22, 0.12);
+      border-radius: 2px;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: background 0.4s ease;
+      z-index: 1;
+    }
+    .grounded-drafting-spine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -14px;
+      right: -14px;
+      cursor: pointer;
+    }
+    body.theme-dark-cinema .grounded-drafting-spine {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    /* Liquid Progress Fill Tracking Active Scroll Position */
+    .grounded-spine-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: linear-gradient(180deg, #D84E29 0%, #F3A427 100%);
+      box-shadow: 0 0 10px rgba(216, 78, 41, 0.5);
+      border-radius: 1px;
+      transition: none !important;
+      z-index: 2;
+    }
+
+    .grounded-reticle-beacon {
+      display: none !important;
+    }
+
+    /* Vertical Waypoint Stack */
+    .grounded-ticks-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(20px, 3.8vh, 32px);
+      z-index: 10;
+      align-items: center;
+      width: auto;
+    }
+
+    .grounded-nav-node {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      cursor: pointer;
+      padding: 2px 0;
+      width: auto;
+    }
+
+    .grounded-tick-mark {
+      display: none;
+    }
+
+    /* Architectural Sector Number Capsule */
+    .grounded-tick-num {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 22px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #7A766F;
+      background: #F8F6F0;
+      border: 1px solid rgba(24, 23, 22, 0.15);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 5;
+    }
+    body.theme-dark-cinema .grounded-tick-num {
+      background: #101217;
+      color: #8C8E98;
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Active Waypoint Illumination */
+    .grounded-nav-node.active .grounded-tick-num {
+      color: #FFFFFF;
+      background: #181716;
+      border-color: #D84E29;
+      box-shadow: 0 0 14px rgba(216, 78, 41, 0.55), 0 4px 12px rgba(0, 0, 0, 0.2);
+      transform: scale(1.15);
+    }
+    body.theme-dark-cinema .grounded-nav-node.active .grounded-tick-num,
+    .grounded-nav-node.cinema-burn-illuminated .grounded-tick-num {
+      background: #D84E29;
+      border-color: #FFA07A;
+      color: #FFFFFF !important;
+      box-shadow: 0 0 18px rgba(216, 78, 41, 0.7);
+      transform: scale(1.15);
+    }
+
+    .grounded-nav-node:hover .grounded-tick-num {
+      color: #D84E29;
+      border-color: #D84E29;
+      transform: scale(1.1);
+    }
+
+    /* Sliding Architectural Sector Label Flag */
+    .grounded-nav-label {
+      position: absolute;
+      right: 44px;
+      top: 50%;
+      transform: translateY(-50%) translateX(10px);
+      opacity: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(24, 23, 22, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #FFFFFF;
+      padding: 5px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(216, 78, 41, 0.35);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      white-space: nowrap;
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+    }
+    body.theme-dark-cinema .grounded-nav-label {
+      background: rgba(20, 22, 28, 0.94);
+      border-color: rgba(216, 78, 41, 0.5);
+    }
+    .grounded-label-text {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      color: #FFFFFF;
+    }
+
+    /* Auto-reveal Active Sector Label & Hover Reveal */
+    /* Sector label revealed exclusively on hover (active sector title is already displayed in the top header) */
+    .grounded-nav-node:hover .grounded-nav-label {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    /* Bottom Telemetry Capsule (Scroll Percentage Suppressed) */
+    .nav-dock-reach-badge {
+      display: none !important;
+    }
+    body.theme-dark-cinema .nav-dock-reach-badge {
+      display: none !important;
+    }
+    .thumb-cap-pct {
+      display: none !important;
+    }
+
+    /* ========= KINETIC WATERMARKS ========= */
+    .kinetic-section-watermark {
+      position: absolute; top: -30px; left: 0; width: 100%;
+      overflow: hidden; pointer-events: none; z-index: 0; user-select: none;
+    }
+    .watermark-massive-text {
+      font-family: var(--font-display);
+      font-size: clamp(80px, 11vw, 190px);
+      font-weight: 900;
+      color: rgba(24, 23, 22, 0.035);
+      white-space: nowrap;
+      text-transform: uppercase;
+      line-height: 1;
+      letter-spacing: -3px;
+      will-change: transform;
+    }

@@ -1,0 +1,205 @@
+/* ========= POSTER GALLERY: PINNED HORIZONTAL PARALLAX EXHIBITION RUNWAY ========= */
+    .poster-horizontal-runway {
+      position: relative;
+      height: 2200px;
+      margin-bottom: clamp(95px, 14vh, 140px);
+    }
+    .poster-horizontal-pin-stage {
+      position: relative;
+      width: 100%;
+      padding-top: 6px;
+      will-change: transform;
+    }
+    .poster-parallax-bg-text {
+      position: absolute;
+      top: 42%;
+      left: 0;
+      font-family: var(--font-display);
+      font-size: clamp(68px, 7.5vw, 125px);
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: rgba(255, 255, 255, 0.035);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+      will-change: transform;
+    }
+    .poster-runway-hud {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+    .poster-scroll-hint {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent-terracotta);
+      letter-spacing: 1px;
+    }
+    .poster-horiz-progress-track {
+      width: 200px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .poster-horiz-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-terracotta), #FF8F73);
+      border-radius: 999px;
+      transition: width 0.08s linear;
+    }
+    .poster-exhibition-section {
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 2;
+    }
+    .poster-filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .btn-poster-filter {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 20px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #A09E97;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .btn-poster-filter:hover {
+      border-color: var(--accent-terracotta);
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+    .btn-poster-filter.active {
+      background: var(--accent-terracotta);
+      border-color: var(--accent-terracotta);
+      color: #FFFFFF;
+      box-shadow: 0 4px 18px rgba(216, 78, 41, 0.45);
+      transform: translateY(-1px);
+    }
+    .poster-horizontal-viewport {
+      width: 100%;
+      overflow: visible;
+      position: relative;
+    }
+    .poster-gallery-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: clamp(28px, 3vw, 44px);
+      align-items: flex-start;
+      width: max-content;
+      will-change: transform;
+      padding: 8px 4px 20px;
+    }
+    /* Raw Unframed Gallery Print: Floating with physical drop shadow */
+    .poster-card {
+      flex: 0 0 clamp(220px, min(19vw, 35vh), 300px);
+      width: clamp(220px, min(19vw, 35vh), 300px);
+      border-radius: 4px;
+      overflow: visible;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      cursor: zoom-in;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (max-width: 860px) {
+      .poster-horizontal-runway {
+        height: auto !important;
+        margin-bottom: 50px;
+      }
+      .poster-horizontal-pin-stage {
+        transform: none !important;
+      }
+      .poster-runway-hud {
+        display: none;
+      }
+      .poster-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        width: 100%;
+        transform: none !important;
+      }
+      .poster-card {
+        flex: initial;
+        width: 100%;
+      }
+    }
+    .poster-card:hover {
+      transform: translateY(-10px) scale(1.015);
+    }
+    /* Authentic A2 / A1 Poster proportions with realistic print paper depth */
+    .poster-card-paper {
+      width: 100%;
+      aspect-ratio: 1 / 1.414;
+      height: auto;
+      overflow: hidden;
+      border-radius: 3px;
+      background: #111216;
+      box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.55),
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
+      transition: box-shadow 0.4s ease, filter 0.3s ease;
+      position: relative;
+    }
+    .poster-card:hover .poster-card-paper {
+      box-shadow:
+        0 28px 65px rgba(0, 0, 0, 0.75),
+        0 0 0 1px rgba(216, 78, 41, 0.4),
+        0 0 35px rgba(216, 78, 41, 0.2);
+    }
+    .poster-card-paper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .poster-card:hover .poster-card-paper img {
+      transform: scale(1.03);
+    }
+    /* Clean Museum-Style Micro-Placard */
+    .poster-card-meta {
+      padding: 14px 4px 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .poster-set-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent-terracotta);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+    .poster-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+    body.theme-dark-cinema .poster-title {
+      color: #FFFFFF;
+    }

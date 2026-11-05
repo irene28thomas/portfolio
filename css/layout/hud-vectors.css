@@ -1,0 +1,371 @@
+/* ========= FULLSCREEN CANVAS: BURNING PAPER & PARTICLES ========= */
+    #disintegration-canvas {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none; z-index: 1;
+      display: none;
+      transform: translateZ(0);
+      will-change: transform;
+      contain: strict;
+    }
+    #ambient-cursor-spotlight {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none; z-index: 44;
+      background: radial-gradient(760px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(216, 78, 41, 0.085), rgba(243, 164, 39, 0.035), transparent 68%);
+      transition: opacity 0.4s ease;
+      will-change: background;
+    }
+    body.theme-dark-cinema #ambient-cursor-spotlight {
+      background: radial-gradient(780px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(216, 78, 41, 0.14), rgba(243, 164, 39, 0.045), transparent 68%);
+    }
+
+    /* ========= LIVING ART-INTEGRATED BACKGROUND INSIDE EACH PINNED LAYER ========= */
+    .layer-ambient-art-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .ambient-art-blur-plate {
+      position: absolute;
+      inset: -12%;
+      width: 124%;
+      height: 124%;
+      background-size: cover;
+      background-position: center;
+      filter: blur(54px) saturate(1.45);
+      opacity: 0.18;
+      transform: translate3d(calc(var(--cursor-nx, 0) * -28px), calc(var(--cursor-ny, 0) * -28px), 0) scale(1.06);
+      transition: background-image 0.75s ease, opacity 0.5s ease, transform 0.25s ease-out;
+      -webkit-mask-image: radial-gradient(ellipse 64% 62% at 50% 50%, rgba(0,0,0,0.22) 15%, rgba(0,0,0,0.95) 95%);
+      mask-image: radial-gradient(ellipse 64% 62% at 50% 50%, rgba(0,0,0,0.22) 15%, rgba(0,0,0,0.95) 95%);
+    }
+    .pinned-burn-layer-57 .ambient-art-blur-plate {
+      opacity: 0.26;
+      filter: blur(58px) saturate(1.55) contrast(1.1);
+    }
+    .ambient-art-ghost-plate {
+      position: absolute;
+      top: -6%;
+      right: -4%;
+      width: 58vw;
+      height: 112vh;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.065;
+      filter: grayscale(25%) contrast(1.15);
+      mix-blend-mode: multiply;
+      transform: translate3d(calc(var(--cursor-nx, 0) * 36px), calc(var(--cursor-ny, 0) * 26px), 0) rotate(-2deg);
+      transition: background-image 0.75s ease, opacity 0.5s ease, transform 0.35s ease-out;
+      -webkit-mask-image: radial-gradient(circle at 72% 48%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.25) 48%, transparent 78%);
+      mask-image: radial-gradient(circle at 72% 48%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.25) 48%, transparent 78%);
+    }
+    .pinned-burn-layer-57 .ambient-art-ghost-plate {
+      opacity: 0.095;
+      mix-blend-mode: screen;
+      filter: grayscale(15%) contrast(1.2);
+    }
+    .ambient-drafting-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(24, 23, 22, 0.032) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(24, 23, 22, 0.032) 1px, transparent 1px);
+      background-size: 96px 96px;
+      background-position: calc(var(--cursor-nx, 0) * 14px) calc(var(--cursor-ny, 0) * 14px);
+      pointer-events: none;
+    }
+    .pinned-burn-layer-57 .ambient-drafting-grid {
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.032) 1px, transparent 1px);
+    }
+
+    /* ========= BACKGROUND DYNAMIC HUD & KINETIC VECTORS ========= */
+    #ambient-vector-canvas-wrap {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none; z-index: 45; overflow: hidden; user-select: none;
+    }
+    .bg-kinetic-vector-svg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+    }
+    .bg-sector-hud {
+      position: absolute;
+      right: clamp(65px, 7vw, 110px);
+      bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      opacity: 0.85;
+      transition: opacity 0.4s ease;
+    }
+    .bg-hud-coords {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      letter-spacing: 1px;
+      display: flex;
+      gap: 8px;
+    }
+    .hud-coord-separator { color: var(--accent-terracotta); }
+    .bg-hud-large-display {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .bg-hud-num {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 900;
+      line-height: 0.9;
+      color: rgba(24, 23, 22, 0.08);
+      transition: color 0.5s ease;
+    }
+    body.theme-dark-cinema .bg-hud-num {
+      color: rgba(255, 255, 255, 0.08);
+    }
+    .bg-hud-text-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .bg-hud-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--accent-terracotta);
+    }
+    .bg-hud-title {
+      font-family: var(--font-display);
+      font-size: clamp(14px, 1.4vw, 20px);
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--ink-secondary);
+      transition: color 0.5s ease;
+    }
+    body.theme-dark-cinema .bg-hud-title {
+      color: #A09E97;
+    }
+
+    /* Floating Magnetic Cursor Pill */
+    #magnetic-cursor-badge {
+      position: fixed; pointer-events: none; z-index: 999999;
+      top: 0; left: 0;
+      transform: translate3d(-50%, -50%, 0);
+      will-change: transform, opacity;
+      background: var(--accent-terracotta); color: #fff;
+      font-family: var(--font-mono); font-size: 10px; font-weight: 800;
+      letter-spacing: 1px; padding: 6px 14px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 10px 25px rgba(216, 78, 41, 0.45);
+      opacity: 0; scale: 0.7;
+      transition: opacity 0.25s ease, scale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+    }
+    #magnetic-cursor-badge.is-visible { opacity: 1; scale: 1; }
+
+
+    /* ========= HUD SMOOTH SWITCHING ANIMATION ========= */
+    .bg-hud-large-display {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+    .bg-hud-num, .bg-hud-title {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, filter 0.35s ease;
+    }
+    .bg-hud-large-display.hud-animating .bg-hud-num {
+      opacity: 0.15;
+      transform: translateY(-8px) scale(0.95);
+      filter: blur(3px);
+    }
+    .bg-hud-large-display.hud-animating .bg-hud-title {
+      opacity: 0;
+      transform: translateY(6px);
+      filter: blur(3px);
+    }
+
+    /* Nav spine label allowed in floating architectural timeline */
+
+  
+
+    /* Desktop: Hide Mobile Floating Capsule & Sheet */
+    @media (min-width: 861px) {
+      .mobile-thumb-capsule,
+      .mobile-sector-sheet-overlay {
+        display: none !important;
+      }
+    }
+
+    /* ========= CUSTOM INTERACTIVE DRAFTING RETICLE CURSOR ========= */
+    #custom-atelier-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+      z-index: 999998;
+    }
+    .cursor-reticle-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 34px;
+      height: 34px;
+      margin-left: -17px;
+      margin-top: -17px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(216, 78, 41, 0.65);
+      background: rgba(216, 78, 41, 0.03);
+      transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), height 0.28s cubic-bezier(0.16, 1, 0.3, 1), margin 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, background 0.25s ease, border-radius 0.28s ease;
+      will-change: transform, width, height;
+    }
+    .reticle-tick {
+      position: absolute;
+      background: var(--accent-terracotta);
+      opacity: 0.75;
+    }
+    .reticle-tick.tick-t { top: -4px; left: 50%; width: 1.5px; height: 5px; transform: translateX(-50%); }
+    .reticle-tick.tick-b { bottom: -4px; left: 50%; width: 1.5px; height: 5px; transform: translateX(-50%); }
+    .reticle-tick.tick-l { left: -4px; top: 50%; width: 5px; height: 1.5px; transform: translateY(-50%); }
+    .reticle-tick.tick-r { right: -4px; top: 50%; width: 5px; height: 1.5px; transform: translateY(-50%); }
+
+    .cursor-reticle-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      margin-left: -3px;
+      margin-top: -3px;
+      border-radius: 50%;
+      background: var(--accent-terracotta);
+      box-shadow: 0 0 8px rgba(216, 78, 41, 0.8);
+      will-change: transform;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+    body.cursor-on-interactive .cursor-reticle-ring {
+      width: 52px;
+      height: 52px;
+      margin-left: -26px;
+      margin-top: -26px;
+      border-color: var(--accent-terracotta);
+      background: rgba(216, 78, 41, 0.1);
+    }
+    body.cursor-on-art .cursor-reticle-ring {
+      width: 66px;
+      height: 66px;
+      margin-left: -33px;
+      margin-top: -33px;
+      border-color: #FFFFFF;
+      background: rgba(216, 78, 41, 0.18);
+      box-shadow: 0 0 24px rgba(216, 78, 41, 0.35);
+    }
+    @media (max-width: 860px), (hover: none) {
+      #custom-atelier-cursor {
+        display: none !important;
+      }
+    }
+
+    /* ========= LEFT MARGIN CURATORIAL GALLERY RAIL & TELEMETRY ========= */
+    .left-margin-atelier-rail {
+      position: fixed;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 95;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 6px;
+      user-select: none;
+    }
+    @media (max-width: 1420px) {
+      .left-margin-atelier-rail {
+        display: none !important;
+      }
+    }
+    .left-rail-step-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(24, 23, 22, 0.18);
+      background: rgba(248, 246, 240, 0.75);
+      backdrop-filter: blur(8px);
+      color: var(--ink-primary);
+      font-size: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    body.theme-dark-cinema .left-rail-step-btn {
+      background: rgba(20, 21, 25, 0.8);
+      border-color: rgba(255, 255, 255, 0.18);
+      color: #F4F1EA;
+    }
+    .left-rail-step-btn:hover {
+      background: var(--accent-terracotta);
+      border-color: var(--accent-terracotta);
+      color: #FFFFFF;
+      transform: scale(1.1);
+    }
+    .left-rail-art-window {
+      position: relative;
+      width: 40px;
+      height: 54px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1.5px solid var(--accent-terracotta);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+      background: #141519;
+    }
+    .left-rail-art-window img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.25s ease, transform 0.35s ease;
+    }
+    .left-rail-stage-counter {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--accent-terracotta);
+      letter-spacing: 0.5px;
+    }
+    .left-rail-spine-line {
+      width: 1px;
+      height: 28px;
+      background: rgba(216, 78, 41, 0.35);
+    }
+    .left-rail-vertical-label {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      color: var(--ink-secondary);
+      max-height: 185px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 0.35s ease;
+    }
+    body.theme-dark-cinema .left-rail-vertical-label {
+      color: #9E9C95;
+    }
+    .left-rail-coords {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      letter-spacing: 0.5px;
+    }

@@ -1,0 +1,15 @@
+# Development & Tooling
+/graft/
+/scratch/
+/backups/
+/archive/
+/webpage_code_temp/
+
+# Large non-production audit/print assets
+Irene_Thomas_Mobile_Showcase_Audit.pdf
+New Season Launch – Landing Page & Campaign Assets __ Behance.pdf
+
+# OS Artifacts
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,88 @@
+/* ========= DARK CINEMA THEME ========= */
+    body.theme-dark-cinema {
+      background-color: #101114 !important;
+      color: #EDE8DE !important;
+    }
+    body.theme-dark-cinema .section-title,
+    body.theme-dark-cinema .section-headline-row h2,
+    body.theme-dark-cinema .section-headline-row h3,
+    .section-headline-row.burn-ignited .section-title,
+    .section-headline-row.burn-ignited h2,
+    .section-headline-row.burn-ignited h3 {
+      color: #FFFFFF !important;
+      transition: color 0.32s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.45s ease;
+    }
+    .section-headline-row.burn-ignited .section-title {
+      text-shadow: 0 0 14px rgba(255, 180, 50, 0.42);
+    }
+    body.theme-dark-cinema .section-headline-row div[style*="font-family:var(--font-mono)"],
+    .section-headline-row.burn-ignited div[style*="font-family:var(--font-mono)"] {
+      color: #9B98A0 !important;
+      transition: color 0.32s ease;
+    }
+    body.theme-dark-cinema .corner-monogram-badge {
+      background: rgba(20, 21, 24, 0.92);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+    body.theme-dark-cinema .monogram-text { color: #fff; }
+    body.theme-dark-cinema .monogram-role { color: #A09E97; border-color: rgba(255,255,255,0.15); }
+    body.theme-dark-cinema .watermark-massive-text {
+      color: rgba(255, 255, 255, 0.04);
+    }
+    body.theme-dark-cinema .grounded-drafting-spine {
+      border-right-color: rgba(255, 255, 255, 0.12) !important;
+    }
+    body.theme-dark-cinema .grounded-tick-mark {
+      background: rgba(255, 255, 255, 0.2) !important;
+    }
+    body.theme-dark-cinema .grounded-tick-num {
+      color: rgba(255, 255, 255, 0.35) !important;
+    }
+
+    /* Burn Wave Contact Ignition for Sector 05 & Transition Cards */
+    body.theme-dark-cinema .vertical-motion-reel-card,
+    .vertical-motion-reel-card.burn-ignited {
+      border-color: rgba(255, 255, 255, 0.18) !important;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    body.theme-dark-cinema .reel-context-content h4,
+    body.theme-dark-cinema .reel-headline,
+    .reel-context-content.burn-ignited h4,
+    .reel-context-content.burn-ignited .reel-headline {
+      color: #FFFFFF !important;
+      transition: color 0.3s ease;
+    }
+
+    body.theme-dark-cinema .reel-context-content p,
+    body.theme-dark-cinema .reel-desc,
+    .reel-context-content.burn-ignited p,
+    .reel-context-content.burn-ignited .reel-desc {
+      color: #A09E97 !important;
+      transition: color 0.3s ease;
+    }
+
+    body.theme-dark-cinema .reel-context-content .spec-node,
+    .reel-context-content.burn-ignited .spec-node,
+    .spec-node.burn-ignited {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    body.theme-dark-cinema .reel-context-content .spec-v,
+    .reel-context-content.burn-ignited .spec-v,
+    .spec-node.burn-ignited .spec-v {
+      color: #EDE8DE !important;
+    }
+
+    body.theme-dark-cinema .reel-context-content .spec-k,
+    .reel-context-content.burn-ignited .spec-k,
+    .spec-node.burn-ignited .spec-k {
+      color: #8E93A3 !important;
+    }
+
+    body.theme-dark-cinema .cinema-universe-section,
+    .cinema-universe-section.burn-ignited {
+      color: #EDE8DE !important;
+    }

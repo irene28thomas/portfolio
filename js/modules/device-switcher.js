@@ -826,7 +826,7 @@ function initMobileDossierCollapsibles() {
     });
   }, true);
 
-  window.addEventListener('DOMContentLoaded', () => {
+  function initSwitcherOnReady() {
     initMobileDossierCollapsibles();
     renderMobileStorefrontStack();
     if (isMobilePortfolioMode()) {
@@ -843,7 +843,13 @@ function initMobileDossierCollapsibles() {
         }
       });
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', initSwitcherOnReady);
+  } else {
+    initSwitcherOnReady();
+  }
 
   window.addEventListener('atelier:modechange', () => {
     initMobileDossierCollapsibles();
@@ -856,7 +862,7 @@ window.toggleMobileDossierSection = toggleMobileDossierSection;
 
 // Auto-detect mobile mode and default to mobile aspect ratio
 if (typeof document !== 'undefined' && document.documentElement.dataset.mode === 'mobile') {
-  window.addEventListener('DOMContentLoaded', () => {
+  const applyMobileSliderRatio = () => {
     const viewport = document.getElementById('slider-device-viewport');
     if (viewport) viewport.className = 'device-stage-viewport device-mobile';
     const mobileBtn = document.querySelector('#device-mode-toggle-group .device-toggle-btn[onclick*="mobile"]');
@@ -864,5 +870,10 @@ if (typeof document !== 'undefined' && document.documentElement.dataset.mode ===
       document.querySelectorAll('#device-mode-toggle-group .device-toggle-btn').forEach(b => b.classList.remove('active'));
       mobileBtn.classList.add('active');
     }
-  });
+  };
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', applyMobileSliderRatio);
+  } else {
+    applyMobileSliderRatio();
+  }
 }

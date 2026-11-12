@@ -625,7 +625,7 @@
     // Only the internal subject begins softly out of focus and rack-focuses to 4K sharp.
     let currentPct = 8;
     if (fill) fill.style.width = '8%';
-    if (statusText) statusText.textContent = 'ACQUIRING FOCUS... 8%';
+    if (statusText) statusText.textContent = 'Opening Atelier... 8%';
 
     const startTime = Date.now();
     const minFocusDuration = 1100; // 1.1s minimum so the optical lens focus is perceptible
@@ -635,7 +635,7 @@
       const pct = Math.max(currentPct, Math.round(10 + ratio * 90));
       currentPct = pct;
       if (fill) fill.style.width = `${pct}%`;
-      if (statusText) statusText.textContent = `ACQUIRING FOCUS... ${pct}%`;
+      if (statusText) statusText.textContent = `Opening Atelier... ${pct}%`;
       psSfx.click(420 + ratio * 280, 0.012, 0.015);
     });
 
@@ -1078,7 +1078,7 @@
       const pct = Math.round(progress * 100);
 
       if (fill) fill.style.width = `${pct}%`;
-      if (statusText) statusText.textContent = `ACQUIRING FOCUS... ${pct}%`;
+      if (statusText) statusText.textContent = `Opening Atelier... ${pct}%`;
 
       if (progress < 1) {
         requestAnimationFrame(updateFocusTick);

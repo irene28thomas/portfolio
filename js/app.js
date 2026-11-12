@@ -3,15 +3,6 @@
 // =========================================================================
 
 // =========================================================================
-// MOBILE CONTINUUM MATRIX — INFINITE LOOP & ASYMMETRIC INITIAL CENTERING
-// =========================================================================
-function initMobileMatrixLoop() {
-  // Phase 3 (2D Lookbook): Chapter 02 uses a clean vertical 2-column grid on mobile
-  // so horizontal swipes strictly change chapters without inner carousel conflicts.
-  return;
-}
-
-// =========================================================================
 // HARDWARE LAUNCH SUITE — TOUCH SWIPE & PEEK CONTROLLER
 // =========================================================================
 function initHardwareSliderSwipe() {
@@ -69,7 +60,10 @@ function initHardwareSliderSwipe() {
   });
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+function initAtelierDesktopApp() {
+  if (window.__atelierDesktopAppInitialized) return;
+  window.__atelierDesktopAppInitialized = true;
+
   // 1. Initialize Nivara Brand Manual Console
   if (typeof renderManualThumbnails === 'function') {
     renderManualThumbnails();
@@ -99,16 +93,19 @@ window.addEventListener('DOMContentLoaded', () => {
     onUnifiedScroll();
   }
 
-  // 5. Initialize Mobile Continuum Matrix Loop & Centering
-  initMobileMatrixLoop();
-
-  // 6. Initialize Mobile Hardware Slider Swipe & Gestures
+  // 5. Initialize Hardware Slider Swipe & Gestures
   initHardwareSliderSwipe();
 
-  // 7. Reset poster gallery scroll position to start at 0 on mobile
+  // 6. Reset poster gallery scroll position
   const posterGrid = document.getElementById('poster-grid');
   if (posterGrid) {
     posterGrid.scrollLeft = 0;
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', initAtelierDesktopApp);
+} else {
+  initAtelierDesktopApp();
+}
 

@@ -88,9 +88,9 @@
       font-size: 10px;
       margin-left: 2px;
     }
-    @media (orientation: portrait), (max-width: 768px) {
+    @media (max-width: 820px) {
       .header-hover-sensor {
-        display: none !important;
+        display: none;
       }
       .grounded-atelier-header.is-collapsed {
         transform: translate3d(0, 0, 0);

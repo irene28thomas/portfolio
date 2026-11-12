@@ -14,3 +14,16 @@
     #tri-img-2 {
       transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), filter 0.24s ease;
     }
+
+@media (prefers-reduced-motion: reduce) {
+  #img-active-device-slider,
+  #img-social-16-9,
+  #img-social-1-1,
+  #img-social-9-16,
+  #crm-active-img,
+  #tri-img-0,
+  #tri-img-1,
+  #tri-img-2 {
+    transition: none;
+  }
+}

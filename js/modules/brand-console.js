@@ -22,7 +22,7 @@ function renderMobileManualVerticalStack() {
       </div>
       <div class="mobile-spread-media-frame">
         <img loading="lazy" src="assets/optimized/brand_identity/${s.file}" alt="Spread ${numStr}: ${s.title}" width="1755" height="1241" decoding="async">
-        <span class="mobile-spread-zoom-pill">🔍 TAP FOR PINCH-ZOOM</span>
+        <span class="mobile-spread-zoom-pill">Tap to inspect</span>
       </div>
     `;
     stack.appendChild(card);

@@ -1349,14 +1349,25 @@
     }
   });
 
-  // Start engine on load (Initial theme: LIGHT)
-  window.addEventListener('load', () => {
+  // Start engine on load (or immediately if hydrated dynamically after load)
+  let engineStarted = false;
+  function startBurnEngine() {
+    if (engineStarted) return;
+    engineStarted = true;
+    isMobile = window.AtelierMode ? window.AtelierMode.isMobile() : (document.documentElement.dataset.mode === 'mobile');
     measureLayout();
     document.body.classList.remove('theme-dark-cinema');
     requestAnimationFrame(renderLoop);
-  });
+  }
 
-  window.addEventListener('atelier:modechange', () => {
+  if (document.readyState === 'complete') {
+    startBurnEngine();
+  } else {
+    window.addEventListener('load', startBurnEngine);
+  }
+
+  window.addEventListener('atelier:modechange', (e) => {
+    isMobile = e && e.detail ? (e.detail.mode === 'mobile') : (window.AtelierMode ? window.AtelierMode.isMobile() : (document.documentElement.dataset.mode === 'mobile'));
     measureLayout();
   });
 

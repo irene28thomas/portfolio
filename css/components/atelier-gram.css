@@ -8,23 +8,24 @@
 /* 1. Shell Isolation & Base Viewport */
 html:not([data-mode="mobile"]) #atelier-gram-root,
 html:not([data-mode="mobile"]) .atelier-gram-story-viewer-modal {
-  display: none !important;
+  display: none;
 }
 
 html[data-mode="mobile"] #atelier-gram-root {
-  display: flex !important;
+  display: flex;
   flex-direction: column;
   position: fixed;
   inset: 0;
-  width: 100vw;
+  width: 100%;
+  height: 100vh;
   height: 100dvh;
   z-index: 850;
   background: #0A0B0E; /* Luxury Obsidian Stage */
   color: #F8F6F0;
   font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -33,9 +34,9 @@ html[data-mode="mobile"] #atelier-gram-root {
 }
 
 html[data-mode="mobile"] #atelier-gram-root::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 html[data-mode="mobile"] #atelier-gram-root.ag-legacy-tab-active {
@@ -44,15 +45,29 @@ html[data-mode="mobile"] #atelier-gram-root.ag-legacy-tab-active {
   color: #181716;
 }
 
-/* Hide desktop Photoshop workstation and old lookbook track on mobile */
+html[data-mode="mobile"] #atelier-gram-root.ag-legacy-tab-active .ag-tab-surface.is-active-tab {
+  padding-top: calc(60px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+}
+
+html[data-mode="mobile"] #atelier-gram-root.ag-legacy-tab-active .ag-tab-surface#ag-tab-reels.is-active-tab {
+  padding-top: 0;
+  padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Hide desktop Photoshop workstation, splash, and desktop lookbook track on mobile */
+html[data-mode="mobile"] #atelier-splash-screen,
 html[data-mode="mobile"] #ps-workspace-window,
 html[data-mode="mobile"] #portfolio-lookbook-root,
-html[data-mode="mobile"] .mobile-thumb-capsule,
+html[data-mode="mobile"] .grounded-atelier-header,
 html[data-mode="mobile"] .grounded-nav-system,
+html[data-mode="mobile"] .header-hover-sensor,
 html[data-mode="mobile"] .left-margin-atelier-rail,
 html[data-mode="mobile"] .pinned-burn-track,
 html[data-mode="mobile"] #ambient-vector-canvas-wrap,
-html[data-mode="mobile"] #bg-vector-astrolabe {
+html[data-mode="mobile"] #bg-vector-astrolabe,
+html[data-mode="mobile"] #custom-atelier-cursor {
   display: none !important;
 }
 
@@ -129,7 +144,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-header-coords {
   font-family: "JetBrains Mono", monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   color: #87837B;
   letter-spacing: 0.05em;
 }
@@ -142,7 +157,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-header-badge {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #D84E29;
   background: rgba(216, 78, 41, 0.08);
@@ -157,7 +172,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   border: 1px solid rgba(24, 23, 22, 0.12);
   color: #181716;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 5px 10px;
   border-radius: 6px;
@@ -222,8 +237,8 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 /* Visited story highlight: grayed out / muted neutral ring */
 .ag-story-node.is-visited .ag-story-ring-outer {
-  background: rgba(24, 23, 22, 0.2) !important;
-  box-shadow: none !important;
+  background: rgba(24, 23, 22, 0.2);
+  box-shadow: none;
 }
 
 .ag-story-node:active .ag-story-ring-outer {
@@ -251,7 +266,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-story-label {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9.5px;
+  font-size: 0.6875rem;
   font-weight: 600;
   color: #57544F;
   letter-spacing: 0.03em;
@@ -395,7 +410,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   border: 1px solid rgba(24, 23, 22, 0.12);
   color: #57544F;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 6px 12px;
   border-radius: 4px;
@@ -430,7 +445,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-hero-serial {
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 0.75rem;
   color: #D84E29;
   letter-spacing: 0.08em;
   font-weight: 800;
@@ -438,7 +453,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-hero-status-pill {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   background: rgba(34, 197, 94, 0.1);
   color: #16A34A;
   border: 1px solid rgba(34, 197, 94, 0.25);
@@ -486,7 +501,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 }
 
 .ag-hero-meta-label {
-  font-size: 9px;
+  font-size: 0.6875rem;
   color: #87837B;
   text-transform: uppercase;
   font-weight: 600;
@@ -550,13 +565,13 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-project-category {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9.5px;
+  font-size: 0.6875rem;
   color: #87837B;
 }
 
 .ag-project-badge {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #D84E29;
   border: 1px solid rgba(216, 78, 41, 0.25);
@@ -614,7 +629,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   -webkit-backdrop-filter: blur(8px);
   color: #FFF;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 4px 8px;
   border-radius: 4px;
@@ -639,7 +654,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   justify-content: center;
   color: #D84E29;
   font-family: "JetBrains Mono", monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   pointer-events: none;
@@ -674,7 +689,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   border: 1px solid rgba(24, 23, 22, 0.1);
   color: #181716;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 6px 11px;
   border-radius: 6px;
@@ -758,7 +773,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-spec-key {
   font-family: "JetBrains Mono", monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   color: #87837B;
   text-transform: uppercase;
   font-weight: 600;
@@ -766,7 +781,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-spec-val {
   font-family: "JetBrains Mono", monospace;
-  font-size: 10.5px;
+  font-size: 0.75rem;
   color: #181716;
   font-weight: 700;
 }
@@ -787,7 +802,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   border: 1px solid rgba(24, 23, 22, 0.1);
   color: #57544F;
   font-family: "JetBrains Mono", monospace;
-  font-size: 9.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   padding: 6px 0;
   border-radius: 4px;
@@ -829,7 +844,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   border: 1px solid rgba(24, 23, 22, 0.12);
   color: #57544F;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 6px 12px;
   border-radius: 20px;
@@ -863,7 +878,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   -webkit-backdrop-filter: blur(8px);
   color: #FFF;
   font-family: "JetBrains Mono", monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 3px;
@@ -916,7 +931,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 }
 
 .ag-tile-title {
-  font-size: 10.5px;
+  font-size: 0.75rem;
   font-weight: 700;
   color: #FFF;
   white-space: nowrap;
@@ -926,7 +941,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-tile-cat-badge {
   font-family: "JetBrains Mono", monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   color: #C5A880;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -983,7 +998,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-reel-live-tag {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #FFF;
   background: rgba(0, 0, 0, 0.65);
@@ -1051,7 +1066,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #FFF;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 6px 12px;
   border-radius: 6px;
@@ -1089,7 +1104,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   border: 1px solid rgba(24, 23, 22, 0.12);
   color: #57544F;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10.5px;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 8px 14px;
   border-radius: 6px;
@@ -1134,7 +1149,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-crm-specs-pill {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #D84E29;
   background: rgba(216, 78, 41, 0.08);
@@ -1164,7 +1179,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
     min-height: 180px;
   }
   .ag-reel-video-element {
-    object-fit: contain !important;
+    object-fit: contain;
     background: #000;
   }
 }
@@ -1230,17 +1245,27 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 }
 
 .ag-crm-kpi-label {
-  font-size: 9.5px;
+  font-size: 0.6875rem;
   color: #87837B;
   font-weight: 600;
 }
 
 /* 9. TAB 5: DOSSIER (EXECUTIVE ARCHIVAL RESUME ON WARM PAPER) */
-.ag-dossier-container,
-#ag-tab-profile {
+.ag-dossier-container {
   display: flex;
   flex-direction: column;
   padding: 12px 14px;
+  gap: 14px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#ag-tab-profile {
+  flex-direction: column;
+  padding-left: 14px;
+  padding-right: 14px;
   gap: 14px;
   box-sizing: border-box;
   width: 100%;
@@ -1278,12 +1303,12 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 .ag-dossier-portrait-crop,
 .ag-dossier-avatar-frame {
   position: relative;
-  width: 76px !important;
-  height: 76px !important;
-  min-width: 76px !important;
-  min-height: 76px !important;
-  max-width: 76px !important;
-  max-height: 76px !important;
+  width: 76px;
+  height: 76px;
+  min-width: 76px;
+  min-height: 76px;
+  max-width: 76px;
+  max-height: 76px;
   border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
@@ -1293,11 +1318,11 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-dossier-portrait-crop img,
 .ag-dossier-avatar-frame img {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  object-fit: cover !important;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
   border-radius: 7px;
   display: block;
 }
@@ -1307,7 +1332,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   bottom: 2px;
   right: 2px;
   font-family: "JetBrains Mono", monospace;
-  font-size: 6.5px;
+  font-size: 0.6875rem;
   font-weight: 800;
   color: #D84E29;
   background: rgba(255, 255, 255, 0.95);
@@ -1331,7 +1356,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-dossier-serial {
   font-family: "JetBrains Mono", monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #D84E29;
   letter-spacing: 0.05em;
@@ -1356,7 +1381,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-dossier-contact-line {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   color: #87837B;
   display: flex;
   align-items: center;
@@ -1400,7 +1425,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-kpi-lbl,
 .ag-dossier-stat-lbl {
-  font-size: 9px;
+  font-size: 0.6875rem;
   color: #87837B;
   text-transform: uppercase;
   font-weight: 600;
@@ -1457,7 +1482,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   border: none;
   color: #57544F;
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 8px 0;
   border-radius: 6px;
@@ -1511,7 +1536,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-chronology-year {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #D84E29;
 }
@@ -1543,7 +1568,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   padding: 4px 8px;
   border-radius: 4px;
   font-family: "JetBrains Mono", monospace;
-  font-size: 9.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #181716;
 }
@@ -1559,7 +1584,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-skills-cat-title {
   font-family: "JetBrains Mono", monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 800;
   color: #D84E29;
   display: block;
@@ -1583,43 +1608,45 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-skill-pct {
   font-family: "JetBrains Mono", monospace;
-  font-size: 10px;
+  font-size: 0.75rem;
   color: #87837B;
 }
 
-/* 10. Sleek Architectural Bottom Navigation Bar on Light Paper */
+/* 10. Sleek Architectural Bottom Navigation Bar */
 .ag-bottom-nav-bar,
 .ag-bottom-bar-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 56px;
-  background: rgba(248, 246, 240, 0.94);
+  height: calc(56px + env(safe-area-inset-bottom, 0px));
+  background: rgba(248, 246, 240, 0.96);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-top: 1px solid rgba(24, 23, 22, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 0 4px env(safe-area-inset-bottom, 0px);
+  padding: 0 4px env(safe-area-inset-bottom, 0px) 4px;
   z-index: 900;
   box-sizing: border-box;
 }
 
 .ag-nav-tab-btn {
   flex: 1;
+  min-width: 44px;
+  min-height: 44px;
   background: transparent;
   border: none;
-  padding: 6px 0;
+  padding: 6px 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  color: #87837B;
+  gap: 2px;
+  color: #57544F;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
   outline: none;
 }
 
@@ -1636,10 +1663,11 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-nav-tab-btn span {
   font-family: "JetBrains Mono", monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
+  line-height: 1.1;
 }
 
 .ag-nav-tab-btn.is-active {
@@ -1885,7 +1913,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 .ag-highlight-label {
   margin-top: 6px;
   font-family: -apple-system, BlinkMacSystemFont, "Plus Jakarta Sans", sans-serif;
-  font-size: 10.5px;
+  font-size: 0.75rem;
   font-weight: 600;
   color: #2B2927;
   letter-spacing: 0.01em;
@@ -1929,7 +1957,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-module-category {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: #6E6A62;
@@ -1938,7 +1966,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-module-badge {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   letter-spacing: 0.08em;
   color: #D84E29;
   background: rgba(216, 78, 41, 0.08);
@@ -2033,7 +2061,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   -webkit-backdrop-filter: blur(8px);
   color: #FFF;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   padding: 3px 7px;
@@ -2057,7 +2085,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-petal-hud-brand {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #D84E29;
   letter-spacing: 0.08em;
@@ -2079,7 +2107,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-petal-hud-ratio {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #A38048;
   background: rgba(163, 128, 72, 0.12);
@@ -2091,7 +2119,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-petal-hud-dims {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   color: #7A7670;
 }
 
@@ -2111,7 +2139,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   border: 1px solid rgba(24, 23, 22, 0.16);
   color: #57544F;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   padding: 5px 10px;
   border-radius: 4px;
@@ -2136,7 +2164,6 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   touch-action: pan-y;
   user-select: none;
   cursor: grab;
-  perspective: 700px;
   background: #181716;
   border-radius: 6px;
   box-shadow: inset 0 2px 10px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.12);
@@ -2179,7 +2206,6 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   bottom: -125px;
   width: 0;
   height: 0;
-  transform-style: preserve-3d;
   transition: transform 0.12s ease-out;
 }
 
@@ -2212,14 +2238,14 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 }
 
 .ag-petal-mini-card.is-active-petal {
-  border-color: #D84E29 !important;
-  box-shadow: 0 0 16px rgba(216, 78, 41, 0.95), 0 4px 14px rgba(0,0,0,0.7) !important;
+  border-color: #D84E29;
+  box-shadow: 0 0 16px rgba(216, 78, 41, 0.95), 0 4px 14px rgba(0,0,0,0.7);
   z-index: 30;
 }
 
 /* Height variations: Base sits on circumference, heights radiate outward */
 .ag-petal-mini-card.is-ratio-16-9 {
-  height: 27px; /* 48 * 9/16 */
+  height: 44px; min-height: 44px; /* >=44px touch target */
 }
 .ag-petal-mini-card.is-ratio-1-1 {
   height: 48px; /* 48 * 1 */
@@ -2235,7 +2261,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   right: 0;
   text-align: center;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   color: rgba(255, 255, 255, 0.45);
   letter-spacing: 0.1em;
   pointer-events: none;
@@ -2316,7 +2342,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   bottom: 8px;
   left: 8px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   color: #00F5D4;
   background: rgba(0,0,0,0.85);
   padding: 2px 6px;
@@ -2336,7 +2362,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   -webkit-backdrop-filter: blur(6px);
   color: #FFF;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   padding: 3px 6px;
   border-radius: 3px;
@@ -2359,7 +2385,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-folio-spread-num {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #D84E29;
   letter-spacing: 0.08em;
@@ -2373,7 +2399,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-folio-cad-toggle-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: #0E1C26;
   color: #00F5D4;
@@ -2402,7 +2428,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-folio-step-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: #EAE6DC;
   border: 1px solid #181716;
@@ -2434,7 +2460,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-folio-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: #FFF;
   border: 1px solid rgba(24, 23, 22, 0.2);
@@ -2461,7 +2487,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-sub-shelf-title {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #6E6A62;
   letter-spacing: 0.08em;
@@ -2509,7 +2535,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   bottom: 3px;
   left: 3px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 7px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: rgba(0, 0, 0, 0.75);
   color: #FFF;
@@ -2545,7 +2571,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-swatch-name {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #57544F;
   letter-spacing: 0.05em;
@@ -2604,14 +2630,14 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-cinema-tc {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
+  font-size: 0.6875rem;
   color: #FFF;
   letter-spacing: 0.08em;
 }
 
 .ag-cinema-sound-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: rgba(255,255,255,0.9);
   color: #181716;
@@ -2642,7 +2668,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-episodic-title {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #181716;
   letter-spacing: 0.08em;
@@ -2650,7 +2676,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-episodic-badge {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   color: #D84E29;
   font-weight: 700;
 }
@@ -2684,7 +2710,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   -webkit-backdrop-filter: blur(6px);
   color: #FFF;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   padding: 3px 7px;
   border-radius: 3px;
@@ -2703,7 +2729,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-episodic-stage-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #57544F;
   background: #ECE8E0;
@@ -2762,7 +2788,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 .ag-hud-stat-lbl {
   display: block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 7.5px;
+  font-size: 0.6875rem;
   color: #7A7670;
   font-weight: 700;
 }
@@ -2770,7 +2796,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 .ag-hud-stat-val {
   display: block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
+  font-size: 0.6875rem;
   color: #181716;
   font-weight: 800;
   margin-top: 2px;
@@ -2804,13 +2830,13 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-hw-card-code {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 7.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #D84E29;
 }
 
 .ag-hw-card-name {
-  font-size: 10px;
+  font-size: 0.75rem;
   font-weight: 800;
   color: #181716;
 }
@@ -2834,7 +2860,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 .ag-vp-pill {
   flex: 1;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: #FFF;
   border: 1px solid rgba(24, 23, 22, 0.2);
@@ -2876,7 +2902,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   bottom: 6px;
   left: 6px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   color: #FFF;
   background: rgba(0, 0, 0, 0.75);
   padding: 2px 6px;
@@ -2892,7 +2918,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 .ag-sf-brand-btn {
   flex: 1;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: #EAE6DC;
   border: 1px solid rgba(24, 23, 22, 0.15);
@@ -2948,7 +2974,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-crm-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: #FFF;
   border: 1px solid rgba(24, 23, 22, 0.2);
@@ -2964,7 +2990,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-crm-loupe-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: #D84E29;
   color: #FFF;
@@ -3014,7 +3040,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 .ag-placard-title {
   display: block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #F8F6F0;
 }
@@ -3022,7 +3048,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 .ag-placard-type {
   display: block;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 7.5px;
+  font-size: 0.6875rem;
   color: #A3A099;
 }
 
@@ -3054,7 +3080,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-term-title {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   color: #A3A6B0;
   margin-left: 4px;
 }
@@ -3084,7 +3110,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-token-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 7.5px;
+  font-size: 0.6875rem;
   background: rgba(255, 255, 255, 0.08);
   color: #64D2FF;
   padding: 2px 5px;
@@ -3139,7 +3165,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-lb-brand-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: #FFF;
   border: 1px solid rgba(24, 23, 22, 0.2);
@@ -3183,7 +3209,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   bottom: 4px;
   left: 4px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 6.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: rgba(0, 0, 0, 0.75);
   color: #FFF;
@@ -3233,7 +3259,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   background: #D84E29;
   color: #FFF;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 800;
   display: flex;
   align-items: center;
@@ -3258,7 +3284,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-dossier-tenure {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   color: #6E6A62;
   margin: 2px 0 8px 0;
 }
@@ -3270,7 +3296,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-dossier-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: #FFF;
   border: 1px solid #181716;
@@ -3359,7 +3385,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 #ag-story-view-omnichannel .ag-petal-brand-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #D84E29;
 }
@@ -3373,7 +3399,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 #ag-story-view-omnichannel .ag-petal-ratio-badge {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #C5A059;
   background: rgba(197, 160, 89, 0.15);
@@ -3442,7 +3468,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   -webkit-backdrop-filter: blur(8px);
   color: #FFF;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   padding: 3px 7px;
@@ -3454,7 +3480,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 .ag-the-open-caption-bar {
   padding: 8px 2px 6px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #181716;
   letter-spacing: 0.05em;
@@ -3470,7 +3496,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-the-open-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: #EFECE3;
   color: #4A463F;
@@ -3499,7 +3525,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
 
 .ag-nivara-thumb-btn {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   background: rgba(255, 255, 255, 0.1);
   color: #A3A099;
@@ -3516,7 +3542,7 @@ html[data-mode="mobile"] #bg-vector-astrolabe {
   border-color: #D84E29;
 }
 
-/* 14. CURSOR INTERACTION RULES (REQUIREMENT 7) */
+/* 14. CURSOR INTERACTION RULES */
 html[data-mode="mobile"][data-cursor="fine"] .ag-story-highlight-item,
 html[data-mode="mobile"][data-cursor="fine"] .ag-story-node,
 html[data-mode="mobile"][data-cursor="fine"] .ag-petal-mini-card,
@@ -3524,7 +3550,7 @@ html[data-mode="mobile"][data-cursor="fine"] .ag-petal-stage-card-wrap,
 html[data-mode="mobile"][data-cursor="fine"] .ag-folio-spread-canvas,
 html[data-mode="mobile"][data-cursor="fine"] .ag-episodic-artboard-frame,
 html[data-mode="mobile"][data-cursor="fine"] .ag-nivara-artifact-card {
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 html[data-mode="mobile"][data-cursor="fine"] .ag-petal-dial-wrapper,
@@ -3536,7 +3562,7 @@ html[data-mode="mobile"][data-cursor="fine"] .ag-barney-pan-canvas,
 html[data-mode="mobile"][data-cursor="fine"] .ag-jogwheel-dial,
 html[data-mode="mobile"][data-cursor="fine"] .ag-crm-retina-loupe,
 html[data-mode="mobile"][data-cursor="fine"] .ag-comic-strip-scroller {
-  cursor: grab !important;
+  cursor: grab;
 }
 
 html[data-mode="mobile"][data-cursor="fine"] .ag-petal-dial-wrapper:active,
@@ -3546,7 +3572,7 @@ html[data-mode="mobile"][data-cursor="fine"] .ag-barney-pan-canvas:active,
 html[data-mode="mobile"][data-cursor="fine"] .ag-jogwheel-dial:active,
 html[data-mode="mobile"][data-cursor="fine"] .ag-crm-retina-loupe:active,
 html[data-mode="mobile"][data-cursor="fine"] .ag-sub-shelf-scroller:active {
-  cursor: grabbing !important;
+  cursor: grabbing;
 }
 
 /* Spatial Monograph Display-Contents Shell (Only active on Spatial Feed tab) */
@@ -3557,144 +3583,123 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 
 
 /* ==========================================================================
-   HAUTE ATELIER SPATIAL MONOGRAPH // 100DVH SNAP ENGINE & FLOATING HUD
-   Full-screen snap-locked spatial publication architecture
+   HAUTE ATELIER MOBILE SHOWCASE // SINGLE TOP HEADER & FLEXIBLE ACTS
    ========================================================================== */
 
-/* 1. Global Spatial Compass HUD */
+/* 1. Single Minimalist Top Header Bar */
 .ag-spatial-compass-hud {
-  position: fixed;
-  inset: 0;
+  position: relative;
+  z-index: 1200;
+}
+
+.atelier-gram-root.ag-header-hidden .ag-hud-top-bar {
+  transform: translateY(-100%);
+  opacity: 0;
   pointer-events: none;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: opacity 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
-.atelier-gram-root.ag-legacy-tab-active .ag-spatial-compass-hud {
-  display: none !important;
-}
-
-.ag-spatial-compass-hud.ag-hud-dimmed .ag-hud-top-bar,
-.ag-spatial-compass-hud.ag-hud-dimmed .ag-hud-bottom-bar {
-  opacity: 0.18;
+.ag-spatial-compass-hud.ag-hud-dimmed .ag-hud-top-bar {
+  opacity: 0.25;
   pointer-events: none;
 }
 
 .ag-hud-top-bar {
-  position: absolute;
-  top: 12px;
-  left: 16px;
-  right: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: calc(6px + env(safe-area-inset-top, 0px)) 12px 6px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  pointer-events: none;
-  z-index: 1010;
-  transition: opacity 0.25s ease;
+  gap: 8px;
+  background: rgba(10, 11, 15, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 900;
+  box-sizing: border-box;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.ag-hud-top-bar > * {
-  pointer-events: auto;
+.atelier-gram-root.ag-legacy-tab-active .ag-hud-top-bar {
+  background: rgba(248, 246, 240, 0.94);
+  border-bottom-color: rgba(24, 23, 22, 0.08);
+}
+
+.atelier-gram-root.ag-legacy-tab-active .ag-hud-brand-monogram {
+  background: rgba(24, 23, 22, 0.06);
+  border-color: rgba(24, 23, 22, 0.12);
+  box-shadow: none;
+}
+
+.atelier-gram-root.ag-legacy-tab-active .ag-hud-brand-title {
+  color: #181716;
+}
+
+.atelier-gram-root.ag-legacy-tab-active .ag-compass-capsule {
+  background: #181716;
+  color: #F8F6F0;
 }
 
 .ag-hud-brand-monogram {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(14, 16, 22, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  gap: 6px;
+  min-height: 44px;
+  min-width: 44px;
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 6px 14px 6px 8px;
+  padding: 4px 10px 4px 6px;
   border-radius: 999px;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  color: inherit;
+  flex-shrink: 1;
+  max-width: 56vw;
 }
 
 .ag-hud-monogram-badge {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #D84E29;
   color: #FFF;
   font-family: 'Syne', sans-serif;
   font-weight: 800;
-  font-size: 10px;
+  font-size: 0.6875rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .ag-hud-brand-title {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #F8F6F0;
-  letter-spacing: 0.08em;
-}
-
-.ag-hud-act-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(14, 16, 22, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(216, 78, 41, 0.4);
-  padding: 6px 12px;
-  border-radius: 999px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-.ag-hud-act-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  color: #D84E29;
-}
-
-.ag-hud-act-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  color: #F8F6F0;
-  letter-spacing: 0.08em;
-}
-
-.ag-hud-bottom-bar {
-  position: absolute;
-  bottom: 64px;
-  left: 16px;
-  right: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  pointer-events: none;
-  z-index: 1010;
-  transition: opacity 0.25s ease;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ag-compass-capsule {
-  pointer-events: auto;
-  background: rgba(14, 16, 22, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(216, 78, 41, 0.45);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 0 16px rgba(216, 78, 41, 0.2);
+  background: rgba(24, 26, 34, 0.92);
+  border: 1px solid rgba(216, 78, 41, 0.5);
   border-radius: 999px;
-  padding: 8px 14px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 4px 10px;
   color: #F8F6F0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
+  font-size: 0.6875rem;
   font-weight: 700;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   cursor: pointer;
+  flex-shrink: 0;
   transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1), border-color 0.2s ease;
 }
 
@@ -3709,31 +3714,13 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 
 .ag-compass-chevron {
-  color: #87837B;
+  color: #B5B1A9;
   transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 .ag-compass-capsule[aria-expanded="true"] .ag-compass-chevron {
   transform: rotate(180deg);
-}
-
-.ag-hud-audio-btn {
-  pointer-events: auto;
-  background: rgba(14, 16, 22, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  padding: 8px 12px;
-  color: #F8F6F0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 .ag-audio-bars {
@@ -3753,16 +3740,12 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 .ag-audio-bars .bar-2 { height: 11px; }
 .ag-audio-bars .bar-3 { height: 7px; }
 
-.ag-hud-audio-btn.is-playing .bar-1 { animation: agEqualizer 0.8s ease infinite alternate; }
-.ag-hud-audio-btn.is-playing .bar-2 { animation: agEqualizer 0.5s ease 0.2s infinite alternate; }
-.ag-hud-audio-btn.is-playing .bar-3 { animation: agEqualizer 0.7s ease 0.1s infinite alternate; }
-
 @keyframes agEqualizer {
   0% { height: 3px; }
   100% { height: 12px; }
 }
 
-/* Radial Chapter Index Modal Sheet */
+/* Chapter Index Modal Sheet */
 .ag-radial-chapter-index {
   position: fixed;
   inset: 0;
@@ -3792,11 +3775,13 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   position: relative;
   width: 100%;
   max-width: 480px;
+  max-height: 82dvh;
+  overflow-y: auto;
   background: rgba(18, 20, 28, 0.98);
   border-top: 1px solid rgba(216, 78, 41, 0.4);
-  border-radius: 28px 28px 0 0;
+  border-radius: 24px 24px 0 0;
   box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.75);
-  padding: 20px 20px 32px 20px;
+  padding: 18px 16px calc(24px + env(safe-area-inset-bottom, 0px)) 16px;
   transform: translateY(30px);
   transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
   box-sizing: border-box;
@@ -3810,39 +3795,45 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .ag-radial-title {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+  font-size: 0.75rem;
   font-weight: 700;
   color: #D84E29;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
 }
 
 .ag-radial-close-btn {
-  background: transparent;
-  border: none;
-  color: #A09C94;
-  font-size: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  color: #F8F6F0;
+  font-size: 1rem;
   cursor: pointer;
-  padding: 4px 8px;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ag-radial-chapters-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
   gap: 10px;
 }
 
 .ag-chapter-btn {
-  background: rgba(26, 29, 38, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(26, 29, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
-  padding: 12px 14px;
+  padding: 12px 12px;
+  min-height: 44px;
   text-align: left;
   cursor: pointer;
   display: flex;
@@ -3860,53 +3851,50 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 
 .ag-ch-idx {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
+  font-size: 0.6875rem;
   font-weight: 800;
   color: #D84E29;
 }
 
 .ag-ch-name {
   font-family: 'Syne', sans-serif;
-  font-size: 11px;
+  font-size: 0.75rem;
   font-weight: 700;
   color: #FFF;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
 }
 
 .ag-ch-meta {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 9px;
-  color: #A09C94;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 0.6875rem;
+  color: #B5B1A9;
+  line-height: 1.3;
 }
 
-/* 2. 100dvh Snap Engine & Act Containers */
+/* 2. Flexible, Scroll-Safe Act Containers (Zero Clipping at 360x640+) */
 .ag-spatial-act {
   scroll-snap-align: start;
-  scroll-snap-stop: always;
-  height: 100dvh;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
   min-height: 100dvh;
-  max-height: 100dvh;
-  flex: 0 0 100dvh;
-  width: 100vw;
-  max-width: 100vw;
+  height: auto;
+  flex: 0 0 auto;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex-shrink: 0;
+  gap: 10px;
   background: #0C0D12;
   color: #F8F6F0;
-  padding: 58px 16px 112px 16px;
+  padding: calc(64px + env(safe-area-inset-top, 0px)) 16px calc(74px + env(safe-area-inset-bottom, 0px)) 16px;
   margin: 0;
   border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow: none;
 }
 
@@ -3929,49 +3917,49 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-act-badge {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 800;
   color: #D84E29;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
 }
 .ag-act-pill,
 .ag-the-open-spec,
 .ag-crm-telemetry-pill {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
-  color: #C5C1B8;
+  color: #D6D2C9;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 2px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 3px 9px;
   border-radius: 999px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 .ag-barney-scene-tag {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 800;
   color: #F3A427;
   background: rgba(243, 164, 39, 0.12);
   border: 1px solid rgba(243, 164, 39, 0.35);
-  padding: 2px 8px;
+  padding: 3px 9px;
   border-radius: 999px;
   margin-left: auto;
 }
 .ag-colophon-live-time {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #38EF7D;
   background: rgba(56, 239, 125, 0.1);
   border: 1px solid rgba(56, 239, 125, 0.25);
-  padding: 2px 8px;
+  padding: 3px 9px;
   border-radius: 999px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 .ag-act-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 19px;
+  font-size: clamp(1.1875rem, 5vw, 1.5rem);
   font-weight: 700;
   color: #FFFFFF;
   margin: 0;
@@ -3979,14 +3967,16 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-act-desc {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 11px;
-  color: #A09C94;
-  margin: 2px 0 0 0;
+  font-size: clamp(0.75rem, 3.2vw, 0.875rem);
+  color: #B5B1A9;
+  margin: 4px 0 0 0;
+  line-height: 1.4;
 }
 
-/* ACT 1: OMNICHANNEL FULL-SCREEN STAGE & FLOATING PETAL OVERLAY */
+/* ACT 1: OMNICHANNEL STAGE & FLOATING PETAL OVERLAY */
 .ag-spatial-act#ag-act-omnichannel {
-  padding: 58px 0 112px 0;
+  padding: calc(58px + env(safe-area-inset-top, 0px)) 0 calc(62px + env(safe-area-inset-bottom, 0px)) 0;
+  gap: 6px;
   justify-content: space-between;
 }
 .ag-spatial-act#ag-act-omnichannel .ag-omni-hud-header {
@@ -4004,8 +3994,8 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 .ag-spatial-stage-canvas {
   position: relative;
   inset: auto;
-  flex: 1;
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: clamp(150px, 28dvh, 300px);
   width: 100%;
   padding: 4px 16px;
   box-sizing: border-box;
@@ -4016,11 +4006,15 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   cursor: pointer;
   order: 2;
 }
-.ag-spatial-stage-canvas .ag-omnichannel-stage {
+.ag-spatial-stage-canvas .ag-omnichannel-stage,
+.ag-spatial-stage-canvas .ag-omnichannel-stage.is-ratio-1-1,
+.ag-spatial-stage-canvas .ag-omnichannel-stage.is-ratio-9-16,
+.ag-spatial-stage-canvas .ag-omnichannel-stage.is-ratio-16-9 {
   width: 100%;
-  height: 100%;
+  aspect-ratio: auto;
+  min-height: clamp(146px, 27dvh, 280px);
+  max-height: clamp(180px, 34dvh, 320px);
   max-width: 100%;
-  max-height: 100%;
   background: transparent;
   border: none;
   box-shadow: none;
@@ -4034,7 +4028,7 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 100%;
+  max-height: clamp(168px, 31dvh, 300px);
   object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.65);
@@ -4051,7 +4045,7 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 16px;
+  padding: 0 12px;
   gap: 6px;
   order: 3;
 }
@@ -4059,14 +4053,25 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   background: rgba(18, 20, 28, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  padding: 6px 8px;
+  padding: 4px 6px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 4px;
 }
 .ag-spatial-act#ag-act-omnichannel .ag-petal-filter-btn {
+  flex: 1 1 0;
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #D6D2C9;
-  font-size: 8.5px;
-  padding: 5px 8px;
+  color: #EAE6DC;
+  font-size: 0.6875rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 4px 8px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .ag-spatial-act#ag-act-omnichannel .ag-petal-filter-btn.is-active {
   background: #D84E29;
@@ -4074,17 +4079,17 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   color: #FFFFFF;
 }
 .ag-spatial-act#ag-act-omnichannel .ag-petal-dial-wrapper {
-  height: 174px;
+  height: clamp(138px, 21dvh, 164px);
 }
 .ag-spatial-act#ag-act-omnichannel .ag-petal-arc-guide,
 .ag-spatial-act#ag-act-omnichannel .ag-petal-wheel-plane {
-  bottom: -136px;
+  bottom: -146px;
 }
 
-/* ACT 2: BARNEY DALE 70MM CINEMA & JOG-WHEEL */
+/* ACT 2: BARNEY DALE CINEMA & JOG-WHEEL */
 .ag-barney-pan-canvas {
-  flex: 1;
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: clamp(185px, 34dvh, 320px);
   aspect-ratio: auto;
   width: 100%;
   position: relative;
@@ -4092,13 +4097,14 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: #000;
-  margin: 6px 0;
+  margin: 4px 0;
   cursor: grab;
   touch-action: pan-y;
 }
 .ag-barney-pan-track {
   display: flex;
   height: 100%;
+  min-height: inherit;
   width: 250%;
   will-change: transform;
   transform: translate3d(0, 0, 0);
@@ -4124,15 +4130,15 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   display: flex;
   align-items: center;
   gap: 5px;
-  background: rgba(0, 0, 0, 0.78);
+  background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: #FFF;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 3px 7px;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   pointer-events: none;
@@ -4149,17 +4155,19 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 .ag-director-commentary-pill,
 .ag-director-commentary-pill.ag-reel-mute-btn {
   width: auto;
-  height: auto;
-  background: rgba(22, 25, 34, 0.85);
-  border: 1px solid rgba(216, 78, 41, 0.4);
+  min-height: 44px;
+  min-width: 44px;
+  background: rgba(22, 25, 34, 0.88);
+  border: 1px solid rgba(216, 78, 41, 0.45);
   border-radius: 999px;
-  padding: 6px 14px;
+  padding: 8px 16px;
   color: #F8F6F0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
+  font-size: 0.75rem;
   font-weight: 700;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   cursor: pointer;
 }
@@ -4199,8 +4207,8 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   padding: 2px 14px;
 }
 .ag-jogwheel-dial {
-  width: 68px;
-  height: 68px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: radial-gradient(circle, #252833 0%, #111318 100%);
   border: 3px solid rgba(216, 78, 41, 0.45);
@@ -4229,31 +4237,35 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-jogwheel-center-cap {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   font-weight: 800;
-  color: #A09C94;
+  color: #D6D2C9;
 }
 .ag-jogwheel-hint {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
-  color: #87837B;
-  letter-spacing: 0.08em;
+  font-size: 0.6875rem;
+  color: #B5B1A9;
+  letter-spacing: 0.05em;
 }
 
-/* ACT 3: NIVARA SPREAD FOLIO & X-RAY PEEL */
+/* ACT 3: NIVARA SPREAD FOLIO & PACKAGING OVERLAY */
 .ag-spatial-act#ag-act-nivara .ag-folio-cad-toggle-btn {
   margin-left: auto;
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 0.6875rem;
+  padding: 6px 12px;
 }
 .ag-nivara-folio-canvas-wrap {
-  flex: 1;
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: clamp(190px, 34dvh, 320px);
   width: 100%;
   position: relative;
   overflow: hidden;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: #14161D;
-  margin: 6px 0;
+  margin: 4px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4268,7 +4280,7 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-nivara-base-spread img {
   max-width: 100%;
-  max-height: 100%;
+  max-height: clamp(185px, 33dvh, 310px);
   object-fit: contain;
 }
 .ag-cad-dieline-overlay {
@@ -4285,8 +4297,8 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   top: 0;
   bottom: 0;
   left: 0%;
-  width: 36px;
-  margin-left: -18px;
+  width: 44px;
+  margin-left: -22px;
   cursor: ew-resize;
   touch-action: none;
   z-index: 15;
@@ -4307,9 +4319,9 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   background: #F3A427;
   color: #181716;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 900;
-  padding: 4px 6px;
+  padding: 5px 8px;
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
@@ -4321,27 +4333,34 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 .ag-spatial-act#ag-act-nivara .ag-folio-nav-row {
   margin-top: 4px;
 }
+.ag-spatial-act#ag-act-nivara .ag-folio-step-btn,
+.ag-spatial-act#ag-act-nivara .ag-folio-pill {
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 0.75rem;
+}
 .ag-spatial-act#ag-act-nivara .ag-nivara-sub-shelf {
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 .ag-spatial-act#ag-act-nivara .ag-nivara-artifact-card {
-  flex: 0 0 84px;
-  height: 56px;
+  flex: 0 0 88px;
+  height: 58px;
+  min-height: 44px;
 }
 
 /* ACT 4: THE OPEN RETAIL ARCHITECTURE */
 .ag-retail-vitrine-stage {
-  flex: 1;
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: clamp(200px, 38dvh, 340px);
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   cursor: pointer;
-  margin: 6px 0;
+  margin: 4px 0;
   overflow: hidden;
 }
 .ag-retail-fixture-view {
@@ -4355,7 +4374,7 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-retail-fixture-view img {
   max-width: 100%;
-  max-height: 100%;
+  max-height: clamp(195px, 36dvh, 330px);
   object-fit: contain;
   border-radius: 10px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75);
@@ -4370,21 +4389,29 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding-bottom: 0;
   flex-shrink: 0;
 }
 .ag-spatial-act#ag-act-retail .ag-the-open-selector-row {
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 6px;
   max-width: 100%;
 }
 .ag-spatial-act#ag-act-retail .ag-the-open-btn {
   background: rgba(255, 255, 255, 0.08);
   color: #EAE6DC;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  padding: 6px 9px;
-  border-radius: 4px;
+  padding: 8px 12px;
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 0.6875rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .ag-spatial-act#ag-act-retail .ag-the-open-btn.is-active {
   background: #D84E29;
@@ -4393,12 +4420,13 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-retail-material-meta {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: #87837B;
-  letter-spacing: 0.08em;
+  font-size: 0.6875rem;
+  color: #B5B1A9;
+  letter-spacing: 0.05em;
+  text-align: center;
 }
 
-/* ACT 5: CRM TELEMETRY CONSOLE */
+/* ACT 5: CRM EMAIL SYSTEMS */
 .ag-crm-telemetry-header {
   display: flex;
   flex-direction: column;
@@ -4408,13 +4436,13 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
-  padding: 4px 8px;
+  padding: 6px 10px;
   overflow: hidden;
   white-space: nowrap;
 }
 .ag-teletype-ticker {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 0.6875rem;
   color: #38EF7D;
   display: inline-block;
   animation: agTeletypeMarquee 20s linear infinite;
@@ -4424,20 +4452,19 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   100% { transform: translateX(-50%); }
 }
 .ag-crm-console-stage {
-  flex: 1;
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: clamp(210px, 38dvh, 360px);
   width: 100%;
   position: relative;
   overflow: hidden;
-  margin: 6px 0;
+  margin: 4px 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .ag-crm-scroll-viewport {
   width: 100%;
-  height: 100%;
-  max-height: 100%;
+  height: clamp(210px, 38dvh, 360px);
   overflow-y: auto;
   overflow-x: hidden;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -4477,10 +4504,10 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-loupe-spec-tag {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 800;
   color: #FFF;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.78);
   padding: 2px 6px;
   border-radius: 4px;
 }
@@ -4490,17 +4517,30 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-spatial-act#ag-act-crm .ag-crm-actions-ribbon {
   margin-top: 2px;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 .ag-spatial-act#ag-act-crm .ag-crm-pills-row {
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 6px;
 }
-.ag-spatial-act#ag-act-crm .ag-crm-pill {
+.ag-spatial-act#ag-act-crm .ag-crm-pill,
+.ag-spatial-act#ag-act-crm .ag-crm-loupe-btn {
   background: rgba(255, 255, 255, 0.08);
   color: #EAE6DC;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  padding: 5px 8px;
+  padding: 8px 12px;
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 0.6875rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .ag-spatial-act#ag-act-crm .ag-crm-pill.is-active {
   background: #D84E29;
@@ -4510,14 +4550,14 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 
 /* ACT 6: GENERATIVE AI SPLIT-SCREEN WIPE */
 .ag-genai-wipe-stage {
-  flex: 1;
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: clamp(210px, 38dvh, 360px);
   width: 100%;
   position: relative;
   overflow: hidden;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  margin: 6px 0;
+  margin: 4px 0;
   cursor: grab;
   background: #000;
 }
@@ -4541,7 +4581,7 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   bottom: 12px;
   left: 12px;
   right: 12px;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
   padding: 6px 10px;
   border-radius: 6px;
@@ -4549,18 +4589,19 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-prompt-code {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   color: #38EF7D;
   display: block;
+  line-height: 1.35;
 }
 .ag-genai-final-badge {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: rgba(216, 78, 41, 0.85);
+  background: rgba(216, 78, 41, 0.9);
   color: #FFF;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 800;
   padding: 4px 8px;
   border-radius: 4px;
@@ -4570,8 +4611,8 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   top: 0;
   bottom: 0;
   left: 50%;
-  width: 36px;
-  margin-left: -18px;
+  width: 44px;
+  margin-left: -22px;
   cursor: ew-resize;
   touch-action: none;
   z-index: 15;
@@ -4593,9 +4634,9 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   border: 1px solid #FFF;
   color: #FFF;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
+  font-size: 0.6875rem;
   font-weight: 800;
-  padding: 4px 8px;
+  padding: 5px 10px;
   border-radius: 999px;
   white-space: nowrap;
 }
@@ -4608,33 +4649,44 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-spatial-act#ag-act-genai .ag-genai-thumb-btn {
   position: relative;
-  height: 54px;
+  height: 56px;
+  min-height: 44px;
+  min-width: 44px;
 }
 .ag-spatial-act#ag-act-genai .ag-genai-thumb-btn span {
   position: absolute;
   bottom: 3px;
   left: 4px;
-  background: rgba(10, 11, 15, 0.82);
+  background: rgba(10, 11, 15, 0.88);
   color: #F8F6F0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 7.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
-  padding: 1px 5px;
+  padding: 2px 6px;
   border-radius: 3px;
 }
 
-/* ACT 7: 30-YEAR HERITAGE ARCHIVE SWATCH DECK */
+/* ACT 7: EDITORIAL LOOKBOOK SWATCH DECK */
 .ag-spatial-act#ag-act-archive .ag-lookbook-brand-selector {
   flex-shrink: 0;
   margin: 4px 0;
+  display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 6px;
 }
 .ag-spatial-act#ag-act-archive .ag-lb-brand-pill {
   background: rgba(255, 255, 255, 0.08);
   color: #EAE6DC;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  padding: 5px 9px;
+  padding: 8px 12px;
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 0.6875rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .ag-spatial-act#ag-act-archive .ag-lb-brand-pill.is-active {
   background: #D84E29;
@@ -4642,21 +4694,21 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   border-color: #D84E29;
 }
 .ag-archive-swatch-stage {
-  flex: 1;
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: clamp(240px, 42dvh, 360px);
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   perspective: 1000px;
   position: relative;
-  margin: 6px 0;
+  margin: 4px 0;
 }
 .ag-swatch-card {
   position: absolute;
-  height: min(88%, 360px);
+  height: min(88%, 320px);
   width: auto;
-  max-width: 74vw;
+  max-width: 72vw;
   aspect-ratio: 1 / 1.414;
   border-radius: 14px;
   overflow: hidden;
@@ -4675,17 +4727,17 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   position: absolute;
   bottom: 8px;
   left: 8px;
-  background: rgba(10, 11, 15, 0.84);
+  background: rgba(10, 11, 15, 0.88);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   color: #F8F6F0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 7.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
-  padding: 3px 7px;
+  padding: 4px 8px;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 .ag-swatch-portrait {
   z-index: 10;
@@ -4703,15 +4755,15 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-museum-placard-strip {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: #87837B;
-  letter-spacing: 0.08em;
+  font-size: 0.6875rem;
+  color: #B5B1A9;
+  letter-spacing: 0.05em;
 }
 
-/* ACT 8: EXECUTIVE COLOPHON & MONOLITH */
+/* ACT 8: EXECUTIVE COLOPHON */
 .ag-colophon-monolith-stage {
-  flex: 1;
-  min-height: 0;
+  flex: 1 1 auto;
+  min-height: clamp(200px, 34dvh, 300px);
   width: 100%;
   display: flex;
   align-items: center;
@@ -4759,22 +4811,22 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-vcard-identity-text h3 {
   font-family: 'Syne', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 800;
   color: #FFF;
   margin: 0 0 2px 0;
 }
 .ag-vcard-role {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 11px;
+  font-size: 0.75rem;
   color: #D84E29;
   font-weight: 600;
   display: block;
 }
 .ag-vcard-coords {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: #87837B;
+  font-size: 0.6875rem;
+  color: #B5B1A9;
   display: block;
   margin-top: 3px;
 }
@@ -4787,7 +4839,7 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   padding: 4px 10px;
   border-radius: 999px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 8.5px;
+  font-size: 0.6875rem;
   font-weight: 700;
   color: #38EF7D;
   margin-bottom: 12px;
@@ -4801,8 +4853,8 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
 }
 .ag-vcard-signature-seal {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: #87837B;
+  font-size: 0.6875rem;
+  color: #B5B1A9;
   border-top: 1px dashed rgba(255, 255, 255, 0.1);
   padding-top: 8px;
 }
@@ -4825,14 +4877,17 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   background: rgba(26, 29, 38, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 999px;
-  padding: 8px 12px;
+  padding: 10px 14px;
+  min-height: 44px;
+  min-width: 44px;
   color: #F8F6F0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
+  font-size: 0.75rem;
   font-weight: 700;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -4846,9 +4901,178 @@ html[data-mode="mobile"] #atelier-gram-root:not(.ag-legacy-tab-active) #ag-tab-f
   transform: scale(0.96);
 }
 
-/* Portrait / Landscape Mode Strict Separation */
-@media (orientation: landscape) and (min-width: 900px) {
+/* Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
   html[data-mode="mobile"] #atelier-gram-root {
-    display: none !important;
+    scroll-behavior: auto;
   }
+  .ag-teletype-ticker,
+  .ag-director-commentary-pill.is-playing .ag-audio-waveform .bar,
+  .ag-hud-audio-btn.is-playing .bar {
+    animation: none;
+  }
+  #atelier-gram-root *,
+  .atelier-gram-story-viewer-modal * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Width-Aligned Mode Separation (> 820px is desktop) */
+@media (min-width: 821px) {
+  html:not([data-mode="mobile"]) #atelier-gram-root {
+    display: none;
+  }
+}
+
+/* Tap-Target & Accessibility Guarantee (>= 44x44px) for Mobile Tabs & Story Modal */
+#atelier-gram-root button,
+#atelier-gram-root a[href],
+#ag-story-viewer-modal button,
+#ag-story-viewer-modal a[href],
+#atelier-gram-root .ag-header-cv-btn,
+#atelier-gram-root .ag-dossier-btn,
+#atelier-gram-root .ag-dossier-primary-btn,
+#atelier-gram-root .ag-dossier-download-cta,
+#ag-story-viewer-modal .ag-story-close-btn,
+#atelier-gram-root .ag-reel-mute-btn,
+#atelier-gram-root .ag-reel-tool-btn,
+#atelier-gram-root .ag-card-tool-btn,
+#atelier-gram-root .ag-ratio-pill-btn,
+#atelier-gram-root .ag-filter-pill-btn,
+#atelier-gram-root .ag-crm-tab-btn,
+#atelier-gram-root .ag-crm-inspect-btn,
+#atelier-gram-root .ag-profile-segment-btn,
+#atelier-gram-root .ag-profile-seg-btn,
+#atelier-gram-root .ag-omnichannel-ratio-btn,
+#ag-story-viewer-modal .ag-petal-filter-btn,
+#atelier-gram-root .ag-folio-cad-toggle-btn,
+#atelier-gram-root .ag-folio-step-btn,
+#atelier-gram-root .ag-folio-pill,
+#atelier-gram-root .ag-cinema-sound-btn,
+#atelier-gram-root .ag-vp-pill,
+#atelier-gram-root .ag-sf-brand-btn,
+#atelier-gram-root .ag-crm-pill,
+#atelier-gram-root .ag-crm-loupe-btn,
+#atelier-gram-root .ag-lb-brand-pill,
+#atelier-gram-root .ag-the-open-btn,
+#ag-story-viewer-modal .ag-nivara-thumb-btn,
+#atelier-gram-root .ag-genai-thumb-btn,
+#atelier-gram-root .ag-hud-brand-monogram {
+  min-height: 44px;
+  min-width: 44px;
+  box-sizing: border-box;
+}
+
+#ag-story-viewer-modal .ag-story-progress-bar-container {
+  display: flex;
+  gap: 4px;
+  padding: calc(10px + env(safe-area-inset-top, 0px)) 14px 4px;
+  z-index: 60;
+}
+
+#ag-story-viewer-modal .ag-story-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 14px 10px;
+  color: #F8F6F0;
+  z-index: 60;
+  position: relative;
+}
+
+#ag-story-viewer-modal .ag-story-header-author,
+#ag-story-viewer-modal .ag-story-header-right-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#ag-story-viewer-modal .ag-story-header-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+#ag-story-viewer-modal .ag-story-header-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #D84E29;
+  color: #FFF;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+#ag-story-viewer-modal .ag-story-header-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #FFF;
+}
+
+#ag-story-viewer-modal .ag-story-header-time,
+#ag-story-viewer-modal .ag-story-index-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: #B5B1A9;
+}
+
+#ag-story-viewer-modal .ag-story-nav-edge {
+  position: absolute;
+  top: 90px;
+  bottom: 180px;
+  width: 14%;
+  z-index: 5;
+}
+
+#ag-story-viewer-modal .ag-story-nav-edge.left { left: 0; }
+#ag-story-viewer-modal .ag-story-nav-edge.right { right: 0; }
+
+#ag-story-viewer-modal .ag-story-close-btn,
+#ag-story-viewer-modal .ag-cinema-modal-sound-btn,
+#ag-story-viewer-modal .ag-nivara-modal-cad-btn,
+#ag-story-viewer-modal .ag-museum-tab,
+#ag-story-viewer-modal .ag-crm-m-pill,
+#ag-story-viewer-modal .ag-crm-m-zoom-btn,
+#ag-story-viewer-modal .ag-ai-m-tab,
+#ag-story-viewer-modal .ag-lb-m-btn,
+#ag-story-viewer-modal .ag-hw-modal-tab,
+#ag-story-viewer-modal .ag-sf-modal-dev,
+#ag-story-viewer-modal .ag-sf-modal-brand,
+#ag-story-viewer-modal .ag-nivara-thumb-btn,
+#ag-story-viewer-modal .ag-petal-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 25;
+}
+
+#ag-story-viewer-modal .ag-petal-filter-bar,
+#ag-story-viewer-modal .ag-museum-modal-tabs,
+#ag-story-viewer-modal .ag-crm-modal-pills,
+#ag-story-viewer-modal .ag-ai-modal-concept-tabs,
+#ag-story-viewer-modal .ag-lb-modal-brand-selector,
+#ag-story-viewer-modal .ag-hw-modal-nav-tabs,
+#ag-story-viewer-modal .ag-sf-modal-device-toggles,
+#ag-story-viewer-modal .ag-sf-modal-brand-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+#ag-story-viewer-modal .ag-story-viewer-top-bar {
+  top: calc(16px + env(safe-area-inset-top, 0px));
 }

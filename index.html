@@ -2,37 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Irene Thomas — Graphic Designer & Art Director | Creative Showcase</title>
   <meta name="description" content="Visual portfolio of Irene Thomas, Graphic Designer & Art Director in Dubai. Featuring commercial e-commerce campaigns, brand identity systems, and motion design.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>">
 
-  <!-- PHASE 1: Layout Mode & Cursor Capability Detection (Dictated Strictly by Resolution: Portrait = Mobile, Landscape = PC; Shows Cursor when Present) -->
+  <!-- Width-Based, Virtual-Keyboard-Immune Mode & Cursor Capability Detection -->
   <script>
     (function () {
       var root = document.documentElement;
-      var mqPortrait = window.matchMedia('(orientation: portrait)');
+      var mqMobileWidth = window.matchMedia('(max-width: 820px)');
       var mqCursor = window.matchMedia('(hover: hover) and (pointer: fine)');
       var mqAnyFine = window.matchMedia ? window.matchMedia('(any-pointer: fine)') : null;
+      var lastInnerWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
 
-      function isPortraitResolution() {
+      function isMobileViewport() {
         if (typeof window === 'undefined') return false;
-        // Strictly dictated by screen resolution / aspect ratio:
-        // Height >= Width -> Portrait (Mobile Page)
-        // Width > Height  -> Landscape (PC / Desktop Page)
-        return window.innerHeight >= window.innerWidth;
+        return mqMobileWidth.matches || window.innerWidth <= 820;
       }
 
       function applyLayoutMode() {
-        var isPortrait = isPortraitResolution();
-        var mode = isPortrait ? 'mobile' : 'desktop';
+        var isMob = isMobileViewport();
+        var mode = isMob ? 'mobile' : 'desktop';
         var prev = root.getAttribute('data-mode');
         root.setAttribute('data-mode', mode);
         if (prev !== mode) {
           window.dispatchEvent(new CustomEvent('atelier:modechange', {
-            detail: { mode: mode, isMobile: isPortrait, isDesktop: !isPortrait, isPortrait: isPortrait }
+            detail: { mode: mode, isMobile: isMob, isDesktop: !isMob, isPortrait: isMob }
           }));
         }
+      }
+
+      function handleWidthResize() {
+        var w = window.innerWidth;
+        if (w === lastInnerWidth) return;
+        lastInnerWidth = w;
+        applyLayoutMode();
       }
 
       var hasCursor = Boolean((mqCursor && mqCursor.matches) || (mqAnyFine && mqAnyFine.matches));
@@ -54,7 +59,6 @@
       applyLayoutMode();
       applyCursorMode();
 
-      // Dynamic pointer detection: if a mouse, trackpad or stylus is moved, a cursor is present!
       window.addEventListener('mousemove', function () {
         if (!hasCursor) setCursorPresent(true);
       }, { passive: true });
@@ -73,21 +77,29 @@
         else if (mq.addListener) mq.addListener(fn);
       }
 
-      bindChange(mqPortrait, applyLayoutMode);
-      window.addEventListener('resize', applyLayoutMode);
-      window.addEventListener('orientationchange', applyLayoutMode);
+      bindChange(mqMobileWidth, function () {
+        lastInnerWidth = window.innerWidth;
+        applyLayoutMode();
+      });
+      window.addEventListener('resize', handleWidthResize);
+      window.addEventListener('orientationchange', function () {
+        setTimeout(function () {
+          lastInnerWidth = window.innerWidth;
+          applyLayoutMode();
+        }, 60);
+      });
       bindChange(mqCursor, applyCursorMode);
       if (mqAnyFine) bindChange(mqAnyFine, applyCursorMode);
 
       window.AtelierMode = {
-        isMobile: function () { return isPortraitResolution(); },
-        isDesktop: function () { return !isPortraitResolution(); },
-        isPortrait: function () { return isPortraitResolution(); },
-        isLandscape: function () { return !isPortraitResolution(); },
+        isMobile: function () { return isMobileViewport(); },
+        isDesktop: function () { return !isMobileViewport(); },
+        isPortrait: function () { return isMobileViewport(); },
+        isLandscape: function () { return !isMobileViewport(); },
         hasFineHover: function () { return hasCursor; },
         hasCursor: function () { return hasCursor; },
         applyLayoutMode: applyLayoutMode,
-        mqPortrait: mqPortrait,
+        mqMobileWidth: mqMobileWidth,
         mqCursor: mqCursor
       };
     })();
@@ -141,7 +153,7 @@
         <!-- Focal Subject (This starts softly blurred and snaps to 4K sharp on 100%) -->
         <div class="viewfinder-subject is-focusing" id="viewfinder-subject">
           <div class="vf-monogram-wrap">
-            <img src="assets/brand/it_logo_white.png" alt="IT Logo" class="vf-monogram-img">
+            <img data-desktop-src="assets/brand/it_logo_white.png" alt="IT Logo" class="vf-monogram-img">
           </div>
           <h1 class="vf-title">IRENE THOMAS</h1>
           <p class="vf-subtitle">ART DIRECTION &amp; GRAPHIC DESIGN</p>
@@ -152,13 +164,13 @@
           </div>
           <div class="vf-status-line">
             <span class="vf-status-indicator" id="vf-status-indicator"></span>
-            <span class="vf-status-text" id="viewfinder-status-text">ACQUIRING FOCUS... 0%</span>
+            <span class="vf-status-text" id="viewfinder-status-text">Opening Atelier... 0%</span>
           </div>
         </div>
 
         <!-- Mobile Focused Portrait Card (Revealed at Focus Lock; Sized at Exact Mobile Card Crop) -->
         <div class="vf-mobile-photo-card" id="vf-mobile-photo-card" aria-hidden="true">
-          <img src="assets/optimized/new_additions/PP.jpg" alt="Irene Thomas" id="vf-mobile-photo-img" decoding="async">
+          <img data-desktop-src="assets/optimized/new_additions/PP.jpg" alt="Irene Thomas" id="vf-mobile-photo-img" decoding="async">
           <div class="vf-mobile-photo-badge">THE ELS CLUB // DUBAI SPORTS CITY</div>
         </div>
       </div>
@@ -294,9 +306,9 @@
             <!-- Living Ambient Canvas identical to live page -->
             <div class="layer-ambient-art-canvas" id="ps-artboard-ambient" aria-hidden="true">
               <div class="ambient-art-blur-plate plate-a is-active" id="ps-ambient-blur-plate"
-                style="background-image: url('assets/optimized/new_additions/PP.jpg');"></div>
+                data-desktop-bg="assets/optimized/new_additions/PP.jpg"></div>
               <div class="ambient-art-ghost-plate plate-a is-active" id="ps-ambient-ghost-plate"
-                style="background-image: url('assets/optimized/new_additions/PP.jpg');"></div>
+                data-desktop-bg="assets/optimized/new_additions/PP.jpg"></div>
               <div class="ambient-drafting-grid"></div>
             </div>
 
@@ -344,7 +356,7 @@
             <aside class="left-margin-atelier-rail" id="ps-build-left-rail" aria-label="Stage Telemetry & Quick Stepper">
               <button type="button" class="left-rail-step-btn" title="Previous Showcase Stage">▲</button>
               <div class="left-rail-art-window" title="Active Stage Artwork">
-                <img src="assets/optimized/new_additions/PP.jpg" alt="Stage Preview" decoding="async">
+                <img data-desktop-src="assets/optimized/new_additions/PP.jpg" alt="Stage Preview" decoding="async">
                 <span class="left-rail-art-frame"></span>
               </div>
               <div class="left-rail-stage-counter">01 / 16</div>
@@ -457,8 +469,8 @@
                     <div class="hero-pills-row" id="ps-build-pills">
                       <span class="hero-pill">📍 Al Khail Gate, Dubai, UAE</span>
                       <a href="tel:+971563482737" class="hero-pill">📞 +971 56 348 2737</a>
-                      <a href="https://linkedin.com" target="_blank" rel="noopener" class="hero-pill">LI: Irene Thomas</a>
-                      <a href="https://behance.net" target="_blank" rel="noopener" class="hero-pill">Be: Irene Thomas</a>
+                      <a href="mailto:irene28thomas@gmail.com" class="hero-pill">✉️ irene28thomas@gmail.com</a>
+                      <a href="Irene_Resume_2026.pdf" download class="hero-pill">📄 Download Resume</a>
                     </div>
                   </div>
 
@@ -470,7 +482,7 @@
                     </div>
 
                     <div class="portrait-image-crop img-upload-box ps-build-portrait-card" id="ps-build-portrait">
-                      <img src="assets/optimized/new_additions/PP.jpg" alt="Irene Thomas - Graphic Designer" decoding="async">
+                      <img data-desktop-src="assets/optimized/new_additions/PP.jpg" alt="Irene Thomas - Graphic Designer" decoding="async">
                       <div class="portrait-badge-overlay" id="ps-build-portrait-tag">THE ELS CLUB // DUBAI SPORTS CITY</div>
 
                       <!-- 8-Handle Cyan Free Transform Bounding Box -->
@@ -780,109 +792,72 @@
        ======================================================================= -->
   <div id="atelier-gram-root" class="atelier-gram-root" aria-label="Irene Thomas Atelier Mobile Application">
     
-    <!-- FLOATING SPATIAL COMPASS HUD (REPLACES TRADITIONAL MOBILE CHROME) -->
-    <aside class="ag-spatial-compass-hud" id="ag-spatial-compass-hud" aria-label="Spatial Portfolio Wayfinding">
-      <!-- Top HUD Bar -->
+    <!-- SINGLE MINIMALIST MOBILE TOP HEADER -->
+    <aside class="ag-spatial-compass-hud" id="ag-spatial-compass-hud" aria-label="Portfolio Navigation">
       <div class="ag-hud-top-bar">
-        <div class="ag-hud-brand-monogram" onclick="if(window.switchAtelierGramTab) window.switchAtelierGramTab('feed')" role="button" tabindex="0">
+        <button type="button" class="ag-hud-brand-monogram" onclick="if(window.switchAtelierGramTab) window.switchAtelierGramTab('feed')">
           <span class="ag-hud-monogram-badge">IT</span>
-          <span class="ag-hud-brand-title">SEB // ATELIER</span>
-        </div>
-        <div class="ag-hud-act-badge" id="ag-hud-act-indicator">
-          <span class="ag-hud-act-num">01 / 08</span>
-          <span class="ag-hud-act-label">OMNICHANNEL</span>
-        </div>
-      </div>
-
-      <!-- Bottom HUD Bar -->
-      <div class="ag-hud-bottom-bar">
+          <span class="ag-hud-brand-title">IRENE THOMAS</span>
+        </button>
         <button type="button" class="ag-compass-capsule" id="ag-compass-capsule" onclick="toggleSpatialChapterIndex()" aria-expanded="false" aria-label="Open Chapter Index">
-          <svg class="ag-compass-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
-          </svg>
-          <span class="ag-compass-act-name" id="ag-compass-act-name">01 // OMNICHANNEL</span>
-          <svg class="ag-compass-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <button type="button" class="ag-hud-audio-btn" id="ag-hud-audio-btn" onclick="toggleGlobalSpatialAudio()" aria-label="Toggle Ambiance Audio">
-          <span class="ag-audio-bars">
-            <span class="bar bar-1"></span><span class="bar bar-2"></span><span class="bar bar-3"></span>
-          </span>
-          <span class="ag-audio-label">AUDIO</span>
+          <span class="ag-compass-act-name" id="ag-compass-act-name">01 / 08 · Campaigns</span>
+          <svg class="ag-compass-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
       </div>
 
-      <!-- Radial / Arc Chapter Index Menu (Unfolds on Tap) -->
+      <!-- Chapter Index Sheet (Unfolds on Tap) -->
       <div class="ag-radial-chapter-index" id="ag-radial-chapter-index" aria-hidden="true">
         <div class="ag-radial-backdrop" onclick="toggleSpatialChapterIndex(false)"></div>
         <div class="ag-radial-menu-sheet">
           <div class="ag-radial-header">
-            <span class="ag-radial-title">SPATIAL MONOGRAPH // 8 ACTS</span>
+            <span class="ag-radial-title">Portfolio Chapters · 8 Acts</span>
             <button type="button" class="ag-radial-close-btn" onclick="toggleSpatialChapterIndex(false)" aria-label="Close Index">✕</button>
           </div>
           <div class="ag-radial-chapters-grid">
             <button type="button" class="ag-chapter-btn is-active" data-act-target="ag-act-omnichannel" onclick="jumpToSpatialAct('ag-act-omnichannel', this)">
               <span class="ag-ch-idx">01</span>
-              <span class="ag-ch-name">OMNICHANNEL ORBIT</span>
-              <span class="ag-ch-meta">12 Multi-Ratio Systems</span>
+              <span class="ag-ch-name">Omnichannel Campaigns</span>
+              <span class="ag-ch-meta">12 Multi-Format Ad Systems</span>
             </button>
             <button type="button" class="ag-chapter-btn" data-act-target="ag-act-cinema" onclick="jumpToSpatialAct('ag-act-cinema', this)">
               <span class="ag-ch-idx">02</span>
-              <span class="ag-ch-name">BARNEY DALE CINEMA</span>
-              <span class="ag-ch-meta">2000×915 Panoramic Filmstrip</span>
+              <span class="ag-ch-name">Barney Dale: The Cloud</span>
+              <span class="ag-ch-meta">2D Animated Short &amp; Storyboard</span>
             </button>
             <button type="button" class="ag-chapter-btn" data-act-target="ag-act-nivara" onclick="jumpToSpatialAct('ag-act-nivara', this)">
               <span class="ag-ch-idx">03</span>
-              <span class="ag-ch-name">NIVARA BOTANICAL FOLIO</span>
-              <span class="ag-ch-meta">13 Spreads &amp; CAD Dielines</span>
+              <span class="ag-ch-name">Nivara Brand Book</span>
+              <span class="ag-ch-meta">13 Spreads &amp; Packaging Dielines</span>
             </button>
             <button type="button" class="ag-chapter-btn" data-act-target="ag-act-retail" onclick="jumpToSpatialAct('ag-act-retail', this)">
               <span class="ag-ch-idx">04</span>
-              <span class="ag-ch-name">THE OPEN 2026 RETAIL</span>
-              <span class="ag-ch-meta">In-Store Architectural Collateral</span>
+              <span class="ag-ch-name">The Open 2026 Retail</span>
+              <span class="ag-ch-meta">In-Store Displays &amp; Posters</span>
             </button>
             <button type="button" class="ag-chapter-btn" data-act-target="ag-act-crm" onclick="jumpToSpatialAct('ag-act-crm', this)">
               <span class="ag-ch-idx">05</span>
-              <span class="ag-ch-name">CRM TELEMETRY CONSOLE</span>
-              <span class="ag-ch-meta">5000px Dispatch &amp; Retina Loupe</span>
+              <span class="ag-ch-name">CRM Email Systems</span>
+              <span class="ag-ch-meta">VIP Campaigns &amp; Magnifier</span>
             </button>
             <button type="button" class="ag-chapter-btn" data-act-target="ag-act-genai" onclick="jumpToSpatialAct('ag-act-genai', this)">
               <span class="ag-ch-idx">06</span>
-              <span class="ag-ch-name">GENERATIVE AI STUDIO</span>
-              <span class="ag-ch-meta">Bifurcated Prompt Wipe</span>
+              <span class="ag-ch-name">Generative AI Studio</span>
+              <span class="ag-ch-meta">Concept-to-Final Comparison</span>
             </button>
             <button type="button" class="ag-chapter-btn" data-act-target="ag-act-archive" onclick="jumpToSpatialAct('ag-act-archive', this)">
               <span class="ag-ch-idx">07</span>
-              <span class="ag-ch-name">HERITAGE ARCHIVE</span>
-              <span class="ag-ch-meta">30-Year Swatch Deck &amp; Posters</span>
+              <span class="ag-ch-name">Editorial Lookbook</span>
+              <span class="ag-ch-meta">Print Posters &amp; Store Collateral</span>
             </button>
             <button type="button" class="ag-chapter-btn" data-act-target="ag-act-colophon" onclick="jumpToSpatialAct('ag-act-colophon', this)">
               <span class="ag-ch-idx">08</span>
-              <span class="ag-ch-name">EXECUTIVE COLOPHON</span>
-              <span class="ag-ch-meta">Live UTC HUD &amp; Tactile vCard</span>
+              <span class="ag-ch-name">About &amp; Contact</span>
+              <span class="ag-ch-meta">Dubai Studio &amp; Direct Inquiry</span>
             </button>
           </div>
         </div>
       </div>
     </aside>
-
-    <!-- Legacy Top Architectural Header kept in DOM for backward compatibility -->
-    <header class="ag-top-header" id="ag-mobile-top-header" style="display: none;" aria-hidden="true">
-      <div class="ag-header-left">
-        <div class="ag-header-brand-mark">IT</div>
-        <div class="ag-header-title-group">
-          <span class="ag-header-name" id="ag-header-dynamic-title">ATELIER // CURATED</span>
-          <span class="ag-header-coords">DUBAI DESIGN DISTRICT • 25°12'N 55°18'E</span>
-        </div>
-      </div>
-      <div class="ag-header-right">
-        <span class="ag-header-badge">2026 ARCHIVE</span>
-        <a href="Irene_Resume_2026.pdf" download class="ag-header-cv-btn" title="Download CV">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          <span>CV</span>
-        </a>
-      </div>
-    </header>
 
     <!-- 2. Main Tab Viewport Container -->
     <main class="ag-tab-viewport-container">
@@ -936,7 +911,7 @@
             <button type="button" class="ag-story-highlight-item ag-story-node" data-story="storefront" onclick="openStoryViewer('storefront')" aria-label="Story Highlight: Storefront">
               <div class="ag-highlight-ring ag-story-ring-outer">
                 <div class="ag-highlight-avatar">
-                  <img src="assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Desktop 1920x600.jpg" alt="Storefront" loading="lazy">
+                  <img src="assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Mobile 640x427.jpg" alt="Storefront" loading="lazy">
                 </div>
               </div>
               <span class="ag-highlight-label">Storefront</span>
@@ -980,22 +955,22 @@
              ACT 01: OMNICHANNEL CAMPAIGN ORBIT
              Full-screen stage canvas filling 100dvh with floating petal arc dial
              =================================================================== -->
-        <article class="ag-spatial-act ag-feed-post-card ag-module-omnichannel" id="ag-act-omnichannel" data-act="1" data-act-name="OMNICHANNEL" data-post-id="omnichannel">
+        <article class="ag-spatial-act ag-feed-post-card ag-module-omnichannel" id="ag-act-omnichannel" data-act="1" data-act-name="Campaigns" data-post-id="omnichannel">
           <div class="ag-spatial-stage-canvas" id="ag-omni-expanded-card" onclick="openActivePetalLightbox()">
             <div class="ag-omnichannel-stage is-ratio-1-1" id="ag-omnichannel-stage">
               <img id="ag-omnichannel-active-img" class="ag-petal-stage-img" src="assets/optimized/new_additions/TaylorMade Hi-Toe 5 Wedges Ad 1080x1080.jpg" alt="TaylorMade Hi-Toe 5 Wedges 1:1 Feed Master" loading="lazy">
               <div class="ag-petal-inspect-hint">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg>
-                <span>TAP TO EXAMINE MASTER</span>
+                <span>Tap to inspect</span>
               </div>
             </div>
           </div>
 
           <header class="ag-act-header ag-omni-hud-header">
             <div class="ag-act-tag-row">
-              <span class="ag-act-badge">ACT 01 // ORBIT</span>
-              <span class="ag-petal-hud-ratio" id="ag-petal-hud-ratio">1:1 FEED MASTER</span>
-              <span class="ag-petal-hud-dims" id="ag-petal-hud-dims">1080 × 1080 PX</span>
+              <span class="ag-act-badge">01 · Omnichannel Campaigns</span>
+              <span class="ag-petal-hud-ratio" id="ag-petal-hud-ratio">1:1 FEED</span>
+              <span class="ag-petal-hud-dims" id="ag-petal-hud-dims">1080 × 1080 px</span>
               <!-- Buttons for test compatibility -->
               <button type="button" class="ag-specs-accordion-btn" style="display:none;" onclick="toggleSpecsDrawer('omni-drawer', this)">SPECS</button>
               <button type="button" class="ag-post-heart-btn" style="display:none;" onclick="togglePostLike(this)">HEART</button>
@@ -1006,10 +981,10 @@
 
           <div class="ag-petal-floating-overlay" id="ag-petal-floating-overlay" aria-label="Circular Petal Wheel">
             <div class="ag-petal-filter-bar ag-omnichannel-ratio-bar">
-              <button type="button" class="ag-petal-filter-btn ag-omnichannel-ratio-btn" data-filter="1-1" onclick="switchOmnichannelRatio('1:1', this)">1:1 FEED</button>
-              <button type="button" class="ag-petal-filter-btn ag-omnichannel-ratio-btn" data-filter="9-16" onclick="switchOmnichannelRatio('9:16', this)">9:16 STORY</button>
-              <button type="button" class="ag-petal-filter-btn ag-omnichannel-ratio-btn" data-filter="16-9" onclick="switchOmnichannelRatio('16:9', this)">16:9 DISPLAY</button>
-              <button type="button" class="ag-petal-filter-btn ag-omnichannel-ratio-btn is-active" data-filter="all" onclick="filterPetalDial('all', this)">ALL (12)</button>
+              <button type="button" class="ag-petal-filter-btn ag-omnichannel-ratio-btn" data-filter="1-1" aria-label="1:1 Feed format" onclick="switchOmnichannelRatio('1:1', this)">1:1</button>
+              <button type="button" class="ag-petal-filter-btn ag-omnichannel-ratio-btn" data-filter="9-16" aria-label="9:16 Story format" onclick="switchOmnichannelRatio('9:16', this)">9:16</button>
+              <button type="button" class="ag-petal-filter-btn ag-omnichannel-ratio-btn" data-filter="16-9" aria-label="16:9 Display format" onclick="switchOmnichannelRatio('16:9', this)">16:9</button>
+              <button type="button" class="ag-petal-filter-btn ag-omnichannel-ratio-btn is-active" data-filter="all" aria-label="All 12 assets" onclick="filterPetalDial('all', this)">ALL (12)</button>
             </div>
 
             <div class="ag-petal-dial-wrapper" id="ag-feed-petal-dial-wrapper">
@@ -1030,33 +1005,33 @@
         <article class="ag-spatial-act ag-feed-post-card ag-module-cinema" id="ag-act-cinema" data-act="2" data-act-name="CINEMA" data-post-id="editorial-print">
           <header class="ag-act-header">
             <div class="ag-act-tag-row">
-              <span class="ag-act-badge">ACT 02 // 70MM CINEMA</span>
-              <span class="ag-act-pill">2000 × 915 MASTER</span>
-              <span class="ag-barney-scene-tag" id="ag-barney-scene-tag">STAGE 01: PROLOGUE</span>
+              <span class="ag-act-badge">02 · Film &amp; Storyboard</span>
+              <span class="ag-act-pill">2000 × 915 px</span>
+              <span class="ag-barney-scene-tag" id="ag-barney-scene-tag">Scene 01: Prologue</span>
             </div>
             <h2 class="ag-act-title">Barney Dale: The Cloud</h2>
-            <p class="ag-act-desc">Directed 2D Animated Graphic Narrative // Authentic 2000×915 Episodic Storyboard</p>
+            <p class="ag-act-desc">Directed 2D animated short film and panoramic storyboard</p>
           </header>
 
-          <div class="ag-barney-pan-canvas ag-episodic-pan-viewport" id="ag-barney-filmstrip-viewport" onclick="openLightboxWithImage('assets/real_works/Barney_Dale__The_Cloud_story_arc.jpg', 'Barney Dale: The Cloud — Master Episodic Storyboard Arc', 'Authentic 2000×915 Panoramic Master Artboard // 4-Stage Progressive Narrative')">
+          <div class="ag-barney-pan-canvas ag-episodic-pan-viewport" id="ag-barney-filmstrip-viewport" onclick="openLightboxWithImage('assets/real_works/Barney_Dale__The_Cloud_story_arc.jpg', 'Barney Dale: The Cloud — Storyboard Arc', 'Panoramic Storyboard · 4-Stage Narrative')">
             <div class="ag-barney-pan-track" id="ag-barney-filmstrip-track">
               <img id="ag-barney-pan-img" src="assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg" alt="Barney Dale Episodic Storyboard Arc" loading="lazy">
             </div>
             <div class="ag-barney-film-grain-overlay"></div>
             <div class="ag-barney-inspect-hint">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg>
-              <span>TAP FOR 300DPI LIGHTBOX</span>
+              <span>Tap to inspect</span>
             </div>
           </div>
 
-          <video id="ag-overview-barney-video" src="assets/real_works/Barney_Dale__The_Cloud_story_arc.mp4" poster="assets/optimized/Barney_Dale__The_Cloud_story_arc_poster.webp" loop muted playsinline style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></video>
+          <video id="ag-overview-barney-video" data-src="assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4" poster="assets/optimized/Barney_Dale__The_Cloud_story_arc_poster.webp" loop muted playsinline style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;" preload="none"></video>
 
           <footer class="ag-barney-controls-hud">
             <button type="button" class="ag-director-commentary-pill ag-reel-mute-btn" id="ag-barney-audio-pill" onclick="toggleMobileVideoAudio(this, 'ag-overview-barney-video')" aria-label="Toggle Director's Soundtrack Commentary">
               <span class="ag-audio-waveform">
                 <span class="bar bar-1"></span><span class="bar bar-2"></span><span class="bar bar-3"></span><span class="bar bar-4"></span>
               </span>
-              <span class="ag-commentary-label">DIRECTOR'S COMMENTARY // 24FPS SOUNDTRACK</span>
+              <span class="ag-commentary-label">Tap to play with sound</span>
             </button>
 
             <div class="ag-jogwheel-container" id="ag-barney-jogwheel-container" aria-label="70mm Filmstrip Scrubber">
@@ -1065,7 +1040,7 @@
                 <div class="ag-jogwheel-needle"></div>
                 <div class="ag-jogwheel-center-cap">70MM</div>
               </div>
-              <div class="ag-jogwheel-hint">◂ SCRUB 70MM JOG-WHEEL TO PAN SCENES ▸</div>
+              <div class="ag-jogwheel-hint">◂ Drag wheel to scrub storyboard ▸</div>
             </div>
           </footer>
         </article>
@@ -1074,14 +1049,14 @@
              ACT 03: NIVARA BOTANICAL COSMETICS
              Full-screen tactile spread folio (01-13) with CAD Dieline X-Ray Peel
              =================================================================== -->
-        <article class="ag-spatial-act ag-feed-post-card ag-module-brand-folio" id="ag-act-nivara" data-act="3" data-act-name="NIVARA FOLIO" data-post-id="nivara">
+        <article class="ag-spatial-act ag-feed-post-card ag-module-brand-folio" id="ag-act-nivara" data-act="3" data-act-name="Brand Identity" data-post-id="nivara">
           <header class="ag-act-header">
             <div class="ag-act-tag-row">
-              <span class="ag-act-badge">ACT 03 // FOLIO</span>
+              <span class="ag-act-badge">03 · Nivara Brand Identity</span>
               <span class="ag-folio-spread-num" id="ag-nivara-spread-num">SPREAD 01 / 13</span>
               <button type="button" class="ag-folio-cad-toggle-btn" id="ag-nivara-cad-btn" onclick="toggleNivaraDielines()">
                 <span class="ag-cad-icon">📐</span>
-                <span>CAD DIELINES</span>
+                <span>Packaging Dielines</span>
               </button>
             </div>
             <h2 class="ag-act-title">Nivara Botanical Cosmetics</h2>
@@ -1093,7 +1068,7 @@
               <img id="ag-nivara-spread-img" src="assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-01.jpg" alt="Active Nivara Spread" loading="lazy">
               <div class="ag-folio-zoom-hint">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg>
-                <span>TAP TO EXAMINE SPREAD</span>
+                <span>Tap to inspect</span>
               </div>
             </div>
 
@@ -1103,7 +1078,7 @@
               <div class="ag-cad-fold-line left"></div>
               <div class="ag-cad-fold-line right"></div>
               <div class="ag-cad-crease-mark"></div>
-              <span class="ag-cad-spec-tag">DIN A4 LANDSCAPE // 300 DPI // 3MM BLEED // FOIL STAMP</span>
+              <span class="ag-cad-spec-tag">DIN A4 Print Layout · 3mm Bleed · Foil Stamp</span>
             </div>
 
             <div class="ag-nivara-peel-handle" id="ag-nivara-peel-handle" aria-label="X-Ray Peel Handle">
@@ -1164,8 +1139,8 @@
         <article class="ag-spatial-act ag-feed-post-card ag-module-the-open" id="ag-act-retail" data-act="4" data-act-name="THE OPEN RETAIL" data-post-id="the-open">
           <header class="ag-act-header">
             <div class="ag-act-tag-row">
-              <span class="ag-act-badge">ACT 04 // SPATIAL VITRINE</span>
-              <span class="ag-the-open-spec" id="ag-the-open-spec">THE OPEN 2026 // A4 STORE COLLATERAL // 300 DPI</span>
+              <span class="ag-act-badge">04 · Championship Retail</span>
+              <span class="ag-the-open-spec" id="ag-the-open-spec">The Open 2026 · In-Store Print Collateral</span>
             </div>
             <h2 class="ag-act-title">Championship Sports Retail</h2>
             <p class="ag-act-desc">The Open 2026 Official Tournament Flagship Store Collateral &amp; In-Store Vitrines</p>
@@ -1176,7 +1151,7 @@
               <img id="ag-the-open-active-img" src="assets/optimized/new_additions/The Open Major Offers 2026 A4 UAE Select Stores 1.jpg" alt="The Open 2026 Store Collateral" loading="lazy">
               <div class="ag-the-open-inspect-hint">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg>
-                <span>TAP TO EXAMINE FIXTURE</span>
+                <span>Tap to inspect</span>
               </div>
             </div>
             <div class="ag-retail-glass-reflection"></div>
@@ -1199,17 +1174,17 @@
              ACT 05: CRM TELEMETRY CONSOLE
              Cybernetic command console with live teletype & 1500w Retina Loupe
              =================================================================== -->
-        <article class="ag-spatial-act ag-feed-post-card ag-module-crm-dispatch" id="ag-act-crm" data-act="5" data-act-name="CRM TELEMETRY" data-post-id="storefront">
+        <article class="ag-spatial-act ag-feed-post-card ag-module-crm-dispatch" id="ag-act-crm" data-act="5" data-act-name="CRM Email" data-post-id="storefront">
           <header class="ag-act-header ag-crm-telemetry-header">
             <div class="ag-act-tag-row">
-              <span class="ag-act-badge">ACT 05 // CYBERNETIC CRM</span>
+              <span class="ag-act-badge">05 · CRM Email Systems</span>
               <span class="ag-crm-telemetry-pill">5,000PX ULTRA-LONG</span>
               <span class="ag-crm-spec-dims" id="ag-crm-spec-dims" style="display:none;">5,000 × 1,200</span>
               <span class="ag-crm-spec-grid" id="ag-crm-spec-grid" style="display:none;">Modular Grid</span>
               <span class="ag-crm-active-file" id="ag-crm-active-file" style="display:none;">Callaway_VIP_Newsletter.html</span>
             </div>
             <div class="ag-crm-teletype-stream" id="ag-crm-teletype-stream">
-              <span class="ag-teletype-ticker">SYS_METRICS: +42% CONVERSION LIFT // OPEN RATE: 48.7% // PATRON REACH: 18,400+ // DUBAI PRIVATE MEMBERS</span>
+              <span class="ag-teletype-ticker">Impact: +42% Conversion Lift · 48.7% Open Rate · 18,400+ Subscribers</span>
             </div>
           </header>
 
@@ -1218,7 +1193,7 @@
               <img id="ag-overview-crm-img" src="assets/optimized/new_additions/crm_vip_launch_750w.webp" alt="CRM VIP Direct Dispatch" loading="lazy">
               <div class="ag-crm-retina-loupe" id="ag-crm-retina-loupe" aria-label="1500w Retina Loupe">
                 <div class="ag-loupe-reticle"></div>
-                <div class="ag-loupe-spec-tag">1500W RETINA // 2.5X</div>
+                <div class="ag-loupe-spec-tag">2.5× Zoom</div>
               </div>
             </div>
           </div>
@@ -1230,7 +1205,7 @@
                 <button type="button" class="ag-crm-pill ag-crm-tab-btn" data-thread="majors" onclick="switchOverviewCrm('majors', this)">MAJOR TOURNAMENTS</button>
                 <button type="button" class="ag-crm-pill ag-crm-tab-btn" data-thread="vessel" onclick="switchOverviewCrm('vessel', this)">VESSEL LUXURY</button>
               </div>
-              <button type="button" class="ag-crm-loupe-btn" id="ag-crm-loupe-btn" onclick="inspectActiveCrmAsset()">🔍 1500W RETINA LOUPE</button>
+              <button type="button" class="ag-crm-loupe-btn" id="ag-crm-loupe-btn" onclick="inspectActiveCrmAsset()">Inspect Full Email</button>
             </div>
           </footer>
         </article>
@@ -1239,16 +1214,16 @@
              ACT 06: GENERATIVE AI CONCEPT STUDIO
              Full-screen bifurcated split-screen wipe slider
              =================================================================== -->
-        <article class="ag-spatial-act ag-feed-post-card ag-module-genai-terminal" id="ag-act-genai" data-act="6" data-act-name="AI STUDIO" data-post-id="ai-studio">
+        <article class="ag-spatial-act ag-feed-post-card ag-module-genai-terminal" id="ag-act-genai" data-act="6" data-act-name="AI Direction" data-post-id="ai-studio">
           <header class="ag-act-header">
             <div class="ag-act-tag-row">
-              <span class="ag-act-badge">ACT 06 // NEURAL STUDIO</span>
-              <span class="ag-token-pill">--v 6.0</span>
-              <span class="ag-token-pill">--style raw</span>
-              <span class="ag-token-pill">CFG 7.0</span>
+              <span class="ag-act-badge">06 · Generative AI Studio</span>
+              <span class="ag-token-pill">Concept Study</span>
+              <span class="ag-token-pill">Art Direction</span>
+              <span class="ag-token-pill">Final Retouch</span>
             </div>
-            <h2 class="ag-act-title">Neural Concept Staging</h2>
-            <p class="ag-act-desc">Bifurcated Split-Screen Wipe: Raw Diffusion Tokens vs. Final Production Direction</p>
+            <h2 class="ag-act-title">Generative Art Direction</h2>
+            <p class="ag-act-desc">Slide to compare initial AI concept with final retouched production</p>
           </header>
 
           <div class="ag-genai-wipe-stage" id="ag-genai-bifurcated-canvas" onclick="openActiveGenAiLightbox()">
@@ -1292,10 +1267,10 @@
              ACT 07: 30-YEAR HERITAGE ARCHIVE
              3D cascading swatch cards with brand filtering
              =================================================================== -->
-        <article class="ag-spatial-act ag-feed-post-card ag-module-lookbook-showroom" id="ag-act-archive" data-act="7" data-act-name="HERITAGE ARCHIVE" data-post-id="gfore">
+        <article class="ag-spatial-act ag-feed-post-card ag-module-lookbook-showroom" id="ag-act-archive" data-act="7" data-act-name="Print Archive" data-post-id="gfore">
           <header class="ag-act-header">
             <div class="ag-act-tag-row">
-              <span class="ag-act-badge">ACT 07 // 30Y ARCHIVE</span>
+              <span class="ag-act-badge">07 · Editorial Archive</span>
               <span class="ag-act-pill">PHYSICAL SWATCH DECK</span>
             </div>
             <h2 class="ag-act-title">30-Year Heritage Archive</h2>
@@ -1323,7 +1298,7 @@
 
           <footer class="ag-archive-footer-hud">
             <div class="ag-museum-placard-strip">
-              <span class="ag-placard-title">SWISS ASYMMETRIC GRID</span> · <span>DIN A1 ARCHIVAL PRINT</span> · <span>300 DPI</span>
+              <span class="ag-placard-title">Editorial Print Grid</span> · <span>DIN A1 Exhibition Print</span> · <span>Offset</span>
             </div>
           </footer>
         </article>
@@ -1332,14 +1307,14 @@
              ACT 08: EXECUTIVE COLOPHON
              Monolithic architectural statement with live time/location HUD & vCard
              =================================================================== -->
-        <article class="ag-spatial-act ag-feed-post-card ag-module-executive-dossier" id="ag-act-colophon" data-act="8" data-act-name="EXECUTIVE COLOPHON" data-post-id="hardware">
+        <article class="ag-spatial-act ag-feed-post-card ag-module-executive-dossier" id="ag-act-colophon" data-act="8" data-act-name="About & Contact" data-post-id="hardware">
           <header class="ag-act-header">
             <div class="ag-act-tag-row">
-              <span class="ag-act-badge">ACT 08 // COLOPHON</span>
-              <span class="ag-colophon-live-time" id="ag-colophon-live-time">DUBAI GST: --:--:-- // UTC+4</span>
+              <span class="ag-act-badge">08 · About & Contact</span>
+              <span class="ag-colophon-live-time" id="ag-colophon-live-time">Dubai (GST): --:--:--</span>
             </div>
-            <h2 class="ag-act-title">Architectural Colophon</h2>
-            <p class="ag-act-desc">Curatorial Dossier, Executive Credentials &amp; Direct Commission Directives</p>
+            <h2 class="ag-act-title">About &amp; Credentials</h2>
+            <p class="ag-act-desc">Experience, creative credentials &amp; direct contact</p>
           </header>
 
           <div class="ag-colophon-monolith-stage">
@@ -1351,13 +1326,13 @@
                 </div>
                 <div class="ag-vcard-identity-text">
                   <h3 class="ag-vcard-name">IRENE THOMAS</h3>
-                  <span class="ag-vcard-role">Senior Creative Director // Atelier Lead</span>
+                  <span class="ag-vcard-role">Senior Creative Director · Brand &amp; Art Direction</span>
                   <span class="ag-vcard-coords">DUBAI DESIGN DISTRICT • 25°12'N 55°18'E</span>
                 </div>
               </div>
               <div class="ag-vcard-status-badge">
                 <span class="ag-status-dot"></span>
-                <span>AVAILABLE FOR SELECT COMMISSIONS 2026</span>
+                <span>Available for Creative Roles & Projects · 2026</span>
               </div>
               <div class="ag-vcard-signature-seal">
                 <span class="ag-seal-stamp">IT // ARCHIVE 2026</span>
@@ -1371,7 +1346,7 @@
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                 <span>DOWNLOAD RESUME (PDF)</span>
               </a>
-              <a href="mailto:contact@irenethomas.design" class="ag-colophon-btn" title="Start Briefing">
+              <a href="mailto:irene28thomas@gmail.com" class="ag-colophon-btn" title="Start Briefing">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 <span>START DIRECT BRIEFING</span>
               </a>
@@ -1545,32 +1520,32 @@
           </div>
 
           <div class="ag-explore-tile" data-cat="commerce" onclick="openLightboxWithImage('assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Desktop 1920x600.jpg')">
-            <img src="assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Desktop 1920x600.jpg" alt="Jack Nicklaus Slider" loading="lazy">
+            <img src="assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Mobile 640x427.jpg" alt="Jack Nicklaus Slider" loading="lazy">
             <span class="ag-tile-badge">SLIDER</span>
           </div>
 
           <div class="ag-explore-tile" data-cat="commerce" onclick="openLightboxWithImage('assets/optimized/new_additions/Adidas New Collection _ Slider Desktop 1920x600.jpg')">
-            <img src="assets/optimized/new_additions/Adidas New Collection _ Slider Desktop 1920x600.jpg" alt="Adidas Slider" loading="lazy">
+            <img src="assets/optimized/new_additions/Adidas New Collection _ Slider Mobile 640x427.jpg" alt="Adidas Slider" loading="lazy">
             <span class="ag-tile-badge">ADIDAS</span>
           </div>
 
           <div class="ag-explore-tile" data-cat="commerce" onclick="openLightboxWithImage('assets/optimized/new_additions/JLindeberg 30Y Collection Slider Web 1920x600.jpg')">
-            <img src="assets/optimized/new_additions/JLindeberg 30Y Collection Slider Web 1920x600.jpg" alt="JLindeberg Slider" loading="lazy">
+            <img src="assets/optimized/new_additions/JLindeberg 30Y Collection Slider Mobile 640x427.jpg" alt="JLindeberg Slider" loading="lazy">
             <span class="ag-tile-badge">J.LINDEBERG</span>
           </div>
 
           <div class="ag-explore-tile" data-cat="commerce" onclick="openLightboxWithImage('assets/optimized/new_additions/TaylorMade Sailors Point Collection Slider 1920x600.jpg')">
-            <img src="assets/optimized/new_additions/TaylorMade Sailors Point Collection Slider 1920x600.jpg" alt="Sailors Point Slider" loading="lazy">
+            <img src="assets/optimized/new_additions/TaylorMade Sailors Point Collection Slider 640x427.jpg" alt="Sailors Point Slider" loading="lazy">
             <span class="ag-tile-badge">SAILORS POINT</span>
           </div>
 
           <div class="ag-explore-tile" data-cat="commerce" onclick="openLightboxWithImage('assets/optimized/new_additions/TaylorMade Palms and Pastels Staff Bag Slider 1920x600.jpg')">
-            <img src="assets/optimized/new_additions/TaylorMade Palms and Pastels Staff Bag Slider 1920x600.jpg" alt="Palms & Pastels Slider" loading="lazy">
+            <img src="assets/optimized/new_additions/TaylorMade Palms and Pastels Staff Bag Slider 640x427.jpg" alt="Palms & Pastels Slider" loading="lazy">
             <span class="ag-tile-badge">STAFF BAG</span>
           </div>
 
           <div class="ag-explore-tile" data-cat="commerce" onclick="openLightboxWithImage('assets/optimized/new_additions/Vessel New Collection Golf Bags Slider Web 1920x600.jpg')">
-            <img src="assets/optimized/new_additions/Vessel New Collection Golf Bags Slider Web 1920x600.jpg" alt="Vessel Slider" loading="lazy">
+            <img src="assets/optimized/new_additions/Vessel New Collection Golf Bags Slider Mobile 640x427.jpg" alt="Vessel Slider" loading="lazy">
             <span class="ag-tile-badge">VESSEL BAGS</span>
           </div>
 
@@ -1628,16 +1603,16 @@
           <!-- REEL 1: PART SALE 2026 APPAREL STORY -->
           <article class="ag-reel-snap-item">
             <div class="ag-reel-top-bar">
-              <span class="ag-reel-live-tag">● 60 FPS // KINETIC MOTION</span>
+              <span class="ag-reel-live-tag">● Kinetic Motion</span>
               <button type="button" class="ag-reel-mute-btn" onclick="toggleMobileReelAudio(this)" aria-label="Toggle Audio">🔊</button>
             </div>
-            <video class="ag-reel-video-element" loop playsinline autoplay muted poster="assets/optimized/new_additions/PART_SALE_2026_Apparel_Story_poster.webp">
-              <source src="assets/optimized/new_additions/PART SALE 2026 Apparel Story.mp4" type="video/mp4">
+            <video class="ag-reel-video-element" loop playsinline muted poster="assets/optimized/new_additions/PART_SALE_2026_Apparel_Story_poster.webp" preload="none">
+              <source data-src="assets/optimized/new_additions/PART SALE 2026 Apparel Story.mp4" type="video/mp4">
             </video>
 
             <div class="ag-reels-bottom-meta-overlay">
               <div class="ag-reel-author-tag">
-                <span>PART SALE 2026 // Luxury Retail Campaign</span>
+                <span>PART SALE 2026 · Luxury Retail Campaign</span>
                 <span class="ag-project-badge">9:16 VERTICAL</span>
               </div>
               <p class="ag-reel-caption">
@@ -1657,13 +1632,13 @@
               <span class="ag-reel-live-tag">● 2D NARRATIVE SHORT</span>
               <button type="button" class="ag-reel-mute-btn" onclick="toggleMobileReelAudio(this)" aria-label="Toggle Audio">🔊</button>
             </div>
-            <video class="ag-reel-video-element" loop playsinline muted poster="assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg">
-              <source src="assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4" type="video/mp4">
+            <video class="ag-reel-video-element" loop playsinline muted poster="assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg" preload="none">
+              <source data-src="assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4" type="video/mp4">
             </video>
 
             <div class="ag-reels-bottom-meta-overlay">
               <div class="ag-reel-author-tag">
-                <span>BARNEY DALE: THE CLOUD // Directed Short Film</span>
+                <span>BARNEY DALE: THE CLOUD · Directed Short Film</span>
                 <span class="ag-project-badge">SAE DUBAI</span>
               </div>
               <p class="ag-reel-caption">
@@ -1683,14 +1658,14 @@
               <span class="ag-reel-live-tag">● TECHNICAL TEXTILES</span>
               <button type="button" class="ag-reel-mute-btn" onclick="toggleMobileReelAudio(this)" aria-label="Toggle Audio">🔊</button>
             </div>
-            <video class="ag-reel-video-element" loop playsinline muted poster="assets/optimized/Galvin_Green_New_Collection_poster.jpg">
-              <source src="assets/optimized/Galvin_Green_New_Collection.webm" type="video/webm">
-              <source src="assets/optimized/Galvin_Green_New_Collection.mp4" type="video/mp4">
+            <video class="ag-reel-video-element" loop playsinline muted poster="assets/optimized/Galvin_Green_New_Collection_poster.jpg" preload="none">
+              <source data-src="assets/optimized/Galvin_Green_New_Collection.webm" type="video/webm">
+              <source data-src="assets/optimized/Galvin_Green_New_Collection.mp4" type="video/mp4">
             </video>
 
             <div class="ag-reels-bottom-meta-overlay">
               <div class="ag-reel-author-tag">
-                <span>GALVIN GREEN // Hydro-Tech Kinetic Installation</span>
+                <span>GALVIN GREEN · Kinetic Installation</span>
                 <span class="ag-project-badge">FLAGSHIP SCREEN</span>
               </div>
               <p class="ag-reel-caption">
@@ -1705,14 +1680,14 @@
               <span class="ag-reel-live-tag">● KINETIC TYPOGRAPHY</span>
               <button type="button" class="ag-reel-mute-btn" onclick="toggleMobileReelAudio(this)" aria-label="Toggle Audio">🔊</button>
             </div>
-            <video class="ag-reel-video-element" loop playsinline muted poster="assets/optimized/LAB_Golf_DF3__Back_in_stock_poster.jpg">
-              <source src="assets/optimized/LAB_Golf_DF3__Back_in_stock.webm" type="video/webm">
-              <source src="assets/optimized/LAB_Golf_DF3__Back_in_stock.mp4" type="video/mp4">
+            <video class="ag-reel-video-element" loop playsinline muted poster="assets/optimized/LAB_Golf_DF3__Back_in_stock_poster.jpg" preload="none">
+              <source data-src="assets/optimized/LAB_Golf_DF3__Back_in_stock.webm" type="video/webm">
+              <source data-src="assets/optimized/LAB_Golf_DF3__Back_in_stock.mp4" type="video/mp4">
             </video>
 
             <div class="ag-reels-bottom-meta-overlay">
               <div class="ag-reel-author-tag">
-                <span>L.A.B. GOLF DF3 // Tour Replenishment Broadcast</span>
+                <span>L.A.B. GOLF DF3 · Tour Broadcast</span>
                 <span class="ag-project-badge">TOUR BROADCAST</span>
               </div>
               <p class="ag-reel-caption">
@@ -1748,8 +1723,8 @@
           <article class="ag-crm-canvas-card">
             
             <header class="ag-crm-canvas-meta-bar">
-              <span class="ag-crm-file-title" id="ag-crm-active-file">FILE: eGolf_VIP_Seasonal_Launch_5000px.webp</span>
-              <span class="ag-crm-specs-pill" id="ag-crm-active-specs">5,000 × 1,200 PX // RETINA 2X</span>
+              <span class="ag-crm-file-title" id="ag-crm-active-file">eGolf VIP Seasonal Launch</span>
+              <span class="ag-crm-specs-pill" id="ag-crm-active-specs">5,000 × 1,200 px · High-Res</span>
             </header>
 
             <!-- Dynamic Viewport-Filling 5,000px Vertical Scroll Canvas -->
@@ -1821,7 +1796,7 @@
             </div>
             
             <div class="ag-dossier-hero-text">
-              <span class="ag-dossier-serial">ARCHIVAL RECORD // 08</span>
+              <span class="ag-dossier-serial">Portfolio Dossier</span>
               <h2 class="ag-dossier-name">Irene Thomas</h2>
               <p class="ag-dossier-role">Lead Graphic Designer &amp; Visual Art Director</p>
               <div class="ag-dossier-contact-line">
@@ -2061,7 +2036,7 @@
         <div class="ag-cinema-modal-projector">
           <div class="ag-filmstrip-sprocket-rail top"></div>
           <div class="ag-cinema-modal-screen">
-            <video id="ag-cinema-modal-video" src="assets/real_works/Barney_Dale__The_Cloud_story_arc.mp4" poster="assets/optimized/Barney_Dale__The_Cloud_story_arc_poster.webp" loop muted playsinline autoplay></video>
+            <video id="ag-cinema-modal-video" data-src="assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4" poster="assets/optimized/Barney_Dale__The_Cloud_story_arc_poster.webp" loop muted playsinline preload="none"></video>
             <div class="ag-cinema-modal-hud">
               <span class="ag-cinema-modal-pill" id="ag-cinema-modal-title">BARNEY DALE: THE CLOUD</span>
               <button type="button" class="ag-cinema-modal-sound-btn" onclick="toggleMobileVideoAudio(this, 'ag-cinema-modal-video')">🔊 SOUND</button>
@@ -2100,12 +2075,12 @@
               <div class="ag-cad-fold-line left"></div>
               <div class="ag-cad-fold-line right"></div>
               <div class="ag-cad-crease-mark"></div>
-              <span class="ag-cad-spec-tag">CAD PACKAGING DIELINES // 300DPI MASTER</span>
+              <span class="ag-cad-spec-tag">Packaging Dielines · Print Layout</span>
             </div>
           </div>
           <div class="ag-nivara-modal-hud">
-            <span class="ag-nivara-modal-tag" id="ag-nivara-modal-tag">SPREAD 01 // MASTER LOGOTYPE ANATOMY</span>
-            <button type="button" class="ag-nivara-modal-cad-btn" onclick="toggleNivaraModalDielines()">📐 TOGGLE CAD DIELINES</button>
+            <span class="ag-nivara-modal-tag" id="ag-nivara-modal-tag">Spread 01 · Master Logotype Anatomy</span>
+            <button type="button" class="ag-nivara-modal-cad-btn" onclick="toggleNivaraModalDielines()">Toggle Packaging Dielines</button>
           </div>
           <div class="ag-nivara-spreads-filmstrip">
 <button type="button" class="ag-nivara-thumb-btn is-active" onclick="switchNivaraModalSpread(0, this)">01</button>
@@ -2148,9 +2123,9 @@
             </div>
           </div>
           <div class="ag-hw-modal-nav-tabs">
-            <button type="button" class="ag-hw-modal-tab is-active" onclick="switchHardwareModal('callaway', this)">01 // CALLAWAY</button>
-            <button type="button" class="ag-hw-modal-tab" onclick="switchHardwareModal('taylormade', this)">02 // TAYLORMADE</button>
-            <button type="button" class="ag-hw-modal-tab" onclick="switchHardwareModal('pxg', this)">03 // PXG GEN8</button>
+            <button type="button" class="ag-hw-modal-tab is-active" onclick="switchHardwareModal('callaway', this)">01 · Callaway</button>
+            <button type="button" class="ag-hw-modal-tab" onclick="switchHardwareModal('taylormade', this)">02 · TaylorMade</button>
+            <button type="button" class="ag-hw-modal-tab" onclick="switchHardwareModal('pxg', this)">03 · PXG Gen8</button>
           </div>
         </div>
       </div>
@@ -2159,10 +2134,10 @@
       <div class="ag-bespoke-story-view" id="ag-story-view-retail">
         <div class="ag-storefront-modal-stage">
           <div class="ag-sf-modal-viewport-frame is-desktop" id="ag-sf-modal-viewport-frame">
-            <img id="ag-sf-modal-img" src="assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Desktop 1920x600.jpg" alt="Storefront Viewport" loading="lazy">
+            <img id="ag-sf-modal-img" src="assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Mobile 640x427.jpg" alt="Storefront Viewport" loading="lazy">
           </div>
           <div class="ag-sf-modal-hud">
-            <span class="ag-sf-modal-res" id="ag-sf-modal-res">1920 × 600 PX // VIEWPORT DESKTOP (16:5)</span>
+            <span class="ag-sf-modal-res" id="ag-sf-modal-res">1920 × 600 px · Desktop (16:5)</span>
           </div>
           <div class="ag-sf-modal-device-toggles">
             <button type="button" class="ag-sf-modal-dev is-active" onclick="morphStorefrontModalDev('desktop', this)">DESKTOP 16:5</button>
@@ -2185,7 +2160,7 @@
             <img id="ag-museum-modal-img" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-01.jpg" alt="Mental Health Poster" loading="lazy">
           </div>
           <div class="ag-museum-modal-placard">
-            <span class="ag-museum-modal-title" id="ag-museum-modal-title">SPECTRUM OF MIND // SET 03</span>
+            <span class="ag-museum-modal-title" id="ag-museum-modal-title">Spectrum of Mind · Set 03</span>
             <span class="ag-museum-modal-type" id="ag-museum-modal-type">Helvetica Neue Light · Swiss Typography Asymmetry</span>
           </div>
           <div class="ag-museum-modal-tabs">
@@ -2210,7 +2185,7 @@
               <button type="button" class="ag-crm-m-pill" onclick="switchCrmModalCampaign('majors', this)">MAJOR OFFERS</button>
               <button type="button" class="ag-crm-m-pill" onclick="switchCrmModalCampaign('vessel', this)">VESSEL LUXURY</button>
             </div>
-            <button type="button" class="ag-crm-m-zoom-btn" onclick="inspectActiveCrmAsset()">🔍 1500W RETINA LOUPE</button>
+            <button type="button" class="ag-crm-m-zoom-btn" onclick="inspectActiveCrmAsset()">Inspect Full Email</button>
           </div>
         </div>
       </div>
@@ -2219,7 +2194,7 @@
       <div class="ag-bespoke-story-view" id="ag-story-view-ai">
         <div class="ag-ai-modal-stage">
           <div class="ag-ai-modal-terminal-top">
-            <span class="ag-ai-m-tag">CONTROLNET_DEPTH // LATENT_DIFFUSION_NODE</span>
+            <span class="ag-ai-m-tag">AI Visual Direction · Concept Study</span>
           </div>
           <div class="ag-ai-modal-canvas" onclick="openActiveGenAiLightbox()">
             <img id="ag-ai-modal-img" src="assets/optimized/new_additions/689352046_18580395709020262_5220540874800235796_n.jpg" alt="AI Footwear Concept" loading="lazy">
@@ -2478,54 +2453,13 @@
     </div>
   </nav>
 
-  <!-- DYNAMIC ARCHITECTURAL FLOATING THUMB CAPSULE & SECTOR SHEET (MOBILE ONLY) -->
-  <div class="mobile-thumb-capsule" id="mobile-thumb-capsule" role="navigation" aria-label="Mobile Chapter Scrubber">
-    <button type="button" class="thumb-cap-btn prev" id="thumb-cap-prev" aria-label="Previous Chapter" onclick="jumpToAdjacentSector(-1)">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-    <div class="thumb-cap-core" id="thumb-cap-core" role="button" tabindex="0" aria-label="Tap to open chapter index or drag to scrub chapters" onclick="toggleMobileSectorSheet()" title="Tap to open Chapter Index">
-      <div class="thumb-cap-top-row">
-        <span class="thumb-cap-star" aria-hidden="true">✦</span>
-        <span class="thumb-cap-num" id="thumb-cap-num">01 / 08</span>
-        <span class="thumb-cap-sep" aria-hidden="true">·</span>
-        <span class="thumb-cap-title" id="thumb-cap-title">OVERVIEW</span>
-        <span class="thumb-cap-pct" id="thumb-cap-pct" aria-hidden="true">1/8</span>
-      </div>
-      <div class="thumb-cap-scrubber" id="thumb-cap-scrubber" aria-hidden="true">
-        <div class="thumb-cap-scrubber-fill" id="thumb-cap-scrubber-fill" style="width: 12.5%;"></div>
-      </div>
-    </div>
-    <button type="button" class="thumb-cap-btn next" id="thumb-cap-next" aria-label="Next Chapter" onclick="jumpToAdjacentSector(1)">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
-  </div>
-
-  <!-- EXPANDABLE MOBILE ARCHITECTURAL SECTOR SHEET -->
-  <div class="mobile-sector-sheet-overlay" id="mobile-sector-sheet" onclick="closeMobileSectorSheet(event)">
-    <div class="mobile-sector-sheet-panel" onclick="event.stopPropagation()">
-      <div class="sheet-drag-handle"></div>
-      <div class="sheet-header-row">
-        <div>
-          <span class="sheet-eyebrow">ARCHITECTURAL SECTOR DIRECTORY</span>
-          <h3 class="sheet-headline">Direct Showcase Navigation</h3>
-        </div>
-        <button type="button" class="sheet-close-btn" onclick="toggleMobileSectorSheet()" aria-label="Close Directory">✕</button>
-      </div>
-      <div class="sheet-sectors-list" id="sheet-sectors-list">
-        <!-- Rendered dynamically via JS -->
-      </div>
-    </div>
-  </div>
-
-
-  
   <main id="portfolio-lookbook-root" class="portfolio-lookbook-root" aria-label="Portfolio Showcase Chapters">
   <!-- LAYER 1-4 (Z-INDEX 30): Sectors 01 to 04 -->
   <div id="layer-1-4" class="pinned-burn-layer pinned-burn-layer-14">
     <div class="layer-ambient-art-canvas" aria-hidden="true">
-      <div class="ambient-art-blur-plate plate-a is-active" id="ambient-blur-14-a" style="background-image: url('assets/optimized/new_additions/PP.jpg');"></div>
+      <div class="ambient-art-blur-plate plate-a is-active" id="ambient-blur-14-a" data-desktop-bg="assets/optimized/new_additions/PP.jpg"></div>
       <div class="ambient-art-blur-plate plate-b" id="ambient-blur-14-b"></div>
-      <div class="ambient-art-ghost-plate plate-a is-active" id="ambient-ghost-14-a" style="background-image: url('assets/optimized/new_additions/PP.jpg');"></div>
+      <div class="ambient-art-ghost-plate plate-a is-active" id="ambient-ghost-14-a" data-desktop-bg="assets/optimized/new_additions/PP.jpg"></div>
       <div class="ambient-art-ghost-plate plate-b" id="ambient-ghost-14-b"></div>
       <div class="ambient-drafting-grid"></div>
     </div>
@@ -2555,14 +2489,14 @@
           <div class="hero-pills-row">
             <span class="hero-pill">📍 Al Khail Gate, Dubai, UAE</span>
             <a href="tel:+971563482737" class="hero-pill">📞 +971 56 348 2737</a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener" class="hero-pill">LI: Irene Thomas</a>
-            <a href="https://behance.net" target="_blank" rel="noopener" class="hero-pill">Be: Irene Thomas</a>
+            <a href="mailto:irene28thomas@gmail.com" class="hero-pill">✉️ irene28thomas@gmail.com</a>
+            <a href="Irene_Resume_2026.pdf" download class="hero-pill">📄 Download Resume</a>
           </div>
         </div>
 
         <div class="hero-visual-col">
           <div class="portrait-image-crop img-upload-box" id="container-atelier-portrait">
-            <img src="assets/optimized/new_additions/PP.jpg" alt="Irene Thomas - Graphic Designer" id="img-atelier-portrait" decoding="async">
+            <img data-desktop-src="assets/optimized/new_additions/PP.jpg" alt="Irene Thomas - Graphic Designer" id="img-atelier-portrait" decoding="async">
             <div class="portrait-badge-overlay">THE ELS CLUB // DUBAI SPORTS CITY</div>
           </div>
         </div>
@@ -2620,7 +2554,7 @@
         <div class="stream-track stream-track-left" id="track-left">
           <div class="stream-card tall-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 4-01.jpg', 'The Cognitive Maze (Set 4-01)', 'FINE ART EXHIBITION')">
             <div class="card-inner-media">
-              <img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 4-01.jpg" alt="Mental Health Awareness Poster Set 4-01" decoding="async">
+              <img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 4-01.jpg" alt="Mental Health Awareness Poster Set 4-01" decoding="async">
             </div>
             <div class="stream-card-overlay">
               <span class="card-tag">EXHIBITION PRINT</span>
@@ -2630,7 +2564,7 @@
           </div>
           <div class="stream-card medium-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/Callaway 2026 Chrome Tour Golf Balls.jpg', 'Callaway 2026 Chrome Tour // Campaign Launch', 'RETAIL LAUNCH')">
             <div class="card-inner-media">
-              <img loading="lazy" src="assets/optimized/promosheet_banners/Callaway 2026 Chrome Tour Golf Balls.jpg" alt="Callaway Chrome Tour" decoding="async">
+              <img loading="lazy" data-desktop-src="assets/optimized/promosheet_banners/Callaway 2026 Chrome Tour Golf Balls.jpg" alt="Callaway Chrome Tour" decoding="async">
             </div>
             <div class="stream-card-overlay">
               <span class="card-tag">COMMERCIAL LAUNCH</span>
@@ -2640,7 +2574,7 @@
           </div>
           <div class="stream-card tall-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 3-04.jpg', 'Perspective Shift (Set 3-04)', 'FINE ART EXHIBITION')">
             <div class="card-inner-media">
-              <img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-04.jpg" alt="Perspective Shift Poster" decoding="async">
+              <img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 3-04.jpg" alt="Perspective Shift Poster" decoding="async">
             </div>
             <div class="stream-card-overlay">
               <span class="card-tag">EXHIBITION PRINT</span>
@@ -2652,10 +2586,10 @@
 
         <!-- Track 2: Center -->
         <div class="stream-track stream-track-center" id="track-center">
-          <div class="stream-card video-card living-motion-card img-upload-box" onclick="openLightboxWithVideo('assets/real_works/Barney_Dale__The_Cloud_story_arc.mp4', 'Barney Dale: The Cloud // Animated Short', 'AFTER EFFECTS 2D ANIMATION')">
+          <div class="stream-card video-card living-motion-card img-upload-box" onclick="openLightboxWithVideo('assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4', 'Barney Dale: The Cloud // Animated Short', 'AFTER EFFECTS 2D ANIMATION')">
             <div class="card-inner-media video-media-wrap">
-              <video autoplay muted loop playsinline preload="none" poster="assets/optimized/Barney_Dale__The_Cloud_story_arc_poster.webp" id="stream-ambient-video">
-                <source src="assets/real_works/Barney_Dale__The_Cloud_story_arc.mp4" type="video/mp4">
+              <video data-desktop-autoplay="true" muted loop playsinline preload="none" poster="assets/optimized/Barney_Dale__The_Cloud_story_arc_poster.webp" id="stream-ambient-video">
+                <source data-desktop-src="assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4" type="video/mp4">
               </video>
             </div>
             <div class="stream-card-overlay">
@@ -2666,7 +2600,7 @@
           </div>
           <div class="stream-card wide-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/brand_identity/Brand Identity_NIVARA_Version Irene-05.jpg', 'Nivara Botanicals // Structural Packaging & Bag System', 'BRAND IDENTITY')">
             <div class="card-inner-media">
-              <img loading="lazy" src="assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-05.jpg" alt="Nivara Packaging" decoding="async">
+              <img loading="lazy" data-desktop-src="assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-05.jpg" alt="Nivara Packaging" decoding="async">
             </div>
             <div class="stream-card-overlay">
               <span class="card-tag">STRUCTURAL PACKAGING</span>
@@ -2676,9 +2610,9 @@
           </div>
           <div class="stream-card medium-card img-upload-box" onclick="openLightboxWithVideo('assets/optimized/Galvin_Green_New_Collection.mp4', 'Galvin Green // Kinetic Performance Apparel Campaign', 'DIGITAL DISPLAY AD')">
             <div class="card-inner-media">
-              <video autoplay muted loop playsinline preload="metadata" poster="assets/optimized/Galvin_Green_New_Collection_poster.webp" width="750" height="900" aria-label="Galvin Green Animated Campaign">
-                <source src="assets/optimized/Galvin_Green_New_Collection.webm" type="video/webm">
-                <source src="assets/optimized/Galvin_Green_New_Collection.mp4" type="video/mp4">
+              <video data-desktop-autoplay="true" muted loop playsinline preload="none" poster="assets/optimized/Galvin_Green_New_Collection_poster.webp" width="750" height="900" aria-label="Galvin Green Animated Campaign">
+                <source data-desktop-src="assets/optimized/Galvin_Green_New_Collection.webm" type="video/webm">
+                <source data-desktop-src="assets/optimized/Galvin_Green_New_Collection.mp4" type="video/mp4">
               </video>
             </div>
             <div class="stream-card-overlay">
@@ -2693,7 +2627,7 @@
         <div class="stream-track stream-track-right" id="track-right">
           <div class="stream-card tall-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/PUMA x PTC New Collection.jpg', 'PUMA x PTC // Dubai Launch Campaign', 'RETAIL LAUNCH')">
             <div class="card-inner-media">
-              <img loading="lazy" src="assets/optimized/promosheet_banners/PUMA x PTC New Collection.jpg" alt="PUMA x PTC Collection" decoding="async">
+              <img loading="lazy" data-desktop-src="assets/optimized/promosheet_banners/PUMA x PTC New Collection.jpg" alt="PUMA x PTC Collection" decoding="async">
             </div>
             <div class="stream-card-overlay">
               <span class="card-tag">OMNICHANNEL LAUNCH</span>
@@ -2703,7 +2637,7 @@
           </div>
           <div class="stream-card tall-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/magazine_edit/CTRL+ALT_Layout.jpg', 'CTRL+ALT Magazine // Editorial Spread Art Direction', 'EDITORIAL PRINT')">
             <div class="card-inner-media">
-              <img loading="lazy" src="assets/optimized/magazine_edit/CTRL+ALT_Layout.jpg" alt="CTRL+ALT Editorial" decoding="async">
+              <img loading="lazy" data-desktop-src="assets/optimized/magazine_edit/CTRL+ALT_Layout.jpg" alt="CTRL+ALT Editorial" decoding="async">
             </div>
             <div class="stream-card-overlay">
               <span class="card-tag">EDITORIAL PUBLICATION</span>
@@ -2713,9 +2647,9 @@
           </div>
           <div class="stream-card medium-card img-upload-box" onclick="openLightboxWithVideo('assets/optimized/LAB_Golf_DF3__Back_in_stock.mp4', 'L.A.B. Golf DF3 // Dynamic Restock Campaign', 'KINETIC AD')">
             <div class="card-inner-media">
-              <video autoplay muted loop playsinline preload="metadata" poster="assets/optimized/LAB_Golf_DF3__Back_in_stock_poster.webp" width="750" height="850" aria-label="LAB Golf DF3">
-                <source src="assets/optimized/LAB_Golf_DF3__Back_in_stock.webm" type="video/webm">
-                <source src="assets/optimized/LAB_Golf_DF3__Back_in_stock.mp4" type="video/mp4">
+              <video data-desktop-autoplay="true" muted loop playsinline preload="none" poster="assets/optimized/LAB_Golf_DF3__Back_in_stock_poster.webp" width="750" height="850" aria-label="LAB Golf DF3">
+                <source data-desktop-src="assets/optimized/LAB_Golf_DF3__Back_in_stock.webm" type="video/webm">
+                <source data-desktop-src="assets/optimized/LAB_Golf_DF3__Back_in_stock.mp4" type="video/mp4">
               </video>
             </div>
             <div class="stream-card-overlay">
@@ -2754,11 +2688,11 @@
     <div class="frame-brand-identity">
       <div class="brand-identity-grid">
         <div class="img-upload-box brand-mock-main" onclick="openLightboxWithImage('assets/real_works/Logo_Mock.jpg', 'Nivara Luxury Cosmetics Packaging Mockup', 'BRAND PACKAGING')">
-          <img loading="lazy" src="assets/optimized/Logo_Mock.jpg" alt="Luxury Brand Logo Mockup" decoding="async">
+          <img loading="lazy" data-desktop-src="assets/optimized/Logo_Mock.jpg" alt="Luxury Brand Logo Mockup" decoding="async">
         </div>
         <div class="brand-process-side">
           <div class="img-upload-box process-thumb-card" onclick="openLightboxWithImage('assets/real_works/Nivara_Logo_Trials_05.jpg', 'Nivara Geometric Logo Construction Trials', 'GEOMETRIC IDENTITY')">
-            <img loading="lazy" src="assets/optimized/Nivara_Logo_Trials_05.jpg" alt="Logo Construction &amp; Geometry Trials" decoding="async">
+            <img loading="lazy" data-desktop-src="assets/optimized/Nivara_Logo_Trials_05.jpg" alt="Logo Construction &amp; Geometry Trials" decoding="async">
           </div>
           <div class="brand-meta-card">
             <div>
@@ -2816,7 +2750,7 @@
         <button type="button" class="folio-hover-arrow left" onclick="stepManualSpread(-1)" aria-label="Previous Spread">❮</button>
         <div class="manual-spread-viewport" onclick="openActiveManualLightbox()" >
           
-          <img loading="lazy" src="assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-01.jpg" alt="Nivara Brand Guidelines Spread" id="img-manual-active" decoding="async">
+          <img loading="lazy" data-desktop-src="assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-01.jpg" alt="Nivara Brand Guidelines Spread" id="img-manual-active" decoding="async">
         </div>
         <button type="button" class="folio-hover-arrow right" onclick="stepManualSpread(1)" aria-label="Next Spread">❯</button>
       </div>
@@ -2903,7 +2837,7 @@
           </div>
         </div>
         <div class="img-upload-box" style="height:auto;" onclick="openLightboxWithImage('assets/optimized/New_Arrivals_Landing_Page_V1.jpg', 'eGolf Megastore // New Season Omnichannel Landing Page', 'E-COMMERCE UX/UI', '1440 / 5286')">
-          <img src="assets/optimized/New_Arrivals_Landing_Page_V1.jpg" alt="eGolf New Arrivals Landing Page V1" style="object-fit:contain; width:100%; height:auto;" decoding="async">
+          <img data-desktop-src="assets/optimized/New_Arrivals_Landing_Page_V1.jpg" alt="eGolf New Arrivals Landing Page V1" style="object-fit:contain; width:100%; height:auto;" decoding="async">
         </div>
       </div>
 
@@ -2946,7 +2880,7 @@
       <div class="studio-banner-stage-wrapper">
         <div class="studio-banner-frame" onclick="openLightboxFromSlider()" title="Click to Inspect Native 900×600 Master">
           <button type="button" class="hw-arrow hw-arrow-prev" onclick="prevHardwareSlider(event)" aria-label="Previous Slide">‹</button>
-          <img loading="lazy" src="assets/optimized/Callaway_Quantum_Series_900x600.jpg" alt="Golf Brand Slider" id="img-active-slider" decoding="async">
+          <img loading="lazy" data-desktop-src="assets/optimized/Callaway_Quantum_Series_900x600.jpg" alt="Golf Brand Slider" id="img-active-slider" decoding="async">
           <button type="button" class="hw-arrow hw-arrow-next" onclick="nextHardwareSlider(event)" aria-label="Next Slide">›</button>
         </div>
       </div>
@@ -2955,7 +2889,7 @@
       <div class="studio-suite-selector-grid">
         <div class="studio-suite-card active" onclick="switchBannerSlider('assets/real_works/Callaway_Quantum_Series_900x600.jpg', 'Callaway Quantum Series', 'Dynamic gold & black directional lighting layout designed for eGolf mobile app and web slider.', this)">
           <div class="suite-card-thumb">
-            <img src="assets/optimized/Callaway_Quantum_Series_900x600.jpg" alt="Callaway Quantum" decoding="async">
+            <img data-desktop-src="assets/optimized/Callaway_Quantum_Series_900x600.jpg" alt="Callaway Quantum" decoding="async">
           </div>
           <div class="suite-card-info">
             <span class="suite-card-num">01 // CALLAWAY</span>
@@ -2965,7 +2899,7 @@
 
         <div class="studio-suite-card" onclick="switchBannerSlider('assets/real_works/TaylorMade_Qi4D_Series_900x600.jpg', 'TaylorMade Qi4D Series', 'High-contrast typography and carbon-fiber aesthetic for TaylorMade flagship launch.', this)">
           <div class="suite-card-thumb">
-            <img src="assets/optimized/TaylorMade_Qi4D_Series_900x600.jpg" alt="TaylorMade Qi4D" decoding="async">
+            <img data-desktop-src="assets/optimized/TaylorMade_Qi4D_Series_900x600.jpg" alt="TaylorMade Qi4D" decoding="async">
           </div>
           <div class="suite-card-info">
             <span class="suite-card-num">02 // TAYLORMADE</span>
@@ -2975,7 +2909,7 @@
 
         <div class="studio-suite-card" onclick="switchBannerSlider('assets/real_works/PXG_GEN8_Irons_900x600.jpg', 'PXG GEN8 Irons', 'Industrial darkness and chrome metallic finish spotlighting precision golf engineering.', this)">
           <div class="suite-card-thumb">
-            <img src="assets/optimized/PXG_GEN8_Irons_900x600.jpg" alt="PXG GEN8" decoding="async">
+            <img data-desktop-src="assets/optimized/PXG_GEN8_Irons_900x600.jpg" alt="PXG GEN8" decoding="async">
           </div>
           <div class="suite-card-info">
             <span class="suite-card-num">03 // PXG GOLF</span>
@@ -3000,9 +2934,9 @@
       <!-- Motion Piece 01: Galvin Green (750x900 Native Portrait Video) -->
       <div class="gif-card-stage">
         <div class="img-upload-box gif-media-frame" onclick="openLightboxWithVideo('assets/optimized/Galvin_Green_New_Collection.mp4', 'Galvin Green // Kinetic Performance Apparel', 'ANIMATED DISPLAY AD')">
-          <video autoplay muted loop playsinline preload="metadata" poster="assets/optimized/Galvin_Green_New_Collection_poster.webp" width="750" height="900" aria-label="Galvin Green Animated Campaign">
-            <source src="assets/optimized/Galvin_Green_New_Collection.webm" type="video/webm">
-            <source src="assets/optimized/Galvin_Green_New_Collection.mp4" type="video/mp4">
+          <video data-desktop-autoplay="true" muted loop playsinline preload="none" poster="assets/optimized/Galvin_Green_New_Collection_poster.webp" width="750" height="900" aria-label="Galvin Green Animated Campaign">
+            <source data-desktop-src="assets/optimized/Galvin_Green_New_Collection.webm" type="video/webm">
+            <source data-desktop-src="assets/optimized/Galvin_Green_New_Collection.mp4" type="video/mp4">
           </video>
         </div>
         <div class="gif-meta-row">
@@ -3017,9 +2951,9 @@
       <!-- Motion Piece 02: L.A.B. Golf DF3 (750x850 Native Portrait Video) -->
       <div class="gif-card-stage">
         <div class="img-upload-box gif-media-frame" onclick="openLightboxWithVideo('assets/optimized/LAB_Golf_DF3__Back_in_stock.mp4', 'L.A.B. Golf DF3 // Dynamic Restock Campaign', 'ANIMATED DISPLAY AD')">
-          <video autoplay muted loop playsinline preload="metadata" poster="assets/optimized/LAB_Golf_DF3__Back_in_stock_poster.webp" width="750" height="850" aria-label="LAB Golf DF3 Restock Campaign">
-            <source src="assets/optimized/LAB_Golf_DF3__Back_in_stock.webm" type="video/webm">
-            <source src="assets/optimized/LAB_Golf_DF3__Back_in_stock.mp4" type="video/mp4">
+          <video data-desktop-autoplay="true" muted loop playsinline preload="none" poster="assets/optimized/LAB_Golf_DF3__Back_in_stock_poster.webp" width="750" height="850" aria-label="LAB Golf DF3 Restock Campaign">
+            <source data-desktop-src="assets/optimized/LAB_Golf_DF3__Back_in_stock.webm" type="video/webm">
+            <source data-desktop-src="assets/optimized/LAB_Golf_DF3__Back_in_stock.mp4" type="video/mp4">
           </video>
         </div>
         <div class="gif-meta-row">
@@ -3035,8 +2969,8 @@
       <div class="gif-card-stage gif-card-stage-reel">
         <div class="vertical-motion-reel-card">
           <div class="reel-video-container">
-            <video id="apparel-story-video" playsinline loop muted autoplay preload="metadata" poster="assets/optimized/new_additions/PART_SALE_2026_Apparel_Story_poster.webp" width="1080" height="1920">
-              <source src="assets/real_works/new_additions/PART SALE 2026 Apparel Story.mp4" type="video/mp4">
+            <video id="apparel-story-video" playsinline loop muted data-desktop-autoplay="true" preload="none" poster="assets/optimized/new_additions/PART_SALE_2026_Apparel_Story_poster.webp" width="1080" height="1920">
+              <source data-desktop-src="assets/optimized/new_additions/PART SALE 2026 Apparel Story.mp4" type="video/mp4">
             </video>
             <div class="reel-controls-overlay">
               <button type="button" class="reel-btn" onclick="toggleReelPlayback()">
@@ -3140,7 +3074,7 @@
             <!-- Slide 01: Adidas Golf -->
             <div class="carousel-slide-housing is-center" data-brand="adidas" data-index="0" onclick="handleCarouselSlideClick(0)">
               <div class="device-screen-bezel">
-                <img class="carousel-slide-img" src="assets/optimized/new_additions/Adidas New Collection _ Slider Desktop 1920x600.jpg" alt="Adidas Golf" decoding="async">
+                <img class="carousel-slide-img" data-desktop-src="assets/optimized/new_additions/Adidas New Collection _ Slider Desktop 1920x600.jpg" alt="Adidas Golf" decoding="async">
                 <div class="slide-peek-label">01 Adidas Golf</div>
                 <div class="device-screen-overlay">
                   <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
@@ -3151,7 +3085,7 @@
             <!-- Slide 02: J.Lindeberg -->
             <div class="carousel-slide-housing is-next" data-brand="jlindeberg" data-index="1" onclick="handleCarouselSlideClick(1)">
               <div class="device-screen-bezel">
-                <img class="carousel-slide-img" src="assets/optimized/new_additions/JLindeberg 30Y Collection Slider Web 1920x600.jpg" alt="J.Lindeberg" decoding="async">
+                <img class="carousel-slide-img" data-desktop-src="assets/optimized/new_additions/JLindeberg 30Y Collection Slider Web 1920x600.jpg" alt="J.Lindeberg" decoding="async">
                 <div class="slide-peek-label">02 J.Lindeberg</div>
                 <div class="device-screen-overlay">
                   <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
@@ -3162,7 +3096,7 @@
             <!-- Slide 03: Vessel Driven -->
             <div class="carousel-slide-housing is-hidden" data-brand="vessel" data-index="2" onclick="handleCarouselSlideClick(2)">
               <div class="device-screen-bezel">
-                <img class="carousel-slide-img" src="assets/optimized/new_additions/Vessel New Collection Golf Bags Slider Web 1920x600.jpg" alt="Vessel Driven" decoding="async">
+                <img class="carousel-slide-img" data-desktop-src="assets/optimized/new_additions/Vessel New Collection Golf Bags Slider Web 1920x600.jpg" alt="Vessel Driven" decoding="async">
                 <div class="slide-peek-label">03 Vessel Driven</div>
                 <div class="device-screen-overlay">
                   <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
@@ -3173,7 +3107,7 @@
             <!-- Slide 04: Jack Nicklaus -->
             <div class="carousel-slide-housing is-hidden" data-brand="nicklaus" data-index="3" onclick="handleCarouselSlideClick(3)">
               <div class="device-screen-bezel">
-                <img class="carousel-slide-img" src="assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Desktop 1920x600.jpg" alt="Jack Nicklaus" decoding="async">
+                <img class="carousel-slide-img" data-desktop-src="assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Desktop 1920x600.jpg" alt="Jack Nicklaus" decoding="async">
                 <div class="slide-peek-label">04 Jack Nicklaus</div>
                 <div class="device-screen-overlay">
                   <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
@@ -3184,7 +3118,7 @@
             <!-- Slide 05: TM Palms -->
             <div class="carousel-slide-housing is-hidden" data-brand="palms" data-index="4" onclick="handleCarouselSlideClick(4)">
               <div class="device-screen-bezel">
-                <img class="carousel-slide-img" src="assets/optimized/new_additions/TaylorMade Palms and Pastels Staff Bag Slider 1920x600.jpg" alt="TM Palms" decoding="async">
+                <img class="carousel-slide-img" data-desktop-src="assets/optimized/new_additions/TaylorMade Palms and Pastels Staff Bag Slider 1920x600.jpg" alt="TM Palms" decoding="async">
                 <div class="slide-peek-label">05 TM Palms</div>
                 <div class="device-screen-overlay">
                   <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
@@ -3195,7 +3129,7 @@
             <!-- Slide 06: TM Sailors -->
             <div class="carousel-slide-housing is-prev" data-brand="sailors" data-index="5" onclick="handleCarouselSlideClick(5)">
               <div class="device-screen-bezel">
-                <img class="carousel-slide-img" src="assets/optimized/new_additions/TaylorMade Sailors Point Collection Slider 1920x600.jpg" alt="TM Sailors" decoding="async">
+                <img class="carousel-slide-img" data-desktop-src="assets/optimized/new_additions/TaylorMade Sailors Point Collection Slider 1920x600.jpg" alt="TM Sailors" decoding="async">
                 <div class="slide-peek-label">06 TM Sailors</div>
                 <div class="device-screen-overlay">
                   <span class="device-zoom-pill">🔍 CLICK TO INSPECT ORIGINAL MASTER</span>
@@ -3298,7 +3232,7 @@
             <div class="floating-card floating-card-left" id="card-social-1-1" onclick="openLightboxFromSocial('1-1')">
               <div class="card-ratio-floating-pill">1:1 FEED MASTER</div>
               <div class="card-media-frame frame-1-1">
-                <img id="img-social-1-1" src="assets/optimized/new_additions/TaylorMade Hi-Toe 5 Wedges Ad 1080x1080.jpg" alt="1:1 Feed Master" decoding="async">
+                <img id="img-social-1-1" data-desktop-src="assets/optimized/new_additions/TaylorMade Hi-Toe 5 Wedges Ad 1080x1080.jpg" alt="1:1 Feed Master" decoding="async">
               </div>
             </div>
 
@@ -3306,7 +3240,7 @@
             <div class="floating-card floating-card-center" id="card-social-9-16" onclick="openLightboxFromSocial('9-16')">
               <div class="card-ratio-floating-pill">9:16 VERTICAL STORY</div>
               <div class="card-media-frame frame-9-16">
-                <img id="img-social-9-16" src="assets/optimized/new_additions/TaylorMade Hi-Toe 5 Wedges Ad 1080x1920.jpg" alt="9:16 Story Ad" decoding="async">
+                <img id="img-social-9-16" data-desktop-src="assets/optimized/new_additions/TaylorMade Hi-Toe 5 Wedges Ad 1080x1920.jpg" alt="9:16 Story Ad" decoding="async">
               </div>
             </div>
 
@@ -3314,7 +3248,7 @@
             <div class="floating-card floating-card-right" id="card-social-16-9" onclick="openLightboxFromSocial('16-9')">
               <div class="card-ratio-floating-pill">16:9 DISPLAY NETWORK</div>
               <div class="card-media-frame frame-16-9">
-                <img id="img-social-16-9" src="assets/optimized/new_additions/TaylorMade Hi-Toe 5 Wedges Ad 1920x1080.jpg" alt="16:9 Campaign Banner" decoding="async">
+                <img id="img-social-16-9" data-desktop-src="assets/optimized/new_additions/TaylorMade Hi-Toe 5 Wedges Ad 1920x1080.jpg" alt="16:9 Campaign Banner" decoding="async">
               </div>
             </div>
 
@@ -3330,9 +3264,9 @@
   <!-- LAYER 5-7 (Z-INDEX 20): Sectors 05 to 07 -->
   <div id="layer-5-7" class="pinned-burn-layer pinned-burn-layer-57">
     <div class="layer-ambient-art-canvas" aria-hidden="true">
-      <div class="ambient-art-blur-plate plate-a is-active" id="ambient-blur-57-a" style="background-image: url('assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg');"></div>
+      <div class="ambient-art-blur-plate plate-a is-active" id="ambient-blur-57-a" data-desktop-bg="assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg"></div>
       <div class="ambient-art-blur-plate plate-b" id="ambient-blur-57-b"></div>
-      <div class="ambient-art-ghost-plate plate-a is-active" id="ambient-ghost-57-a" style="background-image: url('assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg');"></div>
+      <div class="ambient-art-ghost-plate plate-a is-active" id="ambient-ghost-57-a" data-desktop-bg="assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg"></div>
       <div class="ambient-art-ghost-plate plate-b" id="ambient-ghost-57-b"></div>
       <div class="ambient-drafting-grid"></div>
     </div>
@@ -3355,11 +3289,11 @@
         <div class="cinema-split-stage">
           <div class="cinema-video-column">
             <div class="cinema-portrait-player" data-cursor="PLAY CINEMA">
-              <video autoplay muted loop playsinline preload="none" poster="assets/optimized/Barney_Dale__The_Cloud_story_arc_poster.webp" width="1080" height="1920" id="video-barney">
-                <source src="assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4" type="video/mp4">
+              <video data-desktop-autoplay="true" muted loop playsinline preload="none" poster="assets/optimized/Barney_Dale__The_Cloud_story_arc_poster.webp" width="1080" height="1920" id="video-barney">
+                <source data-desktop-src="assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4" type="video/mp4">
               </video>
               <div class="cinema-player-overlay">
-                <button type="button" class="btn-cinema-expand" onclick="openLightboxWithVideo('assets/real_works/Barney_Dale__The_Cloud_story_arc.mp4', 'Barney Dale: The Cloud // Full Animated Short', 'AFTER EFFECTS 2D ANIMATION'); event.stopPropagation();">⛶ Fullscreen View</button>
+                <button type="button" class="btn-cinema-expand" onclick="openLightboxWithVideo('assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4', 'Barney Dale: The Cloud // Full Animated Short', 'AFTER EFFECTS 2D ANIMATION'); event.stopPropagation();">⛶ Fullscreen View</button>
               </div>
             </div>
 
@@ -3378,7 +3312,7 @@
 
             </div>
             <div class="img-upload-box storyboard-panoramic-view" id="box-storyboard" onclick="handleStoryboardBoxClick(event)" >
-              <img loading="lazy" src="assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg" alt="Barney Dale The Cloud 12-Frame Storyboard" id="img-storyboard-main" decoding="async">
+              <img loading="lazy" data-desktop-src="assets/optimized/Barney_Dale__The_Cloud_story_arc.jpg" alt="Barney Dale The Cloud 12-Frame Storyboard" id="img-storyboard-main" decoding="async">
             </div>
             <div class="storyboard-narrative-card">
 
@@ -3426,45 +3360,45 @@
             <div class="poster-gallery-grid" id="poster-grid">
               <!-- Set 4 -->
               <div class="poster-card poster-item set-4 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 4-01.jpg', 'The Cognitive Maze (Set 4-01)', 'FINE ART EXHIBITION')">
-                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 4-01.jpg" alt="Poster Set 4-01" decoding="async"></div>
+                <div class="poster-card-paper"><img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 4-01.jpg" alt="Poster Set 4-01" decoding="async"></div>
                 <div class="poster-card-meta"><span class="poster-set-tag">SET 04 // METAPHOR</span><div class="poster-title">The Cognitive Maze</div></div>
               </div>
               <div class="poster-card poster-item set-4 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 4-02.jpg', 'Silent Pressure (Set 4-02)', 'FINE ART EXHIBITION')">
-                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 4-02.jpg" alt="Poster Set 4-02" decoding="async"></div>
+                <div class="poster-card-paper"><img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 4-02.jpg" alt="Poster Set 4-02" decoding="async"></div>
                 <div class="poster-card-meta"><span class="poster-set-tag">SET 04 // METAPHOR</span><div class="poster-title">Silent Pressure</div></div>
               </div>
               <div class="poster-card poster-item set-4 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 4-03.jpg', 'Inner Equilibrium (Set 4-03)', 'FINE ART EXHIBITION')">
-                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 4-03.jpg" alt="Poster Set 4-03" decoding="async"></div>
+                <div class="poster-card-paper"><img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 4-03.jpg" alt="Poster Set 4-03" decoding="async"></div>
                 <div class="poster-card-meta"><span class="poster-set-tag">SET 04 // METAPHOR</span><div class="poster-title">Inner Equilibrium</div></div>
               </div>
               <!-- Set 3 -->
               <div class="poster-card poster-item set-3 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 3-01.jpg', 'Permission to Pause (Set 3-01)', 'FINE ART EXHIBITION')">
-                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-01.jpg" alt="Poster Set 3-01" decoding="async"></div>
+                <div class="poster-card-paper"><img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 3-01.jpg" alt="Poster Set 3-01" decoding="async"></div>
                 <div class="poster-card-meta"><span class="poster-set-tag">SET 03 // TYPOGRAPHY</span><div class="poster-title">Permission to Pause</div></div>
               </div>
               <div class="poster-card poster-item set-3 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 3-03.jpg', 'Rhythm of Rest (Set 3-03)', 'FINE ART EXHIBITION')">
-                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-03.jpg" alt="Poster Set 3-03" decoding="async"></div>
+                <div class="poster-card-paper"><img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 3-03.jpg" alt="Poster Set 3-03" decoding="async"></div>
                 <div class="poster-card-meta"><span class="poster-set-tag">SET 03 // TYPOGRAPHY</span><div class="poster-title">Rhythm of Rest</div></div>
               </div>
               <div class="poster-card poster-item set-3 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 3-04.jpg', 'Perspective Shift (Set 3-04)', 'FINE ART EXHIBITION')">
-                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-04.jpg" alt="Poster Set 3-04" decoding="async"></div>
+                <div class="poster-card-paper"><img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 3-04.jpg" alt="Poster Set 3-04" decoding="async"></div>
                 <div class="poster-card-meta"><span class="poster-set-tag">SET 03 // TYPOGRAPHY</span><div class="poster-title">Perspective Shift</div></div>
               </div>
               <div class="poster-card poster-item set-3 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 3-06.jpg', 'Clarity Through Contrast (Set 3-06)', 'FINE ART EXHIBITION')">
-                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 3-06.jpg" alt="Poster Set 3-06" decoding="async"></div>
+                <div class="poster-card-paper"><img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 3-06.jpg" alt="Poster Set 3-06" decoding="async"></div>
                 <div class="poster-card-meta"><span class="poster-set-tag">SET 03 // TYPOGRAPHY</span><div class="poster-title">Clarity Through Contrast</div></div>
               </div>
               <!-- Set 5 -->
               <div class="poster-card poster-item set-5 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 5-01.jpg', 'Emotional Spectrum (Set 5-01)', 'FINE ART EXHIBITION')">
-                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 5-01.jpg" alt="Poster Set 5-01" decoding="async"></div>
+                <div class="poster-card-paper"><img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 5-01.jpg" alt="Poster Set 5-01" decoding="async"></div>
                 <div class="poster-card-meta"><span class="poster-set-tag">SET 05 // PSYCHOLOGY</span><div class="poster-title">Emotional Spectrum</div></div>
               </div>
               <div class="poster-card poster-item set-5 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 5-02.jpg', 'De-Stigmatization (Set 5-02)', 'FINE ART EXHIBITION')">
-                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 5-02.jpg" alt="Poster Set 5-02" decoding="async"></div>
+                <div class="poster-card-paper"><img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 5-02.jpg" alt="Poster Set 5-02" decoding="async"></div>
                 <div class="poster-card-meta"><span class="poster-set-tag">SET 05 // PSYCHOLOGY</span><div class="poster-title">De-Stigmatization</div></div>
               </div>
               <div class="poster-card poster-item set-5 img-upload-box" onclick="openLightboxWithImage('assets/real_works/posters/Mental Health Awareness Poster Set 5-03.jpg', 'Resilience Archetype (Set 5-03)', 'FINE ART EXHIBITION')">
-                <div class="poster-card-paper"><img loading="lazy" src="assets/optimized/posters/Mental Health Awareness Poster Set 5-03.jpg" alt="Poster Set 5-03" decoding="async"></div>
+                <div class="poster-card-paper"><img loading="lazy" data-desktop-src="assets/optimized/posters/Mental Health Awareness Poster Set 5-03.jpg" alt="Poster Set 5-03" decoding="async"></div>
                 <div class="poster-card-meta"><span class="poster-set-tag">SET 05 // PSYCHOLOGY</span><div class="poster-title">Resilience Archetype</div></div>
               </div>
             </div>
@@ -3489,7 +3423,7 @@
 
     <div class="promo-gallery-grid">
       <div class="promo-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/PUMA x PTC New Collection.jpg', 'PUMA x PTC Palm Tree Crew // Dubai Lifestyle Launch', 'RETAIL LAUNCH')">
-        <div class="promo-card-thumb"><img loading="lazy" src="assets/optimized/promosheet_banners/PUMA x PTC New Collection.jpg" alt="PUMA x PTC" decoding="async"></div>
+        <div class="promo-card-thumb"><img loading="lazy" data-desktop-src="assets/optimized/promosheet_banners/PUMA x PTC New Collection.jpg" alt="PUMA x PTC" decoding="async"></div>
         <div class="promo-card-content">
           <span class="promo-card-tag">APPAREL CAPSULE</span>
           <div class="promo-card-title">PUMA x PTC Collection</div>
@@ -3498,7 +3432,7 @@
       </div>
 
       <div class="promo-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/Bettinardi the Antidote Putter Series.jpg', 'Bettinardi The Antidote Series // Precision Milled Putters', 'EQUIPMENT CAMPAIGN')">
-        <div class="promo-card-thumb"><img loading="lazy" src="assets/optimized/promosheet_banners/Bettinardi the Antidote Putter Series.jpg" alt="Bettinardi The Antidote" decoding="async"></div>
+        <div class="promo-card-thumb"><img loading="lazy" data-desktop-src="assets/optimized/promosheet_banners/Bettinardi the Antidote Putter Series.jpg" alt="Bettinardi The Antidote" decoding="async"></div>
         <div class="promo-card-content">
           <span class="promo-card-tag">PRECISION CLUBS</span>
           <div class="promo-card-title">Bettinardi The Antidote</div>
@@ -3507,7 +3441,7 @@
       </div>
 
       <div class="promo-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/Callaway 2026 Chrome Tour Golf Balls.jpg', 'Callaway 2026 Chrome Tour // Performance Tier', 'BALL PERFORMANCE')">
-        <div class="promo-card-thumb"><img loading="lazy" src="assets/optimized/promosheet_banners/Callaway 2026 Chrome Tour Golf Balls.jpg" alt="Callaway Chrome Tour" decoding="async"></div>
+        <div class="promo-card-thumb"><img loading="lazy" data-desktop-src="assets/optimized/promosheet_banners/Callaway 2026 Chrome Tour Golf Balls.jpg" alt="Callaway Chrome Tour" decoding="async"></div>
         <div class="promo-card-content">
           <span class="promo-card-tag">TOUR EQUIPMENT</span>
           <div class="promo-card-title">Callaway Chrome Tour</div>
@@ -3516,7 +3450,7 @@
       </div>
 
       <div class="promo-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/TaylorMade TP5 TP5x Golf Balls.jpg', 'TaylorMade TP5 / TP5x Multi-Layer Speed Core', 'BALL PROMOTION')">
-        <div class="promo-card-thumb"><img loading="lazy" src="assets/optimized/promosheet_banners/TaylorMade TP5 TP5x Golf Balls.jpg" alt="TaylorMade TP5" decoding="async"></div>
+        <div class="promo-card-thumb"><img loading="lazy" data-desktop-src="assets/optimized/promosheet_banners/TaylorMade TP5 TP5x Golf Balls.jpg" alt="TaylorMade TP5" decoding="async"></div>
         <div class="promo-card-content">
           <span class="promo-card-tag">PREMIUM BALLS</span>
           <div class="promo-card-title">TaylorMade TP5 / TP5x</div>
@@ -3525,7 +3459,7 @@
       </div>
 
       <div class="promo-card img-upload-box" onclick="openLightboxWithImage('assets/real_works/promosheet_banners/Vessel Nightfire Collection.jpg', 'Vessel Nightfire Luxury Gear Edit', 'LUXURY GEAR')">
-        <div class="promo-card-thumb"><img loading="lazy" src="assets/optimized/promosheet_banners/Vessel Nightfire Collection.jpg" alt="Vessel Nightfire" decoding="async"></div>
+        <div class="promo-card-thumb"><img loading="lazy" data-desktop-src="assets/optimized/promosheet_banners/Vessel Nightfire Collection.jpg" alt="Vessel Nightfire" decoding="async"></div>
         <div class="promo-card-content">
           <span class="promo-card-tag">LUXURY GEAR</span>
           <div class="promo-card-title">Vessel Nightfire Edit</div>
@@ -3547,7 +3481,7 @@
 
     <div class="spatial-merch-showcase">
       <div class="spatial-hero-box" onclick="openLightboxWithImage('assets/real_works/new_additions/The Open Major Offers 2026 Hanging Banner mockup.jpg', 'The Open Championship // In-Store 3D Hanging Banner Mockup', 'SPATIAL RETAIL ACTIVATION')">
-        <img loading="lazy" src="assets/optimized/new_additions/The Open Major Offers 2026 Hanging Banner mockup.jpg" alt="The Open Hanging Banner Mockup" decoding="async">
+        <img loading="lazy" data-desktop-src="assets/optimized/new_additions/The Open Major Offers 2026 Hanging Banner mockup.jpg" alt="The Open Hanging Banner Mockup" decoding="async">
         <div class="spatial-overlay-badge">
           <span>SPATIAL CEILING HANGING RIG // eGOLF MEGASTORE AL WASL</span>
         </div>
@@ -3589,7 +3523,7 @@
       <!-- AI Work 1: Boss Luxury Concept -->
       <div class="ai-concept-card" onclick="handleAiConceptCardTap(event, this, 'assets/real_works/new_additions/689352046_18580395709020262_5220540874800235796_n.jpg', 'Hugo Boss Luxury Golf Activation // AI Retail Concept', 'ADOBE FIREFLY GEN-3 // ARCHITECTURAL LIGHTING')">
         <div class="ai-card-media">
-          <img loading="lazy" src="assets/optimized/new_additions/689352046_18580395709020262_5220540874800235796_n.jpg" alt="Boss AI Concept" decoding="async">
+          <img loading="lazy" data-desktop-src="assets/optimized/new_additions/689352046_18580395709020262_5220540874800235796_n.jpg" alt="Boss AI Concept" decoding="async">
           <span class="ai-engine-tag">ADOBE FIREFLY</span>
           <span class="ai-mobile-tap-badge">TAP TO REVEAL</span>
         </div>
@@ -3605,7 +3539,7 @@
       <!-- AI Work 2: Nike Jordan Golf Flatlay -->
       <div class="ai-concept-card" onclick="handleAiConceptCardTap(event, this, 'assets/real_works/new_additions/690140026_18580395751020262_7846448488869614368_n.jpg', 'Nike Air Jordan Golf // Luxury Merchandising Flatlay', 'GENERATIVE AI CONCEPT LAB // RETAIL COMPOSITION')">
         <div class="ai-card-media">
-          <img loading="lazy" src="assets/optimized/new_additions/690140026_18580395751020262_7846448488869614368_n.jpg" alt="Nike Jordan Flatlay AI" decoding="async">
+          <img loading="lazy" data-desktop-src="assets/optimized/new_additions/690140026_18580395751020262_7846448488869614368_n.jpg" alt="Nike Jordan Flatlay AI" decoding="async">
           <span class="ai-engine-tag">HIGGSFIELD AI</span>
           <span class="ai-mobile-tap-badge">TAP TO REVEAL</span>
         </div>
@@ -3621,7 +3555,7 @@
       <!-- AI Work 3: Vessel Alpine Plinth -->
       <div class="ai-concept-card" onclick="handleAiConceptCardTap(event, this, 'assets/real_works/new_additions/708881960_18585805291020262_4494170539801241625_n.jpg', 'Vessel Luxury Bags // Alpine Stone Plinth Activation', 'GENERATIVE CONCEPT LAB // DRAMATIC LIGHTING')">
         <div class="ai-card-media">
-          <img loading="lazy" src="assets/optimized/new_additions/708881960_18585805291020262_4494170539801241625_n.jpg" alt="Vessel Alpine Concept" decoding="async">
+          <img loading="lazy" data-desktop-src="assets/optimized/new_additions/708881960_18585805291020262_4494170539801241625_n.jpg" alt="Vessel Alpine Concept" decoding="async">
           <span class="ai-engine-tag">ADOBE FIREFLY</span>
           <span class="ai-mobile-tap-badge">TAP TO REVEAL</span>
         </div>
@@ -3637,7 +3571,7 @@
       <!-- AI Work 4: Mother's Day Retail Activation -->
       <div class="ai-concept-card" onclick="handleAiConceptCardTap(event, this, 'assets/real_works/new_additions/730713355_18593578669020262_6603178947951019414_n.jpg', 'eGolf Megastore // Mother\'s Day Luxury Gifting Activation', 'GENERATIVE BOTANICAL STAGING // RETAIL CAMPAIGN')">
         <div class="ai-card-media">
-          <img loading="lazy" src="assets/optimized/new_additions/730713355_18593578669020262_6603178947951019414_n.jpg" alt="Mother's Day Concept 1" decoding="async">
+          <img loading="lazy" data-desktop-src="assets/optimized/new_additions/730713355_18593578669020262_6603178947951019414_n.jpg" alt="Mother's Day Concept 1" decoding="async">
           <span class="ai-engine-tag">FIREFLY GEN-3</span>
           <span class="ai-mobile-tap-badge">TAP TO REVEAL</span>
         </div>
@@ -3687,12 +3621,12 @@
       <div class="tri-col-unit">
         <div class="tri-col-tag">A4 MASTER DOUBLE SPREAD // LANDSCAPE 1920 × 1357</div>
         <div class="tri-poster-card tri-card-landscape" onclick="openLightboxFromTriSet(0)">
-          <img id="tri-img-0" src="assets/optimized/new_additions/A4 Posters - New Arrivals (2)/GFORE/GFORE_A4 Mens Landscape.jpg" alt="Landscape Spread" decoding="async">
+          <img id="tri-img-0" data-desktop-src="assets/optimized/new_additions/A4 Posters - New Arrivals (2)/GFORE/GFORE_A4 Mens Landscape.jpg" alt="Landscape Spread" decoding="async">
           <div class="tri-poster-overlay"><span class="tri-zoom-btn">🔍 INSPECT A4 SPREAD</span></div>
         </div>
         <div class="tri-poster-caption" id="tri-caption-0">G/FORE // Pastel Summer Capsule (A4 Landscape)</div>
         <div class="tri-landscape-spec-plate">
-          <div class="spec-plate-title">PRINT SPECIFICATION // 300 DPI OFFSET CMYK</div>
+          <div class="spec-plate-title">Print Specification · Offset CMYK</div>
           <p class="spec-plate-desc">
             High-fidelity editorial lookbook engineered for international luxury golf retail distribution across Dubai &amp; GCC flagships. Art direction by Irene Thomas.
           </p>
@@ -3703,7 +3637,7 @@
       <div class="tri-col-unit">
         <div class="tri-col-tag">PORTRAIT FOLIO 01 // A4 1357 × 1920</div>
         <div class="tri-poster-card tri-card-portrait" onclick="openLightboxFromTriSet(1)">
-          <img id="tri-img-1" src="assets/optimized/new_additions/A4 Posters - New Arrivals (2)/GFORE/GFORE_A4 Mens.jpg" alt="Portrait Lookbook 1" decoding="async">
+          <img id="tri-img-1" data-desktop-src="assets/optimized/new_additions/A4 Posters - New Arrivals (2)/GFORE/GFORE_A4 Mens.jpg" alt="Portrait Lookbook 1" decoding="async">
           <div class="tri-poster-overlay"><span class="tri-zoom-btn">🔍 INSPECT A4</span></div>
         </div>
         <div class="tri-poster-caption" id="tri-caption-1">G/FORE // Gallivanter Street Lookbook 01</div>
@@ -3713,7 +3647,7 @@
       <div class="tri-col-unit">
         <div class="tri-col-tag">PORTRAIT FOLIO 02 // A4 1357 × 1920</div>
         <div class="tri-poster-card tri-card-portrait" onclick="openLightboxFromTriSet(2)">
-          <img id="tri-img-2" src="assets/optimized/new_additions/A4 Posters - New Arrivals (2)/GFORE/GFORE_A4 Womens.jpg" alt="Portrait Lookbook 2" decoding="async">
+          <img id="tri-img-2" data-desktop-src="assets/optimized/new_additions/A4 Posters - New Arrivals (2)/GFORE/GFORE_A4 Womens.jpg" alt="Portrait Lookbook 2" decoding="async">
           <div class="tri-poster-overlay"><span class="tri-zoom-btn">🔍 INSPECT A4</span></div>
         </div>
         <div class="tri-poster-caption" id="tri-caption-2">G/FORE // Disruptive Luxury Tour 02</div>
@@ -3770,7 +3704,7 @@
         </div>
       </div>
       <div class="browser-scroll-viewport crm-browser-scroll" id="crm-scroll-frame" onclick="openActiveCrmLightbox()" title="Scroll inside window or Click to Inspect Original Master (5,000px)">
-        <img id="crm-active-img" src="assets/optimized/new_additions/crm_vip_launch_1500w.webp" alt="Full-Length CRM Email Dispatch" decoding="async">
+        <img id="crm-active-img" data-desktop-src="assets/optimized/new_additions/crm_vip_launch_1500w.webp" alt="Full-Length CRM Email Dispatch" decoding="async">
       </div>
       <div class="mobile-sandbox-actions">
         <button type="button" class="mobile-view-full-btn" onclick="openActiveCrmLightbox()">⤢ View Full 5,000px CRM Email</button>
@@ -3789,9 +3723,9 @@
   <!-- LAYER 8 (Z-INDEX 10): Sector 08 + Footer -->
   <div id="layer-8" class="pinned-burn-layer pinned-burn-layer-8">
     <div class="layer-ambient-art-canvas" aria-hidden="true">
-      <div class="ambient-art-blur-plate plate-a is-active" id="ambient-blur-8-a" style="background-image: url('assets/optimized/new_additions/PP.jpg');"></div>
+      <div class="ambient-art-blur-plate plate-a is-active" id="ambient-blur-8-a" data-desktop-bg="assets/optimized/new_additions/PP.jpg"></div>
       <div class="ambient-art-blur-plate plate-b" id="ambient-blur-8-b"></div>
-      <div class="ambient-art-ghost-plate plate-a is-active" id="ambient-ghost-8-a" style="background-image: url('assets/optimized/new_additions/PP.jpg');"></div>
+      <div class="ambient-art-ghost-plate plate-a is-active" id="ambient-ghost-8-a" data-desktop-bg="assets/optimized/new_additions/PP.jpg"></div>
       <div class="ambient-art-ghost-plate plate-b" id="ambient-ghost-8-b"></div>
       <div class="ambient-drafting-grid"></div>
     </div>
@@ -3872,7 +3806,7 @@
           <div class="dossier-portrait-wrap" onclick="openLightboxWithImage('assets/real_works/new_additions/PP.jpg', 'Irene Thomas // Creative Director &amp; Graphic Designer', 'DUBAI SPORTS CITY // THE ELS CLUB', '1 / 1.33')">
             <span class="washi-tape washi-tl" aria-hidden="true"></span>
             <span class="washi-tape washi-br" aria-hidden="true"></span>
-            <img src="assets/optimized/new_additions/PP.jpg" alt="Irene Thomas Official Portrait" class="dossier-portrait-img" decoding="async">
+            <img data-desktop-src="assets/optimized/new_additions/PP.jpg" alt="Irene Thomas Official Portrait" class="dossier-portrait-img" decoding="async">
             <!-- Authentic Rotary Postal Cancellation Stamp -->
             <svg class="postcard-cancel-stamp" viewBox="0 0 120 64" fill="none" aria-hidden="true">
               <circle cx="32" cy="32" r="25" stroke="#B83B1A" stroke-width="1.6" stroke-dasharray="6 2 14 2"/>
@@ -4303,7 +4237,7 @@
           <div class="skeleton-shimmer-sweep"></div>
           <div class="skeleton-hud-reticle">
             <span class="skeleton-glyph">✦</span>
-            <span class="skeleton-status">ARCHIVAL MASTER DECODING</span>
+            <span class="skeleton-status">Loading high-resolution image...</span>
           </div>
         </div>
         <!-- Target Media Display -->
@@ -4311,14 +4245,14 @@
       </div>
       <div class="lightbox-caption-minimal" id="lightbox-caption-box">
         <h3 class="lightbox-media-title" id="lightbox-title-text">Asset Inspection</h3>
-        <p class="lightbox-media-sub" id="lightbox-sub-text">HIGH RESOLUTION MASTER • PINCH TO ZOOM / SWIPE</p>
+        <p class="lightbox-media-sub" id="lightbox-sub-text">Pinch to zoom · Swipe to browse</p>
       </div>
     </div>
   </div>
 
 
   <!-- ========================================================================= -->
-  <!-- APPLICATION DATA MODELS                                                  -->
+  <!-- APPLICATION DATA MODELS & SHARED MODULES (LOADED IN BOTH MODES)          -->
   <!-- ========================================================================= -->
   <script src="js/data/sectors.data.js"></script>
   <script src="js/data/brand-manual.data.js"></script>
@@ -4326,31 +4260,88 @@
   <script src="js/data/social.data.js"></script>
   <script src="js/data/lookbooks.data.js"></script>
 
-  <!-- ========================================================================= -->
-  <!-- CORE UTILITIES & ENGINES (Splash, BurningPaperEngine, setScrollProgress, hud-animating) -->
-  <!-- ========================================================================= -->
-  <script src="js/core/splash.js"></script>
   <script src="js/core/utils.js"></script>
-  <script src="js/core/particles.js"></script>
-  <script src="js/core/cursor.js"></script>
-  <script src="js/core/navigation.js"></script>
-
-  <!-- ========================================================================= -->
-  <!-- INTERACTIVE MODULES & CONTROLLERS                                        -->
-  <!-- ========================================================================= -->
   <script src="js/modules/lightbox.js"></script>
-  <script src="js/modules/brand-console.js"></script>
-  <script src="js/modules/device-switcher.js?v=20261109_burn_v2"></script>
-  <script src="js/modules/social-deck.js?v=20261103_v22"></script>
-  <script src="js/modules/lookbook-crm.js"></script>
-  <script src="js/modules/mobile-sheet.js"></script>
-  <script src="js/modules/poster-filter.js"></script>
+  <script src="js/modules/atelier-gram.js"></script>
 
   <!-- ========================================================================= -->
-  <!-- APPLICATION INITIALIZER                                                  -->
+  <!-- MODE-GATED DESKTOP RUNTIME & ASSET HYDRATION (> 820px ONLY)             -->
   <!-- ========================================================================= -->
-  <script src="js/modules/atelier-gram.js"></script>
-  <script src="js/app.js"></script>
-<script src="js/core/pinned-burn-engine.js"></script>
+  <script>
+    (function () {
+      var desktopScriptsLoaded = false;
+      var desktopScriptsLoading = false;
+      var DESKTOP_SCRIPTS = [
+        'js/core/splash.js',
+        'js/core/particles.js',
+        'js/core/cursor.js',
+        'js/core/navigation.js',
+        'js/modules/brand-console.js',
+        'js/modules/device-switcher.js?v=20261109_burn_v2',
+        'js/modules/social-deck.js?v=20261103_v22',
+        'js/modules/lookbook-crm.js',
+        'js/modules/poster-filter.js',
+        'js/app.js',
+        'js/core/pinned-burn-engine.js'
+      ];
+
+      function hydrateDesktopMedia() {
+        if (window.__desktopMediaHydrated) return;
+        window.__desktopMediaHydrated = true;
+        document.querySelectorAll('[data-desktop-src]').forEach(function (el) {
+          el.setAttribute('src', el.getAttribute('data-desktop-src'));
+          el.removeAttribute('data-desktop-src');
+          if (el.tagName === 'SOURCE' && el.parentElement && el.parentElement.tagName === 'VIDEO') {
+            try { el.parentElement.load(); } catch (_) {}
+          }
+        });
+        document.querySelectorAll('[data-desktop-bg]').forEach(function (el) {
+          el.style.backgroundImage = "url('" + el.getAttribute('data-desktop-bg') + "')";
+          el.removeAttribute('data-desktop-bg');
+        });
+        document.querySelectorAll('video[data-desktop-autoplay="true"]').forEach(function (v) {
+          v.setAttribute('autoplay', '');
+          v.removeAttribute('data-desktop-autoplay');
+          try { v.play().catch(function () {}); } catch (_) {}
+        });
+      }
+
+      function loadScriptsSequentially(list, idx) {
+        if (idx >= list.length) {
+          desktopScriptsLoaded = true;
+          desktopScriptsLoading = false;
+          return;
+        }
+        var s = document.createElement('script');
+        s.src = list[idx];
+        s.async = false;
+        s.onload = function () { loadScriptsSequentially(list, idx + 1); };
+        s.onerror = function () { loadScriptsSequentially(list, idx + 1); };
+        document.body.appendChild(s);
+      }
+
+      window.__ensureDesktopRuntime = function () {
+        if (window.AtelierMode && window.AtelierMode.isMobile()) return;
+        hydrateDesktopMedia();
+        if (desktopScriptsLoaded || desktopScriptsLoading) return;
+        desktopScriptsLoading = true;
+        loadScriptsSequentially(DESKTOP_SCRIPTS, 0);
+      };
+
+      if (!(window.AtelierMode && window.AtelierMode.isMobile())) {
+        hydrateDesktopMedia();
+        for (var i = 0; i < DESKTOP_SCRIPTS.length; i++) {
+          document.write('<script src="' + DESKTOP_SCRIPTS[i] + '"><\/script>');
+        }
+        desktopScriptsLoaded = true;
+      } else {
+        window.addEventListener('atelier:modechange', function (e) {
+          if (e && e.detail && e.detail.mode === 'desktop') {
+            window.__ensureDesktopRuntime();
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

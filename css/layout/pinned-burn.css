@@ -71,202 +71,27 @@ html[data-mode="desktop"] .layer-masked {
   -webkit-mask: url(#silver-palace-burn-mask) !important;
 }
 
-/* --- MOBILE SIDEWAYS 2D LOOKBOOK TRACK (html[data-mode="mobile"]) --- */
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback),
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback) body {
-  margin: 0 !important;
-  padding: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  width: 100dvw !important;
-  height: 100dvh !important;
-  max-width: 100dvw !important;
-  overflow: hidden !important;
-  overscroll-behavior: none !important;
-  background-color: #F4F1EA !important;
+/* --- MOBILE MODE ISOLATION (Atelier Mobile handles html[data-mode="mobile"]) --- */
+html[data-mode="mobile"],
+html[data-mode="mobile"] body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background-color: #0A0B0E;
 }
 
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback) .pinned-burn-layer,
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback) .pinned-burn-track,
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback) #frames,
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback) #frames-layer-57,
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback) #frames-layer-8 {
-  display: contents !important;
-  position: static !important;
-  transform: none !important;
-  mask: none !important;
-  -webkit-mask: none !important;
-  contain: none !important;
-}
-
-html[data-mode="mobile"] .layer-ambient-art-canvas {
-  display: none !important;
-}
-
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback) .portfolio-lookbook-root {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  width: 100dvw !important;
-  height: 100dvh !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  scroll-snap-type: x mandatory !important;
-  overscroll-behavior-x: contain !important;
-  overscroll-behavior-y: none !important;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  position: relative;
-  z-index: 2;
-}
-
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback) .portfolio-lookbook-root::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-}
-
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback) .lookbook-chapter {
-  flex: 0 0 100vw !important;
-  flex: 0 0 100dvw !important;
-  width: 100vw !important;
-  width: 100dvw !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  scroll-snap-align: start !important;
-  scroll-snap-stop: always !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  overscroll-behavior-y: contain !important;
-  overscroll-behavior-x: auto !important;
-  -webkit-overflow-scrolling: touch;
-  box-sizing: border-box !important;
-  padding: 62px 16px calc(92px + env(safe-area-inset-bottom, 16px)) 16px !important;
-  position: relative !important;
-}
-
-/* Inset Chapter 01's left edge slightly to avoid iOS Safari's back-swipe gesture */
-html[data-mode="mobile"]:not(.lookbook-vertical-fallback) #chapter-01 {
-  padding-left: max(22px, calc(env(safe-area-inset-left, 0px) + 22px)) !important;
-  box-shadow: inset 4px 0 0 rgba(216, 78, 41, 0.22);
-}
-
-html[data-mode="mobile"] .lookbook-chapter > .container {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  padding-bottom: 0 !important;
-  max-width: 100% !important;
-}
-
-html[data-mode="mobile"] .lookbook-chapter[data-theme="light"] {
-  background-color: #F4F1EA;
-  color: #181512;
-}
-
-html[data-mode="mobile"] .lookbook-chapter[data-theme="dark"] {
-  background-color: #07080C;
-  color: #F4F1EA;
-}
-
-html[data-mode="mobile"] .lookbook-chapter#chapter-08 {
-  background-color: #EFECE6;
-  color: #181512;
-}
-
-/* --- PLAIN VERTICAL FALLBACK (If JS fails to initialize or scroll-snap is unsupported/degraded) --- */
-html:not([data-mode]),
-html:not([data-mode]) body,
-html.lookbook-vertical-fallback,
-html.lookbook-vertical-fallback body {
-  margin: 0 !important;
-  padding: 0 !important;
-  width: 100% !important;
-  height: auto !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  overscroll-behavior-y: auto !important;
-}
-
-html:not([data-mode]) .portfolio-lookbook-root,
-html:not([data-mode]) .pinned-burn-layer,
-html:not([data-mode]) .pinned-burn-track,
-html:not([data-mode]) .lookbook-chapter,
-html.lookbook-vertical-fallback .portfolio-lookbook-root,
-html.lookbook-vertical-fallback .pinned-burn-layer,
-html.lookbook-vertical-fallback .pinned-burn-track,
-html.lookbook-vertical-fallback .lookbook-chapter {
-  position: static !important;
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  overflow: visible !important;
-  transform: none !important;
-  contain: none !important;
-  touch-action: auto !important;
-}
-
-@supports not (scroll-snap-type: x mandatory) {
-  html[data-mode="mobile"],
-  html[data-mode="mobile"] body {
-    height: auto !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-  }
-  html[data-mode="mobile"] .portfolio-lookbook-root,
-  html[data-mode="mobile"] .lookbook-chapter {
-    position: static !important;
-    display: block !important;
-    width: 100% !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-}
-
-/* Ensure fixed navigation, header, capsule, and overlays stay above all pinned burn layers */
+/* Ensure fixed navigation, header, and overlays stay above all pinned burn layers */
 .grounded-atelier-header {
-  z-index: 100 !important;
+  z-index: 100;
 }
 
 .grounded-nav-system {
-  z-index: 100 !important;
-}
-
-.mobile-thumb-capsule {
-  z-index: 110 !important;
-}
-
-.mobile-sector-sheet-overlay {
-  z-index: 120 !important;
+  z-index: 100;
 }
 
 .storyboard-lightbox {
-  z-index: 9999 !important;
-}
-
-/* Short one-shot paper-burn transition on mobile chapter change (not scroll-scrubbed) */
-.mobile-chapter-burn-flash {
-  position: fixed;
-  inset: 0;
-  z-index: 95;
-  pointer-events: none;
-  opacity: 0;
-  will-change: opacity, transform;
-  background: radial-gradient(
-    120% 80% at 85% 90%,
-    rgba(255, 196, 112, 0.34) 0%,
-    rgba(216, 78, 41, 0.28) 28%,
-    rgba(30, 14, 8, 0.18) 54%,
-    transparent 78%
-  );
-  transform: translate3d(0, 8px, 0) scale(1.02);
-  transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.mobile-chapter-burn-flash.is-burning {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
+  z-index: 9999;
 }
 

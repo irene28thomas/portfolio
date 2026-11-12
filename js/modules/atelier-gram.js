@@ -64,7 +64,7 @@
     if (root) {
       if (tabKey === 'feed') {
         root.classList.remove('ag-legacy-tab-active');
-        root.style.scrollSnapType = 'y mandatory';
+        root.style.scrollSnapType = 'y proximity';
         root.scrollTop = 0;
       } else {
         root.classList.add('ag-legacy-tab-active');
@@ -109,11 +109,11 @@
     const titleEl = document.getElementById('ag-header-dynamic-title');
     if (titleEl) {
       const titles = {
-        feed: 'ATELIER // CURATED',
-        explore: 'ARCHIVE // GALLERY',
-        reels: 'CINEMA // MOTION',
-        dms: 'DISPATCH // CRM',
-        profile: 'DOSSIER // RESUME'
+        feed: 'Atelier · Curated',
+        explore: 'Archive · Gallery',
+        reels: 'Cinema · Motion',
+        dms: 'CRM · Email Systems',
+        profile: 'Dossier · Resume'
       };
       titleEl.textContent = titles[tabKey] || 'IRENE THOMAS';
     }
@@ -134,6 +134,25 @@
     }
   }
 
+  function hydrateVideoSources(video) {
+    if (!video || video.dataset.hydrated === 'true') return;
+    let changed = false;
+    if (video.dataset.src && !video.getAttribute('src')) {
+      video.setAttribute('src', video.dataset.src);
+      changed = true;
+    }
+    video.querySelectorAll('source[data-src]').forEach(source => {
+      if (!source.getAttribute('src')) {
+        source.setAttribute('src', source.dataset.src);
+        changed = true;
+      }
+    });
+    if (changed) {
+      video.dataset.hydrated = 'true';
+      try { video.load(); } catch (_) {}
+    }
+  }
+
   // 2. Reels Single-Video Playback Coordinator
   function syncActiveReelPlayback() {
     const scroller = document.getElementById('ag-reels-scroller');
@@ -148,6 +167,7 @@
       const itemTop = item.offsetTop;
       const diff = Math.abs(currentScrollTop - itemTop);
       if (diff < scrollerHeight * 0.4) {
+        hydrateVideoSources(video);
         if (video.paused) {
           try { video.play().catch(() => {}); } catch (_) {}
         }
@@ -290,17 +310,17 @@
       desktop: {
         src: 'assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Desktop 1920x600.jpg',
         style: 'height: 140px; aspect-ratio: 16/5;',
-        title: 'DESKTOP HERO // 1920 × 600'
+        title: 'Desktop Hero · 1920 × 600'
       },
       tablet: {
         src: 'assets/optimized/TaylorMade_Qi4D_Series_900x600.jpg',
         style: 'height: 220px; aspect-ratio: 3/2;',
-        title: 'APP & TABLET BANNER // 900 × 600'
+        title: 'Tablet Banner · 900 × 600'
       },
       mobile: {
         src: 'assets/optimized/New_Arrivals_Landing_Page_V1.jpg',
         style: 'height: 280px; aspect-ratio: 3/4;',
-        title: 'MOBILE STOREFRONT // 640 × 427'
+        title: 'Mobile Storefront · 640 × 427'
       }
     };
 
@@ -339,9 +359,9 @@
   // 9. CRM DIRECT MARKETING 5,000PX SUITE (FULL-WIDTH IMMERSIVE FOLIO)
   const CRM_DATA = {
     egolf: {
-      client: 'eGolf Megastore // Dubai Flagship',
-      file: 'eGolf_VIP_Seasonal_Launch_5000px.webp',
-      specs: '5,000 × 1,200 PX // RETINA 2X',
+      client: 'eGolf Megastore · Dubai Flagship',
+      file: 'eGolf VIP Seasonal Launch',
+      specs: '5,000 × 1,200 px · High-Res',
       srcLow: 'assets/optimized/new_additions/crm_vip_launch_750w.webp',
       srcHigh: 'assets/optimized/new_additions/crm_vip_launch_1500w.webp',
       tech: {
@@ -353,9 +373,9 @@
       kpis: { ctr: '38.4%', opens: '64.2%', orders: '2,480+' }
     },
     callaway: {
-      client: 'Callaway Golf Regional // Major Tournaments',
-      file: 'Callaway_Major_Tournaments_5000px.webp',
-      specs: '5,000 × 1,200 PX // RETINA 2X',
+      client: 'Callaway Golf Regional · Major Tournaments',
+      file: 'Callaway Major Tournaments',
+      specs: '5,000 × 1,200 px · High-Res',
       srcLow: 'assets/optimized/new_additions/crm_major_tournaments_750w.webp',
       srcHigh: 'assets/optimized/new_additions/crm_major_tournaments_1500w.webp',
       tech: {
@@ -367,9 +387,9 @@
       kpis: { ctr: '42.1%', opens: '71.0%', orders: '3,120+' }
     },
     taylormade: {
-      client: 'TaylorMade & Vessel // Luxury Cart Bag',
-      file: 'Vessel_Luxury_Release_5000px.webp',
-      specs: '5,000 × 1,200 PX // RETINA 2X',
+      client: 'TaylorMade & Vessel · Luxury Cart Bag',
+      file: 'Vessel Luxury Release',
+      specs: '5,000 × 1,200 px · High-Res',
       srcLow: 'assets/optimized/new_additions/crm_vessel_luxury_750w.webp',
       srcHigh: 'assets/optimized/new_additions/crm_vessel_luxury_1500w.webp',
       tech: {
@@ -487,19 +507,19 @@
 
   // Complete Unabridged Nivara Suite (All 13 Spreads)
   const OVERVIEW_NIVARA_SPREADS = [
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-01.jpg', title: 'Brand Philosophy & Concept Architecture', label: 'SPREAD 01 // CONCEPT ARCHITECTURE' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-02.jpg', title: 'Logomark Grid & Geometric Ratios', label: 'SPREAD 02 // LOGOMARK GEOMETRY' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-03.jpg', title: 'Primary Logotype Anatomy & Clearspace', label: 'SPREAD 03 // LOGOTYPE CLEARSPACE' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-04.jpg', title: 'Botanical Color Harmony & Tonal Palette', label: 'SPREAD 04 // BOTANICAL COLOR SYSTEM' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-05.jpg', title: 'Botanical Monogram & Embossed Glyphs', label: 'SPREAD 05 // BOTANICAL MONOGRAM' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-06.jpg', title: 'Typographic Hierarchy & Editorial Grids', label: 'SPREAD 06 // TYPOGRAPHY HIERARCHY' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-07.jpg', title: 'Primary Packaging System & Glass Bottles', label: 'SPREAD 07 // PRIMARY PACKAGING' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-08.jpg', title: 'Carton Packaging CAD Dielines & Foil Stamp', label: 'SPREAD 08 // CARTON CAD DIELINES' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-09.jpg', title: 'Secondary Packaging & Embellishment Specs', label: 'SPREAD 09 // SECONDARY PACKAGING' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-10.jpg', title: 'Unboxing Ritual & Interior Liner Patterns', label: 'SPREAD 10 // UNBOXING RITUAL' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-11.jpg', title: 'Digital Brand Portal & Responsive E-Commerce', label: 'SPREAD 11 // DIGITAL MERCHANDISING' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-12.jpg', title: 'Spatial Retail Merchandising & Boutique Fixtures', label: 'SPREAD 12 // SPATIAL RETAIL FIXTURES' },
-    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-13.jpg', title: 'Production Compliance & Global Print Standards', label: 'SPREAD 13 // PRODUCTION COMPLIANCE' }
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-01.jpg', title: 'Brand Philosophy & Concept Architecture', label: 'Spread 01 · Concept Architecture' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-02.jpg', title: 'Logomark Grid & Geometric Ratios', label: 'Spread 02 · Logomark Geometry' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-03.jpg', title: 'Primary Logotype Anatomy & Clearspace', label: 'Spread 03 · Logotype Clearspace' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-04.jpg', title: 'Botanical Color Harmony & Tonal Palette', label: 'Spread 04 · Botanical Color System' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-05.jpg', title: 'Botanical Monogram & Embossed Glyphs', label: 'Spread 05 · Botanical Monogram' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-06.jpg', title: 'Typographic Hierarchy & Editorial Grids', label: 'Spread 06 · Typography Hierarchy' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-07.jpg', title: 'Primary Packaging System & Glass Bottles', label: 'Spread 07 · Primary Packaging' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-08.jpg', title: 'Carton Packaging Dielines & Foil Stamp', label: 'Spread 08 · Carton Dielines' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-09.jpg', title: 'Secondary Packaging & Embellishment Specs', label: 'Spread 09 · Secondary Packaging' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-10.jpg', title: 'Unboxing Ritual & Interior Liner Patterns', label: 'Spread 10 · Unboxing Ritual' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-11.jpg', title: 'Digital Brand Portal & Responsive E-Commerce', label: 'Spread 11 · Digital Merchandising' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-12.jpg', title: 'Spatial Retail Merchandising & Boutique Fixtures', label: 'Spread 12 · Retail Fixtures' },
+    { src: 'assets/optimized/brand_identity/Brand Identity_NIVARA_Version Irene-13.jpg', title: 'Production Compliance & Global Print Standards', label: 'Spread 13 · Print Standards' }
   ];
   let currentNivaraSpreadIdx = 0;
 
@@ -628,21 +648,28 @@
     }
 
     const subtitles = {
-      omnichannel: 'OMNICHANNEL // RADIAL PETAL DIAL',
-      cinema: 'KINETIC CINEMA // 35MM PROJECTOR',
-      nivara: 'NIVARA // BOTANICAL ARCHITECTURE',
-      hardware: 'TOUR EQUIPMENT // CAD SPECIMETER',
-      retail: 'STOREFRONT // VIEWPORT ORIGAMI',
-      posters: 'SPECTRUM OF MIND // MUSEUM SPOTLIGHT',
-      crm: 'VIP DISPATCH // TELETYPE RECEIPT',
-      ai: 'GENERATIVE AI // LATENT DIFFUSION',
-      lookbooks: 'RETAIL LOOKBOOKS // POS TRI-SETS'
+      omnichannel: 'Omnichannel Campaigns',
+      cinema: 'Film & Motion',
+      nivara: 'Nivara Brand Identity',
+      hardware: 'Tour Equipment Campaigns',
+      retail: 'Responsive Storefronts',
+      posters: 'Spectrum of Mind Exhibition',
+      crm: 'CRM Email Systems',
+      ai: 'Generative AI Direction',
+      lookbooks: 'Retail Print Lookbooks'
     };
     const subEl = document.getElementById('ag-story-modal-subtitle');
-    if (subEl) subEl.textContent = subtitles[key] || 'IRENE THOMAS ARCHIVE';
+    if (subEl) subEl.textContent = subtitles[key] || 'Irene Thomas Portfolio';
 
     if (key === 'omnichannel') {
       initPetalDial();
+    }
+    if (key === 'cinema') {
+      const cinemaVid = document.getElementById('ag-cinema-modal-video');
+      if (cinemaVid) {
+        hydrateVideoSources(cinemaVid);
+        try { cinemaVid.play().catch(() => {}); } catch (_) {}
+      }
     }
   }
 
@@ -862,7 +889,7 @@
 
     // Update title text
     document.querySelectorAll('#ag-petal-hud-title, .ag-petal-hud-title').forEach(t => {
-      t.textContent = `${card.campaign} // ${card.dims}`;
+      t.textContent = `${card.campaign} · ${card.dims}`;
     });
 
     // Update ratio pill / badge
@@ -907,7 +934,7 @@
   function openActivePetalLightbox() {
     const card = OMNICHANNEL_PETAL_CARDS[activePetalIndex] || OMNICHANNEL_PETAL_CARDS[0];
     if (typeof openLightboxWithImage === 'function') {
-      openLightboxWithImage(card.src, `${card.brand} — ${card.campaign}`, `${card.ratioLabel} // ${card.dims} PX MASTER`);
+      openLightboxWithImage(card.src, `${card.brand} — ${card.campaign}`, `${card.ratioLabel} · ${card.dims} px`);
     }
   }
 
@@ -982,7 +1009,7 @@
 
   function selectNivaraArtifact(src, title) {
     if (typeof openLightboxWithImage === 'function') {
-      openLightboxWithImage(src, `Nivara Botanical Cosmetics — ${title}`, 'Unabridged Identity Artifact // 300DPI Inspection');
+      openLightboxWithImage(src, `Nivara Botanical Cosmetics — ${title}`, 'Brand Identity System');
     }
   }
 
@@ -1016,8 +1043,8 @@
       const label = barneyPill.querySelector('.ag-commentary-label');
       if (label) {
         label.textContent = isGlobalSpatialAudioPlaying
-          ? "SOUNDTRACK ACTIVE // TAP TO MUTE"
-          : "DIRECTOR'S COMMENTARY // 24FPS SOUNDTRACK";
+          ? "Sound on — tap to mute"
+          : "Tap to play with sound";
       }
     }
   }
@@ -1025,8 +1052,9 @@
   function toggleMobileVideoAudio(btn, videoId) {
     const video = document.getElementById(videoId);
     if (!video) return;
+    hydrateVideoSources(video);
     video.muted = !video.muted;
-    if (!video.muted) {
+    if (!video.muted || video.paused) {
       try { video.play().catch(() => {}); } catch (_) {}
     }
     if (videoId === 'ag-overview-barney-video') {
@@ -1038,8 +1066,8 @@
       const label = btn.querySelector('.ag-commentary-label');
       if (label) {
         label.textContent = video.muted
-          ? "DIRECTOR'S COMMENTARY // 24FPS SOUNDTRACK"
-          : "SOUNDTRACK ACTIVE // TAP TO MUTE";
+          ? "Tap to play with sound"
+          : "Sound on — tap to mute";
       } else {
         btn.textContent = video.muted ? '🔊 UNMUTE' : '🔇 MUTE';
       }
@@ -1086,9 +1114,9 @@
     }
 
     const labels = {
-      desktop: '1920 × 600 PX // VIEWPORT DESKTOP (16:5)',
-      app: '900 × 600 PX // VIEWPORT TABLET APP (3:2)',
-      mobile: '640 × 427 PX // VIEWPORT MOBILE (3:2)'
+      desktop: '1920 × 600 px · Desktop (16:5)',
+      app: '900 × 600 px · Tablet (3:2)',
+      mobile: '640 × 427 px · Mobile (3:2)'
     };
     if (indicator) indicator.textContent = labels[device] || labels.desktop;
   }
@@ -1099,9 +1127,9 @@
 
     const img = document.getElementById('ag-vp-active-img');
     const brands = {
-      nicklaus: 'assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Desktop 1920x600.jpg',
-      adidas: 'assets/optimized/new_additions/Adidas New Collection _ Slider Desktop 1920x600.jpg',
-      jlindeberg: 'assets/optimized/new_additions/JLindeberg 30Y Collection Slider Web 1920x600.jpg'
+      nicklaus: 'assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Mobile 640x427.jpg',
+      adidas: 'assets/optimized/new_additions/Adidas New Collection _ Slider Mobile 640x427.jpg',
+      jlindeberg: 'assets/optimized/new_additions/JLindeberg 30Y Collection Slider Mobile 640x427.jpg'
     };
     if (img && brands[brand]) img.src = brands[brand];
   }
@@ -1112,17 +1140,17 @@
     vip: {
       low: 'assets/optimized/new_additions/crm_vip_launch_750w.webp',
       high: 'assets/optimized/new_additions/crm_vip_launch_1500w.webp',
-      title: 'VIP Direct Dispatch // Irene Thomas Collection'
+      title: 'VIP Email Campaign · Irene Thomas Collection'
     },
     majors: {
       low: 'assets/optimized/new_additions/crm_major_tournaments_750w.webp',
       high: 'assets/optimized/new_additions/crm_major_tournaments_1500w.webp',
-      title: 'Major Tournaments VIP Dispatch // Callaway Regional'
+      title: 'Major Tournaments Campaign · Callaway Regional'
     },
     vessel: {
       low: 'assets/optimized/new_additions/crm_vessel_luxury_750w.webp',
       high: 'assets/optimized/new_additions/crm_vessel_luxury_1500w.webp',
-      title: 'Vessel Luxury Cart Bag Dispatch // TaylorMade Collaboration'
+      title: 'Vessel Luxury Cart Bag · TaylorMade Collaboration'
     }
   };
 
@@ -1207,17 +1235,18 @@
     if (btn) btn.classList.add('is-active');
 
     const reels = {
-      barney: { src: 'assets/real_works/Barney_Dale__The_Cloud_story_arc.mp4', poster: 'assets/optimized/Barney_Dale__The_Cloud_story_arc_poster.webp', title: 'BARNEY DALE: THE CLOUD' },
-      galvin: { src: 'assets/real_works/Galvin_Green_New_Collection.mp4', poster: 'assets/optimized/Galvin_Green_New_Collection_poster.webp', title: 'GALVIN GREEN // KINETIC' },
-      lab: { src: 'assets/real_works/LAB_Golf_DF3__Back_in_stock.mp4', poster: 'assets/optimized/LAB_Golf_DF3__Back_in_stock_poster.webp', title: 'LAB GOLF DF3 // 60FPS' },
-      part: { src: 'assets/optimized/new_additions/PART SALE 2026 Apparel Story.mp4', poster: 'assets/optimized/new_additions/PART_SALE_2026_Apparel_Story_poster.webp', title: 'PART SALE // MOTION' }
+      barney: { src: 'assets/optimized/Barney_Dale__The_Cloud_story_arc.mp4', poster: 'assets/optimized/Barney_Dale__The_Cloud_story_arc_poster.webp', title: 'Barney Dale: The Cloud' },
+      galvin: { src: 'assets/optimized/Galvin_Green_New_Collection.mp4', poster: 'assets/optimized/Galvin_Green_New_Collection_poster.webp', title: 'Galvin Green Collection' },
+      lab: { src: 'assets/optimized/LAB_Golf_DF3__Back_in_stock.mp4', poster: 'assets/optimized/LAB_Golf_DF3__Back_in_stock_poster.webp', title: 'L.A.B. Golf DF3 Campaign' },
+      part: { src: 'assets/optimized/new_additions/PART SALE 2026 Apparel Story.mp4', poster: 'assets/optimized/new_additions/PART_SALE_2026_Apparel_Story_poster.webp', title: 'Seasonal Apparel Story' }
     };
     const r = reels[reelKey];
     if (r && video) {
       video.src = r.src;
+      video.dataset.hydrated = 'true';
       video.poster = r.poster;
       if (title) title.textContent = r.title;
-      try { video.play(); } catch (_) {}
+      try { video.play().catch(() => {}); } catch (_) {}
     }
   }
 
@@ -1249,9 +1278,9 @@
     document.querySelectorAll('.ag-sf-modal-brand, .ag-sf-modal-brand-btn').forEach(b => b.classList.remove('is-active'));
     if (btn) btn.classList.add('is-active');
     const brands = {
-      nicklaus: 'assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Desktop 1920x600.jpg',
-      adidas: 'assets/optimized/new_additions/Adidas New Collection _ Slider Desktop 1920x600.jpg',
-      jlindeberg: 'assets/optimized/new_additions/JLindeberg 30Y Collection Slider Web 1920x600.jpg'
+      nicklaus: 'assets/optimized/new_additions/Jack Nicklaus Collection _ Slider Mobile 640x427.jpg',
+      adidas: 'assets/optimized/new_additions/Adidas New Collection _ Slider Mobile 640x427.jpg',
+      jlindeberg: 'assets/optimized/new_additions/JLindeberg 30Y Collection Slider Mobile 640x427.jpg'
     };
     if (img && brands[brandKey]) img.src = brands[brandKey];
   }
@@ -1259,17 +1288,17 @@
   const EXHIBITION_SETS = [
     {
       src: 'assets/optimized/posters/Mental Health Awareness Poster Set 3-01.jpg',
-      title: 'SPECTRUM OF MIND // SET 03',
+      title: 'Spectrum of Mind · Set 03',
       sub: 'Helvetica Neue Light · Swiss Typography Asymmetry'
     },
     {
       src: 'assets/optimized/posters/Mental Health Awareness Poster Set 4-01.jpg',
-      title: 'SPECTRUM OF MIND // SET 04',
+      title: 'Spectrum of Mind · Set 04',
       sub: 'Akzidenz-Grotesk · Chromatic Tension & Grid Systems'
     },
     {
       src: 'assets/optimized/posters/Mental Health Awareness Poster Set 5-01.jpg',
-      title: 'SPECTRUM OF MIND // SET 05',
+      title: 'Spectrum of Mind · Set 05',
       sub: 'Univers Condensed · High-Contrast Minimalist Balance'
     }
   ];
@@ -1311,9 +1340,9 @@
   }
 
   const GENAI_CONCEPTS = [
-    { src: 'assets/optimized/new_additions/689352046_18580395709020262_5220540874800235796_n.jpg', label: 'CONCEPT 01 // LIQUID CHROME' },
-    { src: 'assets/optimized/new_additions/690140026_18580395751020262_7846448488869614368_n.jpg', label: 'CONCEPT 02 // VOLUMETRIC SOLE' },
-    { src: 'assets/optimized/new_additions/708881960_18585805291020262_4494170539801241625_n.jpg', label: 'CONCEPT 03 // AERODYNAMIC WEAVE' }
+    { src: 'assets/optimized/new_additions/689352046_18580395709020262_5220540874800235796_n.jpg', label: 'Concept 01 · Liquid Chrome' },
+    { src: 'assets/optimized/new_additions/690140026_18580395751020262_7846448488869614368_n.jpg', label: 'Concept 02 · Volumetric Sole' },
+    { src: 'assets/optimized/new_additions/708881960_18585805291020262_4494170539801241625_n.jpg', label: 'Concept 03 · Aerodynamic Weave' }
   ];
   let activeGenAiIdx = 0;
 
@@ -1332,7 +1361,7 @@
   function openActiveGenAiLightbox() {
     const item = GENAI_CONCEPTS[activeGenAiIdx] || GENAI_CONCEPTS[0];
     if (typeof openLightboxWithImage === 'function') {
-      openLightboxWithImage(item.src, `Neural Spatial Concept — ${item.label}`, 'Midjourney V6.0 + ControlNet Depth // 300DPI');
+      openLightboxWithImage(item.src, `AI Visual Concept — ${item.label}`, 'AI Visual Direction · Concept Study');
     }
   }
 
@@ -1349,10 +1378,10 @@
 
   // --- H. THE OPEN 2026 IN-STORE CHAMPIONSHIP COLLATERAL ---
   const THE_OPEN_ASSETS = [
-    { src: 'assets/optimized/new_additions/The Open Major Offers 2026 A4 UAE Select Stores 1.jpg', label: 'THE OPEN 2026 // A4 STORE COLLATERAL // 300 DPI' },
-    { src: 'assets/optimized/new_additions/The Open Major Offers 2026 A4 TDM DHM.jpg', label: 'THE OPEN 2026 // A4 MERCHANDISING // 300 DPI' },
-    { src: 'assets/optimized/new_additions/The Open Major Offers 2026 Hanging Banner mockup.jpg', label: 'THE OPEN 2026 // HANGING BANNER MOCKUP // RETAIL' },
-    { src: 'assets/optimized/new_additions/Ryan Fox The Open 2026 Champion Post.jpg', label: 'THE OPEN 2026 // CHAMPIONSHIP SOCIAL // 1080×1080' }
+    { src: 'assets/optimized/new_additions/The Open Major Offers 2026 A4 UAE Select Stores 1.jpg', label: 'The Open 2026 · A4 Store Collateral' },
+    { src: 'assets/optimized/new_additions/The Open Major Offers 2026 A4 TDM DHM.jpg', label: 'The Open 2026 · A4 Merchandising' },
+    { src: 'assets/optimized/new_additions/The Open Major Offers 2026 Hanging Banner mockup.jpg', label: 'The Open 2026 · Hanging Banner Mockup' },
+    { src: 'assets/optimized/new_additions/Ryan Fox The Open 2026 Champion Post.jpg', label: 'The Open 2026 · Championship Social (1080×1080)' }
   ];
   let activeTheOpenIdx = 0;
 
@@ -1404,6 +1433,7 @@
     if (!indexModal) return;
     const isOpen = (typeof forceState === 'boolean') ? forceState : !indexModal.classList.contains('is-open');
     indexModal.classList.toggle('is-open', isOpen);
+    indexModal.setAttribute('aria-hidden', String(!isOpen));
     if (capsuleBtn) capsuleBtn.setAttribute('aria-expanded', String(isOpen));
   }
 
@@ -1422,7 +1452,7 @@
     }
     const compassName = document.getElementById('ag-compass-act-name');
     if (compassName) {
-      compassName.textContent = `${String(actNum).padStart(2, '0')} // ${actName}`;
+      compassName.textContent = `${String(actNum).padStart(2, '0')} / 08 · ${actName}`;
     }
 
     document.querySelectorAll('.ag-chapter-btn').forEach(b => {
@@ -1452,6 +1482,7 @@
     const nextState = !isGlobalSpatialAudioPlaying;
     syncSpatialAudioUi(nextState);
     if (barneyVideo) {
+      hydrateVideoSources(barneyVideo);
       if (nextState) {
         barneyVideo.muted = false;
         barneyVideo.play().catch(() => {});
@@ -1474,7 +1505,7 @@
       const h = String(dubaiTime.getHours()).padStart(2, '0');
       const m = String(dubaiTime.getMinutes()).padStart(2, '0');
       const s = String(dubaiTime.getSeconds()).padStart(2, '0');
-      if (clockEl) clockEl.textContent = `DUBAI GST: ${h}:${m}:${s} (UTC+4) // COMMISSIONS ACTIVE 2026`;
+      if (clockEl) clockEl.textContent = `Dubai (GST): ${h}:${m}:${s} · Available for commissions`;
     }
     updateClock();
     setInterval(updateClock, 1000);
@@ -1772,13 +1803,25 @@
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
           syncSpatialActHud(entry.target);
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: [0.25, 0.5] });
 
     acts.forEach(act => observer.observe(act));
+
+    const barneyVideo = document.getElementById('ag-overview-barney-video');
+    if (barneyVideo) {
+      barneyVideo.addEventListener('click', () => {
+        hydrateVideoSources(barneyVideo);
+        if (barneyVideo.paused) {
+          barneyVideo.play().catch(() => {});
+        } else {
+          barneyVideo.pause();
+        }
+      });
+    }
 
     startColophonClock();
     initBarneyJogWheel();

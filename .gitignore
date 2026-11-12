@@ -4,6 +4,8 @@
 /backups/
 /archive/
 /webpage_code_temp/
+/.agents/
+/audit_snapshots/
 
 # Large non-production audit/print assets
 Irene_Thomas_Mobile_Showcase_Audit.pdf

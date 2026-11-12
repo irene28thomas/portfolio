@@ -58,7 +58,7 @@
   // Scroll timeline metrics & sector offset caching
   let vw = window.innerWidth;
   let vh = window.innerHeight;
-  let isMobile = vw <= 860;
+  let isMobile = window.AtelierMode ? window.AtelierMode.isMobile() : (document.documentElement.dataset.mode === 'mobile');
   let maxScroll14 = 0;
   let burnSpan1   = 0;
   let maxScroll57 = 0;
@@ -120,7 +120,20 @@
   function measureLayout() {
     vw = window.innerWidth;
     vh = window.innerHeight;
-    isMobile = vw <= 860 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    isMobile = window.AtelierMode ? window.AtelierMode.isMobile() : (document.documentElement.dataset.mode === 'mobile');
+
+    if (isMobile) {
+      [layer14, layer57, layer8].forEach((layer) => {
+        if (!layer) return;
+        layer.style.visibility = '';
+        layer.style.pointerEvents = '';
+        layer.classList.remove('layer-masked');
+      });
+      [track14, track57, track8].forEach((track) => {
+        if (!track) return;
+        track.style.transform = '';
+      });
+    }
 
     maskEl.setAttribute('width', vw);
     maskEl.setAttribute('height', vh);
@@ -471,9 +484,13 @@
     }
   }
 
-  // Override handleRailClick to drive our virtual scroll engine
+  // Override handleRailClick to drive our virtual scroll engine on desktop or 2D lookbook on mobile
   window.handleRailClick = function(e, sectorId) {
     if (e && e.preventDefault) e.preventDefault();
+    if (isMobile && window.Lookbook2D && typeof window.Lookbook2D.goToSector === 'function') {
+      window.Lookbook2D.goToSector(sectorId, { updateHash: true, smooth: true });
+      return;
+    }
     targetY = getSectorTargetY(sectorId);
     if (typeof playUiSound === 'function') {
       playUiSound(900, 'triangle', 0.08);
@@ -498,6 +515,7 @@
     // 2. Active sector navigation node
     if (activeSectorId !== currentSectorId) {
       currentSectorId = activeSectorId;
+      document.body.setAttribute('data-active-sector', activeSectorId);
       document.querySelectorAll('.grounded-nav-node').forEach(node => {
         const sec = node.getAttribute('data-sector');
         if (sec === activeSectorId) {
@@ -537,11 +555,22 @@
         if (headerCode) headerCode.innerText = secData.code;
         if (headerName) headerName.innerText = secData.name;
 
+        const hudNum = document.getElementById('bg-hud-num');
+        const hudTitle = document.getElementById('bg-hud-title');
+        if (hudNum) hudNum.innerText = secData.code;
+        if (hudTitle) hudTitle.innerText = secData.name;
+
         // Update mobile thumb capsule & collapsed header micro-beacon
         const capNum = document.getElementById('thumb-cap-num');
         const capTitle = document.getElementById('thumb-cap-title');
-        if (capNum) capNum.innerText = secData.code;
-        if (capTitle) capTitle.innerText = secData.name;
+        const capScrubberFill = document.getElementById('thumb-cap-scrubber-fill');
+        const totalSecs = String(dockSectorsList.length || 8).padStart(2, '0');
+        if (capNum) capNum.innerText = `${secData.code} / ${totalSecs}`;
+        if (capTitle) capTitle.innerText = isMobile ? (secData.shortName || secData.name) : secData.name;
+        if (capScrubberFill) {
+          const pctFill = ((secIdx + 1) / Math.max(1, dockSectorsList.length)) * 100;
+          capScrubberFill.style.width = `${pctFill.toFixed(1)}%`;
+        }
         const collapsedPillSec = document.getElementById('collapsed-pill-sector');
         if (collapsedPillSec) collapsedPillSec.innerText = `SEC ${secData.code} • ${secData.name}`;
       }
@@ -584,30 +613,61 @@
   let activeStageId = 'hero';
   let hoveredArtOverride = null;
 
+  const ambientBufferState = {
+    '14': { active: 'a', currentArt: '' },
+    '57': { active: 'a', currentArt: '' },
+    '8':  { active: 'a', currentArt: '' }
+  };
+
+  function crossfadeLayerPlates(layerKey, artUrl) {
+    const state = ambientBufferState[layerKey];
+    if (!state || state.currentArt === artUrl) return;
+    state.currentArt = artUrl;
+    const safeUrl = `url("${artUrl}")`;
+
+    const nextSlot = state.active === 'a' ? 'b' : 'a';
+    const currSlot = state.active;
+
+    const blurNext = document.getElementById(`ambient-blur-${layerKey}-${nextSlot}`);
+    const blurCurr = document.getElementById(`ambient-blur-${layerKey}-${currSlot}`);
+    const ghostNext = document.getElementById(`ambient-ghost-${layerKey}-${nextSlot}`);
+    const ghostCurr = document.getElementById(`ambient-ghost-${layerKey}-${currSlot}`);
+
+    if (blurNext) {
+      blurNext.style.backgroundImage = safeUrl;
+      blurNext.classList.add('is-active');
+    }
+    if (ghostNext) {
+      ghostNext.style.backgroundImage = safeUrl;
+      ghostNext.classList.add('is-active');
+    }
+
+    if (blurCurr) blurCurr.classList.remove('is-active');
+    if (ghostCurr) ghostCurr.classList.remove('is-active');
+
+    // Fallback for single plate if dual plates not yet mounted
+    const singleBlur = document.getElementById(`ambient-blur-${layerKey}`);
+    const singleGhost = document.getElementById(`ambient-ghost-${layerKey}`);
+    if (singleBlur && !blurNext) { singleBlur.style.backgroundImage = safeUrl; singleBlur.classList.add('is-active'); }
+    if (singleGhost && !ghostNext) { singleGhost.style.backgroundImage = safeUrl; singleGhost.classList.add('is-active'); }
+
+    state.active = nextSlot;
+  }
+
   function applyAmbientArtToActiveLayer(artUrl) {
     if (!artUrl) return;
-    const safeUrl = `url("${artUrl}")`;
     const p1Start = maxScroll14;
     const p1End   = p1Start + burnSpan1;
     const p2Start = p1End + maxScroll57;
 
     if (currentY <= p1End) {
-      const b14 = document.getElementById('ambient-blur-14');
-      const g14 = document.getElementById('ambient-ghost-14');
-      if (b14 && b14.dataset.art !== artUrl) { b14.dataset.art = artUrl; b14.style.backgroundImage = safeUrl; }
-      if (g14 && g14.dataset.art !== artUrl) { g14.dataset.art = artUrl; g14.style.backgroundImage = safeUrl; }
+      crossfadeLayerPlates('14', artUrl);
     }
     if (currentY > p1Start && currentY <= p2Start + burnSpan2) {
-      const b57 = document.getElementById('ambient-blur-57');
-      const g57 = document.getElementById('ambient-ghost-57');
-      if (b57 && b57.dataset.art !== artUrl) { b57.dataset.art = artUrl; b57.style.backgroundImage = safeUrl; }
-      if (g57 && g57.dataset.art !== artUrl) { g57.dataset.art = artUrl; g57.style.backgroundImage = safeUrl; }
+      crossfadeLayerPlates('57', artUrl);
     }
     if (currentY > p2Start) {
-      const b8 = document.getElementById('ambient-blur-8');
-      const g8 = document.getElementById('ambient-ghost-8');
-      if (b8 && b8.dataset.art !== artUrl) { b8.dataset.art = artUrl; b8.style.backgroundImage = safeUrl; }
-      if (g8 && g8.dataset.art !== artUrl) { g8.dataset.art = artUrl; g8.style.backgroundImage = safeUrl; }
+      crossfadeLayerPlates('8', artUrl);
     }
     const railImg = document.getElementById('left-rail-art-img');
     if (railImg && railImg.getAttribute('src') !== artUrl) {
@@ -663,6 +723,7 @@
   let lastInnerScrollTime = 0;
 
   function applyScrollDelta(delta) {
+    if (isMobile) return;
     const now = performance.now();
     lastScrollInputTime = now;
     if (Math.abs(delta) > 0.5) {
@@ -688,6 +749,10 @@
   // MASTER 5-PHASE SCROLL & BURN STATE MACHINE (INVERTED THEMES)
   // =========================================================================
   function renderLoop(now) {
+    if (isMobile) {
+      setTimeout(() => requestAnimationFrame(renderLoop), 1000);
+      return;
+    }
     const timeSec = now * 0.001;
 
     const p1Start = maxScroll14;
@@ -695,41 +760,31 @@
     const p2Start = p1End + maxScroll57;
     const p2End   = p2Start + burnSpan2;
 
-    // Gentle Section Auto-Lock & Directional Mid-Burn Auto-Completion when user pauses scrolling
+    // Section Auto-Lock when user pauses scrolling (DISABLED during burn transitions 4->5 and 7->8 per specification)
     const idleMs = now - lastScrollInputTime;
-    if (!isDragging && Math.abs(touchMomentumVel) < 0.12 && idleMs > 200) {
-      // A. Directional Burn Completion: completes forward when scrolling down, or backward when scrolling up
-      if (targetY > p1Start && targetY < p1End) {
-        const prog1 = (targetY - p1Start) / Math.max(1, burnSpan1);
-        const snapBurn1 = lastScrollDir >= 0
-          ? (prog1 >= 0.12 ? p1End : p1Start)
-          : (prog1 <= 0.88 ? p1Start : p1End);
-        targetY += (snapBurn1 - targetY) * 0.15;
-        if (Math.abs(snapBurn1 - targetY) < 0.8) targetY = snapBurn1;
-      } else if (targetY > p2Start && targetY < p2End) {
-        const prog2 = (targetY - p2Start) / Math.max(1, burnSpan2);
-        const snapBurn2 = lastScrollDir >= 0
-          ? (prog2 >= 0.12 ? p2End : p2Start)
-          : (prog2 <= 0.88 ? p2Start : p2End);
-        targetY += (snapBurn2 - targetY) * 0.15;
-        if (Math.abs(snapBurn2 - targetY) < 0.8) targetY = snapBurn2;
-      } else {
-        // B. Magnetic stage auto-lock when resting within ±105px of any showcase stage target
-        const snapRadius = isMobile ? 70 : 105;
-        let closestDist = Infinity;
-        let closestY = null;
-        for (let i = 0; i < stageLockTargets.length; i++) {
-          const stY = stageLockTargets[i].y;
-          const dist = stY - targetY;
-          if (Math.abs(dist) <= snapRadius && Math.abs(dist) < Math.abs(closestDist)) {
-            closestDist = dist;
-            closestY = stY;
-          }
+    const inBurnZone1 = (targetY >= p1Start - 15 && targetY <= p1End + 15);
+    const inBurnZone2 = (targetY >= p2Start - 15 && targetY <= p2End + 15);
+
+    if (!isDragging && Math.abs(touchMomentumVel) < 0.12 && idleMs > 200 && !inBurnZone1 && !inBurnZone2) {
+      // Magnetic stage auto-lock when resting within ±105px of any showcase stage target (only within settled sections)
+      const snapRadius = isMobile ? 70 : 105;
+      let closestDist = Infinity;
+      let closestY = null;
+      for (let i = 0; i < stageLockTargets.length; i++) {
+        const stY = stageLockTargets[i].y;
+        // Do not snap to transition boundary targets
+        if (Math.abs(stY - p1Start) < 25 || Math.abs(stY - p1End) < 25 || Math.abs(stY - p2Start) < 25 || Math.abs(stY - p2End) < 25) {
+          continue;
         }
-        if (closestY !== null && Math.abs(closestDist) > 0.5) {
-          targetY += closestDist * 0.15;
-          if (Math.abs(closestY - targetY) < 0.8) targetY = closestY;
+        const dist = stY - targetY;
+        if (Math.abs(dist) <= snapRadius && Math.abs(dist) < Math.abs(closestDist)) {
+          closestDist = dist;
+          closestY = stY;
         }
+      }
+      if (closestY !== null && Math.abs(closestDist) > 0.5) {
+        targetY += closestDist * 0.15;
+        if (Math.abs(closestY - targetY) < 0.8) targetY = closestY;
       }
     }
 
@@ -856,6 +911,7 @@
       layer8.style.visibility = 'hidden';
       layer8.style.pointerEvents = 'none';
       track8.style.transform = 'translate3d(0, 0px, 0)';
+      window._hasInkedSec8 = false;
 
       // Determine active sector in 5-7
       const focusY57 = localY57 + vh * 0.35;
@@ -875,7 +931,7 @@
       const posterBgText = document.getElementById('poster-parallax-bg-text');
       const posterProgBar = document.getElementById('poster-horiz-progress-bar');
 
-      if (runwayEl && pinStageEl && posterGrid && window.innerWidth > 860) {
+      if (runwayEl && pinStageEl && posterGrid && !isMobile) {
         const runwayTop = sectorOffsets['section-posters'];
         const runwayHeight = runwayEl.offsetHeight || 2200;
         const stageHeight = pinStageEl.offsetHeight || 760;
@@ -965,6 +1021,7 @@
   // INPUT HANDLERS: Wheel, Touch with Inertial Momentum Fling, Keyboard, Cursor
   // =========================================================================
   window.addEventListener('wheel', (e) => {
+    if (isMobile) return;
     const now = performance.now();
     const scrollable = e.target.closest('.crm-browser-scroll, .browser-scroll-viewport, .manual-thumbnail-strip');
     if (scrollable && scrollable.scrollHeight > scrollable.clientHeight + 4) {
@@ -1007,16 +1064,43 @@
       });
     }
 
+    let currentInteractiveTarget = null;
+    let isCurrentArtHover = false;
+    let boxX = curX - 9;
+    let boxY = curY - 9;
+    let boxW = 18;
+    let boxH = 18;
+    let lastSetNx = 0;
+    let lastSetNy = 0;
+
+    let hasFineHover = window.AtelierMode ? window.AtelierMode.hasFineHover() : window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    window.addEventListener('atelier:cursorchange', (ev) => {
+      hasFineHover = Boolean(ev.detail && ev.detail.hasFineHover);
+      if (!hasFineHover) {
+        currentInteractiveTarget = null;
+        isCurrentArtHover = false;
+        document.body.classList.remove('cursor-on-art', 'cursor-on-interactive');
+      }
+    });
+
     window.addEventListener('mousemove', (e) => {
+      if (!hasFineHover) return;
       curX = e.clientX;
       curY = e.clientY;
       window._lastMouseY = curY;
 
-      // Normalized -1..1 coordinates for background artwork & grid parallax
       const nx = (curX / Math.max(1, window.innerWidth) - 0.5) * 2;
       const ny = (curY / Math.max(1, window.innerHeight) - 0.5) * 2;
-      document.documentElement.style.setProperty('--cursor-nx', nx.toFixed(3));
-      document.documentElement.style.setProperty('--cursor-ny', ny.toFixed(3));
+
+      // Normalized -1..1 coordinates for background artwork & grid parallax (damped deadband; disabled in Section 8 for 60fps zero-lag paper cursor)
+      if (currentSectorId !== 'resume') {
+        if (Math.abs(nx - lastSetNx) > 0.02 || Math.abs(ny - lastSetNy) > 0.02) {
+          lastSetNx = nx;
+          lastSetNy = ny;
+          document.documentElement.style.setProperty('--cursor-nx', nx.toFixed(3));
+          document.documentElement.style.setProperty('--cursor-ny', ny.toFixed(3));
+        }
+      }
 
       // Hybrid header top-edge hover reveal (expand when mouse is near top 52px, collapse when leaving below 84px)
       if (headerEl && document.body.classList.contains('header-is-collapsed')) {
@@ -1043,9 +1127,21 @@
       const t = e.target;
       if (t && t.closest) {
         const artTarget = t.closest('.img-upload-box, .ai-concept-card, .promo-card, .poster-card, .tri-poster-card, .studio-suite-card, .studio-banner-frame, .manual-spread-viewport, .carousel-slide-housing, .floating-card, .spatial-hero-box');
-        const interactiveTarget = t.closest('button, a, .grounded-nav-node, .console-brand-tab, .crm-browser-tab-btn, .ecom-browser-tab-btn, .dossier-tab-btn');
-        document.body.classList.toggle('cursor-on-art', Boolean(artTarget));
-        document.body.classList.toggle('cursor-on-interactive', Boolean(interactiveTarget && !artTarget));
+        const interactiveTarget = t.closest('button, a, [role="button"], input, select, textarea, .grounded-nav-node, .console-brand-tab, .crm-browser-tab-btn, .ecom-browser-tab-btn, .ecom-jump-btn, .reel-btn, .brand-tab-btn, .device-toggle-btn, .dossier-tab-btn, .btn-header-contact, .header-collapsed-pill, .left-rail-step-btn');
+        isCurrentArtHover = Boolean(artTarget);
+        currentInteractiveTarget = (interactiveTarget && !artTarget) ? interactiveTarget : null;
+
+        document.body.classList.toggle('cursor-on-art', isCurrentArtHover);
+        document.body.classList.toggle('cursor-on-interactive', Boolean(currentInteractiveTarget));
+
+        const modeLabel = document.getElementById('cursor-mode-label');
+        if (modeLabel) {
+          if (artTarget) {
+            modeLabel.textContent = 'VIEW';
+          } else {
+            modeLabel.textContent = '';
+          }
+        }
 
         if (artTarget) {
           const img = artTarget.querySelector('img');
@@ -1064,11 +1160,58 @@
       }
     }, { passive: true });
 
+    document.addEventListener('mouseleave', () => {
+      currentInteractiveTarget = null;
+      isCurrentArtHover = false;
+      document.body.classList.remove('cursor-on-art', 'cursor-on-interactive');
+    });
+
     function updateCursorRing() {
-      ringX += (curX - ringX) * 0.22;
-      ringY += (curY - ringY) * 0.22;
+      if (!hasFineHover) {
+        setTimeout(() => requestAnimationFrame(updateCursorRing), 1000);
+        return;
+      }
+      let targetX = curX - 9;
+      let targetY = curY - 9;
+      let targetW = 18;
+      let targetH = 18;
+
+      if (currentInteractiveTarget) {
+        // Precise magnetic button-hugging crop brackets (exact bounding corners, 0 offset)
+        const rect = currentInteractiveTarget.getBoundingClientRect();
+        targetX = rect.left;
+        targetY = rect.top;
+        targetW = rect.width;
+        targetH = rect.height;
+      } else if (isCurrentArtHover) {
+        targetW = 68;
+        targetH = 68;
+        targetX = curX - 34;
+        targetY = curY - 34;
+      } else {
+        targetW = 18;
+        targetH = 18;
+        targetX = curX - 9;
+        targetY = curY - 9;
+      }
+
+      const lerpSpeed = currentInteractiveTarget ? 0.44 : 0.28;
+      boxX += (targetX - boxX) * lerpSpeed;
+      boxY += (targetY - boxY) * lerpSpeed;
+      boxW += (targetW - boxW) * lerpSpeed;
+      boxH += (targetH - boxH) * lerpSpeed;
+
+      if (currentInteractiveTarget) {
+        if (Math.abs(targetX - boxX) < 1.5) boxX = targetX;
+        if (Math.abs(targetY - boxY) < 1.5) boxY = targetY;
+        if (Math.abs(targetW - boxW) < 1.5) boxW = targetW;
+        if (Math.abs(targetH - boxH) < 1.5) boxH = targetH;
+      }
+
       if (ringEl) {
-        ringEl.style.transform = `translate3d(${ringX.toFixed(1)}px, ${ringY.toFixed(1)}px, 0)`;
+        ringEl.style.transform = `translate3d(${boxX.toFixed(1)}px, ${boxY.toFixed(1)}px, 0)`;
+        ringEl.style.width = `${boxW.toFixed(1)}px`;
+        ringEl.style.height = `${boxH.toFixed(1)}px`;
       }
       requestAnimationFrame(updateCursorRing);
     }
@@ -1088,6 +1231,7 @@
   let touchMomentumVel = 0;
 
   function handleDragStart(clientX, clientY) {
+    if (isMobile) return;
     isDragging = true;
     dragLastX = clientX;
     dragLastY = clientY;
@@ -1195,6 +1339,7 @@
   })();
 
   window.addEventListener('keydown', (e) => {
+    if (isMobile) return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
       const step = e.key === 'ArrowDown' ? 140 : vh * 0.65;
       applyScrollDelta(step);
@@ -1211,9 +1356,14 @@
     requestAnimationFrame(renderLoop);
   });
 
+  window.addEventListener('atelier:modechange', () => {
+    measureLayout();
+  });
+
   // Public API
   window.PinnedBurnEngine = {
     measureLayout,
+    updatePortfolioNav,
     getSectorTargetY,
     getSpineProgressPx,
     getYFromSpinePx,

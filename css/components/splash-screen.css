@@ -1,0 +1,1924 @@
+/* ==========================================================================
+   AUTHENTIC ADOBE PHOTOSHOP CC 2026 — MASTER WEBPAGE BUILDER SPLASH
+   Pixel-perfect Photoshop UI + Multi-Beat Build + Buttery Smooth Zoom Unfold
+   ========================================================================== */
+
+.atelier-splash-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999999;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  background: #1E1E1E;
+  color: #ECEBED;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: auto;
+  cursor: default;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+/* Ambient pasteboard background */
+.ps-ambient-backdrop {
+  position: absolute;
+  inset: 0;
+  background: #1E1E1E;
+  pointer-events: none;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   ZENLESS ZONE ZERO (ZZZ) RETRO PC WORKSTATION (Photorealistic Studio Rig)
+   Real PC Workstation Backdrop + Desktop Launch + Zero-Jump Camera Unzoom
+   ========================================================================== */
+.zzz-workstation-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #020305;
+  overflow: hidden;
+  pointer-events: auto;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), background 0.75s ease;
+}
+
+/* ==========================================================================
+   CONCEPT 3: THE MINIMALIST CURATORIAL VIEWFINDER FOCUS INTRO
+   Clean Photographic Lens Focus (0% -> 100%) -> Reticle Outward Expansion -> Photoshop Workspace
+   ========================================================================== */
+.atelier-viewfinder-stage {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #090B0E;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s ease;
+}
+
+.atelier-viewfinder-stage.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Subtle Film Grain & Radial Vignette */
+.viewfinder-backdrop {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, #12161E 0%, #080A0D 75%, #040507 100%);
+  pointer-events: none;
+}
+
+.viewfinder-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+}
+
+/* The Central Viewfinder Frame - Precision Camera Frame (Always 100% Crisp) */
+.viewfinder-frame {
+  position: relative;
+  width: min(84vw, 760px);
+  height: min(64vh, 460px);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: none !important; /* Camera HUD is ALWAYS crystal sharp! */
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.5s ease,
+              width 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* Beat 3: Seamless Dissolve into Photoshop Canvas Workspace */
+.atelier-viewfinder-stage.is-expanding {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.atelier-viewfinder-stage.is-expanding .viewfinder-frame {
+  transform: scale(1.05);
+  opacity: 0;
+  transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+}
+
+/* 4 Delicate Corner Crop Marks [  ] directly on frame perimeter */
+.vf-corner-mark {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-color: rgba(255, 255, 255, 0.45);
+  border-style: solid;
+  pointer-events: none;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vf-cm-tl { top: -1px; left: -1px; border-width: 1.5px 0 0 1.5px; }
+.vf-cm-tr { top: -1px; right: -1px; border-width: 1.5px 1.5px 0 0; }
+.vf-cm-bl { bottom: -1px; left: -1px; border-width: 0 0 1.5px 1.5px; }
+.vf-cm-br { bottom: -1px; right: -1px; border-width: 0 1.5px 1.5px 0; }
+
+.viewfinder-frame.is-locked .vf-corner-mark {
+  border-color: #00E5FF;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+
+/* Subtle Rule-of-Thirds Grid Intersection Ticks (+) */
+.vf-third-tick {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  transition: color 0.4s ease;
+}
+
+.tick-tl { top: 33.33%; left: 33.33%; }
+.tick-tr { top: 33.33%; left: 66.67%; }
+.tick-bl { top: 66.67%; left: 33.33%; }
+.tick-br { top: 66.67%; left: 66.67%; }
+
+.viewfinder-frame.is-locked .vf-third-tick {
+  color: rgba(0, 229, 255, 0.45);
+}
+
+/* Center Autofocus Reticle [ · ] */
+.vf-center-target {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+  z-index: 12;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 13px;
+  letter-spacing: 0;
+  transition: color 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+}
+
+.vf-target-bracket {
+  font-weight: 300;
+  opacity: 0.7;
+  transition: color 0.35s ease;
+}
+
+.vf-target-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.viewfinder-frame.is-locked .vf-center-target,
+.vf-center-target.is-locked {
+  color: #00E5FF;
+  transform: translate(-50%, -50%) scale(1.12);
+  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.7));
+}
+
+.viewfinder-frame.is-locked .vf-target-dot,
+.vf-center-target.is-locked .vf-target-dot {
+  background: #00E5FF;
+  box-shadow: 0 0 8px #00E5FF;
+}
+
+.atelier-viewfinder-stage.is-expanding .vf-corner-mark,
+.atelier-viewfinder-stage.is-expanding .vf-third-tick,
+.atelier-viewfinder-stage.is-expanding .vf-center-target {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+/* Focal Subject: Monogram & Typography (THE ONLY ELEMENT THAT BLURS) */
+.viewfinder-subject {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  will-change: filter, transform, opacity;
+  transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.35s ease;
+}
+
+/* Beat 1: Living Lens Blur during loading - HUD STAYS 100% SHARP */
+.viewfinder-subject.is-focusing {
+  filter: blur(10px);
+  transform: scale(0.97);
+  opacity: 0.6;
+}
+
+/* Beat 2: Razor-sharp snap at 100% Focus Lock */
+.viewfinder-subject.is-locked {
+  filter: blur(0px) !important;
+  transform: scale(1.0) !important;
+  opacity: 1 !important;
+}
+
+.atelier-viewfinder-stage.is-expanding .viewfinder-subject {
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.vf-monogram,
+.vf-monogram-wrap {
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.vf-monogram-img {
+  max-width: 90px;
+  max-height: 75px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(0, 229, 255, 0.4));
+}
+
+.vf-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(24px, 4vw, 38px);
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: #FFFFFF;
+  margin: 0 0 6px 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.vf-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(10px, 1.2vw, 12px);
+  letter-spacing: 3.5px;
+  color: #8A96A8;
+  margin: 0 0 24px 0;
+  text-transform: uppercase;
+}
+
+/* Minimal 1px Focal Loading Track */
+.vf-focal-track {
+  width: min(280px, 60vw);
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.vf-focal-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00C2D9 0%, #00E5FF 100%);
+  border-radius: 2px;
+  box-shadow: 0 0 8px #00E5FF;
+  transition: width 0.12s linear;
+}
+
+/* Status Line */
+.vf-status-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  color: #8C96A8;
+}
+
+.vf-status-dot,
+.vf-status-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FFA726;
+  box-shadow: 0 0 6px #FFA726;
+  animation: vfDotPulse 1.2s ease-in-out infinite;
+}
+
+.viewfinder-frame.is-locked .vf-status-dot,
+.viewfinder-frame.is-locked .vf-status-indicator {
+  background: #00E5FF !important;
+  box-shadow: 0 0 8px #00E5FF !important;
+  animation: none;
+}
+
+@keyframes vfDotPulse {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.85); }
+}
+
+.viewfinder-frame.is-locked .vf-status-text {
+  color: #00E5FF;
+  font-weight: 700;
+}
+
+/* Shutter Flash Bloom Overlay (Fires on 100% Focus Lock) */
+.viewfinder-shutter-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.85) 0%, rgba(0, 229, 255, 0.35) 45%, transparent 80%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.viewfinder-shutter-flash.is-flashing {
+  animation: vfShutterFlash 0.18s ease-out forwards;
+}
+
+@keyframes vfShutterFlash {
+  0% { opacity: 1; transform: scale(0.98); }
+  50% { opacity: 0.6; }
+  100% { opacity: 0; transform: scale(1.02); }
+}
+
+/* Maximized Photoshop Application Window (Full Screen) */
+.ps-workspace-window {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background: #14161B;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.ps-workspace-window.is-revealed {
+  opacity: 1 !important;
+  transform: scale(1.0) !important;
+}
+
+/* Top Chrome (Titlebar + Tool Options + Document Tab) */
+.ps-top-chrome {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  z-index: 25;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+/* 1. Authentic Titlebar */
+.ps-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+  background: #1F1F1F;
+  border-bottom: 1px solid #141414;
+  padding: 0 12px;
+  font-size: 11.5px;
+}
+
+.ps-titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ps-app-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ps-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: #001E36;
+  color: #31A8FF;
+  border: 1px solid #31A8FF;
+  border-radius: 3px;
+  font-weight: 800;
+  font-size: 9.5px;
+}
+
+.ps-app-name {
+  color: #B8B8B8;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.ps-menubar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #CCCCCC;
+  font-size: 11.5px;
+}
+
+.ps-titlebar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #8C8C8C;
+  font-size: 11.5px;
+}
+
+.ps-tb-btn {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.ps-window-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #888888;
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+/* 2. Photoshop Tool Options Bar */
+.ps-options-bar {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  background: #2B2B2B;
+  border-bottom: 1px solid #1C1C1C;
+  padding: 0 12px;
+  gap: 14px;
+  font-size: 11px;
+  color: #BDBDBD;
+}
+
+.ps-home-btn {
+  font-size: 12px;
+  color: #999999;
+}
+
+.ps-option-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ps-option-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chk-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  background: #383838;
+  border: 1px solid #555555;
+  border-radius: 2px;
+  font-size: 8.5px;
+  color: #31A8FF;
+}
+
+.ps-option-select {
+  background: #383838;
+  border: 1px solid #484848;
+  color: #E0E0E0;
+  padding: 1px 7px;
+  border-radius: 2px;
+  font-size: 10.5px;
+}
+
+.ps-option-aligns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #909090;
+  margin-left: 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+}
+
+.ps-options-mode-badge {
+  color: #808080;
+  font-size: 10px;
+}
+
+/* 3. Document Tab Bar */
+.ps-tabs-bar {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  background: #222222;
+  border-bottom: 1px solid #161616;
+  padding: 0 8px;
+  font-size: 11px;
+}
+
+.ps-tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 24px;
+  padding: 0 12px;
+  border-radius: 3px 3px 0 0;
+  background: #323232;
+  color: #FFFFFF;
+  font-weight: 500;
+  border-top: 2px solid #31A8FF;
+}
+
+.tab-close {
+  color: #999999;
+  font-size: 12px;
+}
+
+/* 4. Main Workspace Body */
+.ps-workspace-body {
+  display: flex;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* 5. Left Vertical Toolbar (22 Tools) */
+.ps-toolbar {
+  width: 38px;
+  background: #2B2B2B;
+  border-right: 1px solid #181818;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 0;
+  gap: 3px;
+  z-index: 20;
+  flex-shrink: 0;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+.ps-tool-btn {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  color: #A0A0A0;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.ps-tool-btn.ps-tool-active {
+  background: #1473E6;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 8px rgba(20, 115, 230, 0.45);
+}
+
+.ps-color-swatches-box {
+  position: relative;
+  width: 26px;
+  height: 32px;
+  margin-top: auto;
+  margin-bottom: 4px;
+}
+
+.swatch-reset-btn {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  font-size: 7px;
+  color: #888888;
+  line-height: 1;
+}
+
+.swatch-swap-btn {
+  position: absolute;
+  top: -4px;
+  right: 0;
+  font-size: 9px;
+  color: #888888;
+  line-height: 1;
+}
+
+.ps-color-swatches {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  margin-top: 10px;
+}
+
+.swatch-bg {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 13px;
+  height: 13px;
+  background: #F4F1EA;
+  border: 1px solid #1E1E1E;
+}
+
+.swatch-fg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 13px;
+  height: 13px;
+  background: #181716;
+  border: 1px solid #777777;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.35s ease, transform 0.25s ease;
+}
+
+.swatch-fg.is-terracotta {
+  background: #D84E29;
+  transform: scale(1.15);
+}
+
+.ps-tool-sub-btn {
+  font-size: 10px;
+  color: #888888;
+  padding: 2px 0;
+}
+
+/* 6. Center Canvas Viewport */
+.ps-canvas-viewport {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #282828;
+  overflow: hidden;
+  padding: 24px 20px 14px 28px;
+}
+
+/* Pixel Rulers */
+.ps-ruler-top {
+  position: absolute;
+  top: 0;
+  left: 18px;
+  right: 0;
+  height: 18px;
+  background: #2A2A2A;
+  border-bottom: 1px solid #181818;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-family: var(--font-mono, monospace);
+  font-size: 8.5px;
+  color: #888888;
+  z-index: 12;
+  background-image: repeating-linear-gradient(to right, rgba(255,255,255,0.14) 0, rgba(255,255,255,0.14) 1px, transparent 1px, transparent 12px);
+  transition: opacity 0.5s ease;
+}
+
+.ps-ruler-left {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  bottom: 0;
+  width: 18px;
+  background: #2A2A2A;
+  border-right: 1px solid #181818;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-family: var(--font-mono, monospace);
+  font-size: 8px;
+  color: #888888;
+  z-index: 12;
+  background-image: repeating-linear-gradient(to bottom, rgba(255,255,255,0.14) 0, rgba(255,255,255,0.14) 1px, transparent 1px, transparent 12px);
+  transition: opacity 0.5s ease;
+}
+
+.ps-ruler-left span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   THE LIVE WEBPAGE ARTBOARD INSIDE PHOTOSHOP (GPU AFFINE CAMERA UNZOOM)
+   Rendered at 100vw × 100vh with real DOM layout coordinates from frame 1.
+   Scaled purely via GPU affine matrix inside Photoshop workbench (scale 0.667).
+   Unzooms smoothly to scale(1.0) with ZERO layout reflow or font jump.
+   ========================================================================== */
+.ps-webpage-artboard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
+  margin: 0;
+  transform: translate(-50%, -50%) scale(var(--ps-artboard-scale, 0.667));
+  transform-origin: center center;
+  will-change: transform;
+  background-color: var(--canvas-paper, #F4F1EA);
+  color: #181512 !important;
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif) !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  overflow: visible !important;
+}
+
+/* Ensure typography inside splash artboard matches live Section 1 100% */
+#ps-webpage-artboard .hero-main-title {
+  color: #181512 !important;
+  font-family: var(--font-display, 'Syne', sans-serif) !important;
+  -webkit-text-fill-color: #181512 !important;
+}
+
+#ps-webpage-artboard .hero-main-title span.accent-italic,
+#ps-webpage-artboard .hero-main-title .ps-bh-campaigns {
+  color: #D84E29 !important;
+  -webkit-text-fill-color: #D84E29 !important;
+}
+
+#ps-webpage-artboard .hero-bio-lead {
+  color: #57544F !important;
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif) !important;
+  -webkit-text-fill-color: #57544F !important;
+}
+
+#ps-webpage-artboard .hero-meta-badge {
+  color: #D84E29 !important;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace) !important;
+}
+
+/* Layer 1: Living Ambient Canvas identical to live page */
+#ps-artboard-ambient {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+}
+
+.ps-webpage-artboard.step-paper #ps-artboard-ambient {
+  opacity: 1;
+}
+
+/* Layer 2: Cyan Layout Ruler Guides (#00E5FF) */
+.ps-cyan-guides-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 25;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.ps-guide-h {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #00E5FF;
+  box-shadow: 0 0 6px rgba(0, 229, 255, 0.7);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ps-guide-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #00E5FF;
+  box-shadow: 0 0 6px rgba(0, 229, 255, 0.7);
+  transform: scaleY(0);
+  transform-origin: center top;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ps-webpage-artboard.step-guides .ps-cyan-guides-layer { opacity: 1; }
+.ps-webpage-artboard.step-guides .ps-guide-h { transform: scaleX(1); }
+.ps-webpage-artboard.step-guides .ps-guide-v { transform: scaleY(1); }
+.ps-webpage-artboard.step-guides-hide .ps-cyan-guides-layer { opacity: 0; }
+
+/* Layer 2B: Dynamic Background HUD & Kinetic Vectors */
+#ps-ambient-vector-canvas-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.ps-webpage-artboard.step-bg-hud #ps-ambient-vector-canvas-wrap {
+  opacity: 1;
+}
+
+#ps-ambient-vector-canvas-wrap .bg-sector-hud {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ps-webpage-artboard.step-bg-hud #ps-ambient-vector-canvas-wrap .bg-sector-hud {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Layer 5A: Left Margin Architectural Gallery Rail */
+#ps-build-left-rail {
+  opacity: 0;
+  transform: translateY(-50%) translateX(-36px);
+  transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 30;
+}
+
+.ps-webpage-artboard.step-left-rail #ps-build-left-rail {
+  opacity: 1 !important;
+  transform: translateY(-50%) !important;
+}
+
+/* Layer 5B: Right Grounded Drafting Spine Navigation */
+#ps-build-right-nav {
+  opacity: 0;
+  transform: translateY(-50%) translateX(36px);
+  transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 30;
+}
+
+#ps-build-right-nav .grounded-spine-progress {
+  transition: height 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#ps-build-right-nav .grounded-reticle-beacon {
+  transition: top 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ps-webpage-artboard.step-right-spine #ps-build-right-nav {
+  opacity: 1 !important;
+  transform: translateY(-50%) !important;
+}
+
+/* Layer 6: Constructed Top Header Bar */
+#ps-build-header {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.38s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 40;
+}
+
+.ps-webpage-artboard.step-header #ps-build-header {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Hero Section Components (Identical to live page) */
+#ps-build-eyebrow {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.ps-webpage-artboard.step-details #ps-build-eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Typographic Typewriter Headline & Pulsing Caret */
+.ps-build-headline-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.ps-type-caret {
+  display: inline-block;
+  width: 0;
+  overflow: visible;
+  color: #00E5FF;
+  font-weight: 300;
+  margin-left: 2px;
+  animation: psCaretBlink 0.5s infinite alternate;
+  vertical-align: baseline;
+}
+
+@keyframes psCaretBlink {
+  0% { opacity: 1; }
+  49% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.ps-type-bounding-box {
+  position: absolute;
+  inset: -6px -10px;
+  border: 1px dashed #00E5FF;
+  background: rgba(0, 229, 255, 0.04);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ps-webpage-artboard.step-type-stamp .ps-type-bounding-box { opacity: 1; }
+.ps-webpage-artboard.step-details .ps-type-bounding-box { opacity: 0; }
+
+.ps-bh-campaigns {
+  transition: color 0.35s ease;
+}
+
+.ps-webpage-artboard.step-type-color .ps-bh-campaigns {
+  color: #D84E29 !important;
+}
+
+/* Bio Lead & Capability Contact Pills */
+#ps-build-bio {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.ps-webpage-artboard.step-details #ps-build-bio {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#ps-build-pills .hero-pill {
+  opacity: 0;
+  transform: translateY(12px) scale(0.94);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ps-webpage-artboard.step-pills #ps-build-pills .hero-pill {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+#ps-build-pills .hero-pill:nth-child(1) { transition-delay: 0.00s; }
+#ps-build-pills .hero-pill:nth-child(2) { transition-delay: 0.05s; }
+#ps-build-pills .hero-pill:nth-child(3) { transition-delay: 0.10s; }
+#ps-build-pills .hero-pill:nth-child(4) { transition-delay: 0.15s; }
+
+/* Right Column: Hero Portrait Card Wrapper (Overflow Visible + Shared Right Clearance) */
+.ps-build-portrait-wrapper {
+  position: relative;
+  overflow: visible !important;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: var(--hero-visual-pad-right, 48px) !important;
+}
+
+/* Vector Shape Drag Marquee (Rectangle Tool U — Matches .portrait-image-crop 100%) */
+.ps-shape-drag-box {
+  position: absolute;
+  top: 0;
+  right: var(--hero-visual-pad-right, 48px);
+  aspect-ratio: 4 / 5;
+  width: min(calc(100% - var(--hero-visual-pad-right, 48px)), calc(var(--hero-portrait-max-h, min(58dvh, 540px)) * 0.8));
+  height: auto;
+  max-height: min(58dvh, 540px);
+  max-width: calc(100% - var(--hero-visual-pad-right, 48px));
+  border: 1.5px dashed #00E5FF;
+  background: rgba(0, 229, 255, 0.05);
+  border-radius: 28px;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: top left;
+  transform: scale(0.1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+  z-index: 22;
+}
+
+.ps-webpage-artboard.step-portrait-shape .ps-shape-drag-box {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.shape-drag-label {
+  position: absolute;
+  bottom: -24px;
+  right: 0;
+  background: #181512;
+  color: #00E5FF;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  white-space: nowrap;
+}
+
+/* Hero Portrait Card (Strict 28px Radius & Dramatic Shadow, Overflow Visible to prevent handle clipping) */
+.ps-build-portrait-card {
+  position: relative;
+  opacity: 0;
+  transform: rotate(3deg);
+  transition: opacity 0.35s ease,
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s ease;
+  border-radius: 28px !important;
+  overflow: visible !important; /* CRITICAL: Prevents clipping of Free Transform handles */
+}
+
+.ps-build-portrait-card img {
+  border-radius: 28px !important;
+  overflow: hidden;
+  display: block;
+}
+
+.ps-webpage-artboard.step-portrait-place .ps-build-portrait-card {
+  opacity: 1;
+  transform: rotate(3deg);
+}
+
+.ps-webpage-artboard.step-portrait-snap .ps-build-portrait-card {
+  opacity: 1 !important;
+  transform: rotate(0deg) !important; /* Snapped upright by Free Transform rotate handle */
+}
+
+.ps-webpage-artboard.step-drop-shadow .ps-build-portrait-card {
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.22) !important;
+}
+
+#ps-build-portrait-tag {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.ps-webpage-artboard.step-portrait-snap #ps-build-portrait-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Free Transform Bounding Box (Floats completely unclipped outside card) */
+.ps-transform-box {
+  position: absolute;
+  inset: -3px;
+  border: 1.5px solid #00E5FF;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.45);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 25;
+  overflow: visible !important;
+}
+
+.ps-transform-box.is-active { opacity: 1; }
+
+.th-handle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: #FFFFFF;
+  border: 1.5px solid #0099FF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  z-index: 28;
+}
+
+.th-tl { top: -4px; left: -4px; }
+.th-tm { top: -4px; left: calc(50% - 3.5px); }
+.th-tr { top: -4px; right: -4px; }
+.th-ml { top: calc(50% - 3.5px); left: -4px; }
+.th-mr { top: calc(50% - 3.5px); right: -4px; }
+.th-bl { bottom: -4px; left: -4px; }
+.th-bm { bottom: -4px; left: calc(50% - 3.5px); }
+.th-br { bottom: -4px; right: -4px; }
+
+.th-dims-pill {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(24, 21, 18, 0.94);
+  color: #00E5FF;
+  border: 1px solid rgba(0, 229, 255, 0.45);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 30;
+}
+
+.th-pivot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #00E5FF;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.th-dims-pill {
+  position: absolute;
+  bottom: -24px;
+  right: 0;
+  background: rgba(20, 20, 20, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ECEBED;
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   AUTONOMOUS DESIGNER CURSOR INSIDE CANVAS
+   ========================================================================== */
+.ps-canvas-cursor {
+  position: absolute;
+  top: 22%;
+  left: 24%;
+  z-index: 40;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
+  transition: top 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              left 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.35s ease;
+}
+
+.ps-cursor-action-tag {
+  background: #1473E6;
+  color: #FFFFFF;
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   CONDITIONAL LOADING DIALOG
+   ========================================================================== */
+.ps-loading-modal {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translate(-50%, 16px);
+  width: 360px;
+  background: #2B2B2B;
+  border: 1px solid #484848;
+  border-radius: 5px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  z-index: 50;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+}
+
+.ps-loading-modal.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.ps-modal-header {
+  background: #1F1F1F;
+  padding: 6px 12px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #CCCCCC;
+  border-bottom: 1px solid #161616;
+}
+
+.ps-modal-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ps-modal-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10.5px;
+  color: #E0E0E0;
+}
+
+.ps-modal-progress-track {
+  width: 100%;
+  height: 6px;
+  background: #181818;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid #383838;
+}
+
+.ps-modal-progress-fill {
+  height: 100%;
+  width: 78%;
+  background: linear-gradient(90deg, #1473E6, #31A8FF);
+  transition: width 0.25s ease;
+}
+
+/* ==========================================================================
+   7. NARROW PANEL ICON STRIP & RIGHT DOCK (EXACT PHOTOSHOP CC PANELS)
+   ========================================================================== */
+.ps-panel-icon-strip {
+  width: 24px;
+  background: #232323;
+  border-left: 1px solid #181818;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 0;
+  gap: 8px;
+  z-index: 20;
+  flex-shrink: 0;
+  color: #8C8C8C;
+  font-size: 11px;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+.strip-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+.strip-icon.is-active {
+  color: #E0E0E0;
+}
+
+.ps-right-dock {
+  width: 200px;
+  background: #2B2B2B;
+  border-left: 1px solid #181818;
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+  flex-shrink: 0;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+/* A. Color Panel */
+.ps-panel-color {
+  height: 142px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #1C1C1C;
+}
+
+.panel-header-tabs {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  background: #222222;
+  border-bottom: 1px solid #181818;
+  padding: 0 10px;
+  gap: 12px;
+  font-size: 10.5px;
+  color: #888888;
+}
+
+.panel-tab-active {
+  color: #FFFFFF;
+  border-bottom: 2px solid #31A8FF;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.color-picker-body {
+  flex: 1;
+  display: flex;
+  padding: 6px 10px 3px;
+  gap: 8px;
+}
+
+.color-spectrum-square {
+  flex: 1;
+  border: 1px solid #181818;
+  background:
+    linear-gradient(to bottom, transparent, #000000),
+    linear-gradient(to right, #FFFFFF, #D84E29);
+  position: relative;
+  border-radius: 2px;
+}
+
+.color-target-ring {
+  position: absolute;
+  top: 78%;
+  left: 14%;
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid #FFFFFF;
+  border-radius: 50%;
+  box-shadow: 0 0 3px #000000;
+  transition: top 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              left 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.color-target-ring.is-terracotta {
+  top: 22%;
+  left: 82%;
+}
+
+.color-hue-bar {
+  width: 14px;
+  border: 1px solid #181818;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #FF0000 0%, #FFFF00 17%, #00FF00 33%, #00FFFF 50%, #0000FF 67%, #FF00FF 83%, #FF0000 100%);
+}
+
+.color-hex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 10px 5px;
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  color: #999999;
+}
+
+.color-hex-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.color-swatch-chip {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: #181716;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: background-color 0.35s ease;
+}
+
+.color-swatch-chip.is-terracotta {
+  background: #D84E29;
+}
+
+.color-space-tag {
+  color: #666666;
+  font-size: 8.5px;
+}
+
+/* B. Properties Panel */
+.ps-panel-properties {
+  padding: 6px 10px;
+  background: #2B2B2B;
+  border-bottom: 1px solid #1C1C1C;
+  font-size: 10px;
+  color: #BDBDBD;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.prop-doc-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #E0E0E0;
+  font-size: 10.5px;
+}
+
+.prop-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.prop-field {
+  background: #363636;
+  border: 1px solid #454545;
+  border-radius: 2px;
+  padding: 2px 6px;
+  font-size: 9.5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.prop-meta-row {
+  font-size: 9px;
+  color: #8C8E95;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.prop-rulers-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  color: #999999;
+  border-top: 1px solid #222222;
+  padding-top: 3px;
+}
+
+.prop-btn {
+  padding: 1px 4px;
+  background: #363636;
+  border-radius: 2px;
+}
+
+.prop-units-select {
+  margin-left: auto;
+  color: #CCCCCC;
+}
+
+/* C. Layers Panel */
+.ps-panel-layers {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #2E2E2E;
+  overflow: hidden;
+}
+
+.layers-filter-bar {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: #262626;
+  border-bottom: 1px solid #1C1C1C;
+  gap: 6px;
+  font-size: 9.5px;
+  color: #888888;
+}
+
+.layers-filter-kind {
+  color: #CCCCCC;
+  font-weight: 500;
+}
+
+.l-filter-icon {
+  font-size: 10px;
+  padding: 1px 3px;
+  border-radius: 2px;
+}
+.l-filter-icon.active {
+  color: #31A8FF;
+}
+
+.layers-blend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 8px;
+  background: #292929;
+  border-bottom: 1px solid #1E1E1E;
+  font-size: 9.5px;
+  color: #999999;
+}
+
+.layers-lock-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 8px;
+  background: #272727;
+  border-bottom: 1px solid #1C1C1C;
+  font-size: 9px;
+  color: #888888;
+}
+
+.lock-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.layers-tree-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 2px 0;
+}
+
+.layer-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  color: #D8D8D8;
+  font-size: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.025);
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.25s ease;
+}
+
+.layer-row.is-hidden-layer {
+  opacity: 0.28;
+}
+
+.layer-row.is-selected {
+  background: #1473E6 !important;
+  color: #FFFFFF !important;
+  opacity: 1 !important;
+}
+
+.layer-arrow {
+  font-size: 8px;
+  color: #888888;
+}
+
+.layer-indent {
+  width: 8px;
+}
+
+.layer-kind {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.layer-name {
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.layer-fx-pill {
+  margin-left: auto;
+  background: #1F1F1F;
+  border: 1px solid #484848;
+  color: #31A8FF;
+  font-family: var(--font-mono, monospace);
+  font-size: 8.5px;
+  padding: 0 4px;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.layer-fx-pill.is-active {
+  opacity: 1;
+}
+
+.layers-bottom-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 24px;
+  background: #232323;
+  border-top: 1px solid #1C1C1C;
+  color: #8C8C8C;
+  font-size: 11px;
+}
+
+.l-act-btn {
+  cursor: default;
+}
+
+/* 8. Bottom Status Bar */
+.ps-statusbar {
+  height: 28px;
+  background: #1F1F1F;
+  border-top: 1px solid #141414;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  color: #999999;
+  z-index: 25;
+  flex-shrink: 0;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+.ps-status-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ps-status-workflow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #E0E0E0;
+}
+
+.workflow-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #31A8FF;
+  box-shadow: 0 0 6px #31A8FF;
+  animation: psDotPulse 1s ease-in-out infinite;
+}
+
+@keyframes psDotPulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.6; }
+  50% { transform: scale(1.25); opacity: 1; }
+}
+
+.ps-status-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ps-status-progress-track {
+  width: 110px;
+  height: 5px;
+  background: #121212;
+  border: 1px solid #333333;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ps-status-progress-fill {
+  height: 100%;
+  width: 10%;
+  background: linear-gradient(90deg, #D84E29, #31A8FF);
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ps-status-pct {
+  color: #ECEBED;
+  font-weight: 700;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ==========================================================================
+   BUTTERY SMOOTH ZERO-JUMP 4-EDGE CHROME PEEL & CONTINUOUS FULL-SCREEN EXPANSION
+   ========================================================================== */
+.atelier-splash-screen.is-unfolding .ps-top-chrome {
+  transform: translate3d(0, -100%, 0);
+  margin-bottom: -72px;
+  opacity: 0;
+}
+
+.atelier-splash-screen.is-unfolding .ps-toolbar {
+  transform: translate3d(-100%, 0, 0);
+  margin-right: -38px;
+  opacity: 0;
+}
+
+.atelier-splash-screen.is-unfolding .ps-panel-icon-strip {
+  transform: translate3d(100%, 0, 0);
+  margin-left: -24px;
+  opacity: 0;
+}
+
+.atelier-splash-screen.is-unfolding .ps-right-dock {
+  transform: translate3d(100%, 0, 0);
+  margin-left: -250px;
+  opacity: 0;
+}
+
+.atelier-splash-screen.is-unfolding .ps-statusbar {
+  transform: translate3d(0, 100%, 0);
+  margin-top: -28px;
+  opacity: 0;
+}
+
+.atelier-splash-screen.is-unfolding .ps-ambient-backdrop {
+  opacity: 0;
+}
+
+.atelier-splash-screen.is-unfolding .ps-canvas-viewport,
+.atelier-splash-screen.is-unfolding .ps-workspace-body,
+.atelier-splash-screen.is-unfolding .ps-workspace-window {
+  overflow: visible !important;
+  background: transparent;
+  padding: 0;
+}
+
+.atelier-splash-screen.is-unfolding .ps-ruler-top,
+.atelier-splash-screen.is-unfolding .ps-ruler-left,
+.atelier-splash-screen.is-unfolding .ps-multi-cursors,
+.atelier-splash-screen.is-unfolding .ps-canvas-cursor,
+.atelier-splash-screen.is-unfolding .ps-loading-modal,
+.atelier-splash-screen.is-unfolding .ps-smart-guides {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+/* The Artboard smoothly unzooms to 100vw × 100vh via pure GPU affine camera handoff (ZERO JUMP) */
+.atelier-splash-screen.is-unfolding .ps-webpage-artboard {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  margin: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  width: 100dvw !important;
+  height: 100dvh !important;
+  transform-origin: center center !important;
+  animation: psArtboardCameraUnzoom 750ms cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  z-index: 1000 !important;
+}
+
+/* Zero-wobble child lock during unzoom: portrait card and all internal elements lock strictly to artboard coordinates */
+.atelier-splash-screen.is-unfolding #ps-webpage-artboard * {
+  transition: none !important;
+}
+
+.atelier-splash-screen.is-unfolding .ps-build-portrait-card,
+.atelier-splash-screen.is-unfolding #ps-build-portrait {
+  transition: none !important;
+  transform: rotate(0deg) !important;
+  animation: none !important;
+}
+
+@keyframes psArtboardCameraUnzoom {
+  0% {
+    transform: translate3d(var(--artboard-start-tx, 0px), var(--artboard-start-ty, 0px), 0) scale(var(--artboard-start-scale, 0.50));
+    border-radius: 4px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.85);
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0) scale(1.0);
+    border-radius: 0px;
+    box-shadow: none;
+  }
+}
+
+/* Photoshop Smart Alignment Guides (#FF007F Magenta) */
+.ps-smart-guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 45;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.ps-smart-guides.is-active {
+  opacity: 1;
+}
+
+.ps-smart-guide-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 62%;
+  width: 1px;
+  background: #FF007F;
+  box-shadow: 0 0 6px #FF007F;
+}
+
+.ps-smart-guide-h {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 19%;
+  height: 1px;
+  background: #FF007F;
+  box-shadow: 0 0 6px #FF007F;
+}
+
+.ps-smart-guide-badge {
+  position: absolute;
+  left: calc(62% + 6px);
+  top: calc(19% + 6px);
+  background: #FF007F;
+  color: #FFFFFF;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+/* Multi-Tool Authentic Photoshop Cursors Styling */
+.ps-multi-cursors {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 120;
+}
+
+.ps-canvas-cursor {
+  position: absolute;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  will-change: left, top, opacity, transform;
+  transition: left 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+              top 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.2s ease,
+              transform 0.12s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.ps-canvas-cursor.is-active {
+  opacity: 1;
+}
+
+.ps-canvas-cursor.is-clicking {
+  transform: scale(0.9) translate(-2px, -2px);
+}
+
+.ps-canvas-cursor.tag-flip-x {
+  flex-direction: row-reverse;
+}
+
+.ps-canvas-cursor.tag-flip-y {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+
+.ps-cursor-action-tag {
+  background: rgba(24, 21, 18, 0.94);
+  color: #00E5FF;
+  border: 1px solid rgba(0, 229, 255, 0.45);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.5px;
+}
+
+/* Cross-fade seamlessly into live DOM */
+.atelier-splash-screen.is-fading-out {
+  opacity: 0 !important;
+  pointer-events: none;
+  transition: opacity 0.22s ease-out;
+}
+
+.atelier-splash-screen.is-loaded {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .ps-right-dock,
+  .ps-panel-icon-strip {
+    display: none;
+  }
+  .ps-menubar {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .ps-toolbar,
+  .ps-options-bar {
+    display: none;
+  }
+  .ps-build-hero-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -208,15 +208,80 @@
 }
 
 
-/* ========= BESPOKE ARCHITECTURAL MONOGRAPH & EXECUTIVE DOSSIER (SECTOR 08 — SPACIOUS OPEN HAIRLINE LEDGER) ========= */
+/* ========= BESPOKE ARCHIVAL MONOGRAPH & EXECUTIVE CREDENTIALS (SECTOR 08 — ROUGH COTTON-RAG PAPER) =========
+   Full-bleed handmade paper surface: no card frame, no radius, no drop shadow.
+   Lit fibre tooth + tonal mottling are procedural SVG (data URIs, no extra requests);
+   deckled top/bottom edges are cut with a tiling CSS mask so the sheet reads as torn paper. */
 .section-editorial-dossier {
-  background: transparent;
-  border-radius: 0;
-  border: none;
-  padding: 44px 0 16px;
-  box-shadow: none;
-  margin-bottom: 12px;
+  --paper-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E %3Cfilter id='f' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.022' numOctaves='5' seed='7' stitchTiles='stitch' result='c'/%3E %3CfeDiffuseLighting in='c' lighting-color='%23fff' surfaceScale='2.2' result='cl'%3E%3CfeDistantLight azimuth='225' elevation='52'/%3E%3C/feDiffuseLighting%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' seed='3' stitchTiles='stitch' result='t'/%3E %3CfeDiffuseLighting in='t' lighting-color='%23fff' surfaceScale='0.9' result='tl'%3E%3CfeDistantLight azimuth='225' elevation='60'/%3E%3C/feDiffuseLighting%3E %3CfeBlend in='cl' in2='tl' mode='multiply' result='m'/%3E %3CfeColorMatrix in='m' type='saturate' values='0'/%3E %3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.27' intercept='0.765'/%3E%3CfeFuncG type='linear' slope='0.27' intercept='0.765'/%3E%3CfeFuncB type='linear' slope='0.27' intercept='0.765'/%3E%3C/feComponentTransfer%3E %3C/filter%3E %3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E %3C/svg%3E");
+  --paper-mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E %3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.0045' numOctaves='3' seed='11' stitchTiles='stitch'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.55 0 0 0 0 0.43 0 0 0 0 0.27 0 0 0 -2.2 1.35'/%3E %3C/filter%3E %3Cfilter id='s' x='0' y='0' width='100%25' height='100%25'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='0.9 0.012' numOctaves='2' seed='5' stitchTiles='stitch'/%3E %3CfeColorMatrix type='matrix' values='0 0 0 0 0.42 0 0 0 0 0.36 0 0 0 0 0.28 0 0 0 -3.4 1.9'/%3E %3C/filter%3E %3Crect width='100%25' height='100%25' filter='url(%23m)' opacity='0.14'/%3E %3Crect width='100%25' height='100%25' filter='url(%23s)' opacity='0.05'/%3E %3C/svg%3E");
+  --paper-deckle-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='30' viewBox='0 0 900 30' preserveAspectRatio='none'%3E%3Cpath d='M0,30 L900,30 L900,9.7 L900.0,9.7 L897.0,9.8 L894.0,10.0 L891.0,7.5 L888.0,9.8 L885.0,9.3 L882.0,13.3 L879.0,10.4 L876.0,10.8 L873.0,12.0 L870.0,12.4 L867.0,7.0 L864.0,11.5 L861.0,12.3 L858.0,15.7 L855.0,14.0 L852.0,15.2 L849.0,19.6 L846.0,17.9 L843.0,21.3 L840.0,20.9 L837.0,21.8 L834.0,21.6 L831.0,19.4 L828.0,20.2 L825.0,16.4 L822.0,20.4 L819.0,18.2 L816.0,17.7 L813.0,17.4 L810.0,18.7 L807.0,18.5 L804.0,15.2 L801.0,15.6 L798.0,16.6 L795.0,12.4 L792.0,13.9 L789.0,9.6 L786.0,14.1 L783.0,11.0 L780.0,14.4 L777.0,16.6 L774.0,14.7 L771.0,18.6 L768.0,19.3 L765.0,20.1 L762.0,18.4 L759.0,18.4 L756.0,17.4 L753.0,17.7 L750.0,15.9 L747.0,18.3 L744.0,15.1 L741.0,20.2 L738.0,17.1 L735.0,17.1 L732.0,20.1 L729.0,21.0 L726.0,19.1 L723.0,21.0 L720.0,16.2 L717.0,20.5 L714.0,17.7 L711.0,16.8 L708.0,18.4 L705.0,15.7 L702.0,17.1 L699.0,22.5 L696.0,20.5 L693.0,25.0 L690.0,26.9 L687.0,24.9 L684.0,26.1 L681.0,26.6 L678.0,24.5 L675.0,26.7 L672.0,27.5 L669.0,24.4 L666.0,24.6 L663.0,25.7 L660.0,26.7 L657.0,20.0 L654.0,22.3 L651.0,25.1 L648.0,22.7 L645.0,20.5 L642.0,18.9 L639.0,16.1 L636.0,16.0 L633.0,14.3 L630.0,14.8 L627.0,13.3 L624.0,15.4 L621.0,13.7 L618.0,11.9 L615.0,12.6 L612.0,13.1 L609.0,16.4 L606.0,13.0 L603.0,12.6 L600.0,12.4 L597.0,12.4 L594.0,11.4 L591.0,13.2 L588.0,12.6 L585.0,13.2 L582.0,12.3 L579.0,11.0 L576.0,12.1 L573.0,11.0 L570.0,8.5 L567.0,9.1 L564.0,11.1 L561.0,5.8 L558.0,7.6 L555.0,5.7 L552.0,4.5 L549.0,7.1 L546.0,5.1 L543.0,6.6 L540.0,7.7 L537.0,10.5 L534.0,10.2 L531.0,9.4 L528.0,10.5 L525.0,13.0 L522.0,11.1 L519.0,14.9 L516.0,10.6 L513.0,12.1 L510.0,11.1 L507.0,14.3 L504.0,14.2 L501.0,16.0 L498.0,17.8 L495.0,16.0 L492.0,18.1 L489.0,14.8 L486.0,12.6 L483.0,9.6 L480.0,14.2 L477.0,10.0 L474.0,8.6 L471.0,11.5 L468.0,10.2 L465.0,6.4 L462.0,7.4 L459.0,12.0 L456.0,9.6 L453.0,12.6 L450.0,9.4 L447.0,11.4 L444.0,12.5 L441.0,11.7 L438.0,5.6 L435.0,9.7 L432.0,10.9 L429.0,9.8 L426.0,10.5 L423.0,12.6 L420.0,10.6 L417.0,12.3 L414.0,10.3 L411.0,12.5 L408.0,11.7 L405.0,11.2 L402.0,9.3 L399.0,8.6 L396.0,7.7 L393.0,5.5 L390.0,4.9 L387.0,5.2 L384.0,7.0 L381.0,9.0 L378.0,11.3 L375.0,11.2 L372.0,11.8 L369.0,13.6 L366.0,12.1 L363.0,13.5 L360.0,13.9 L357.0,18.2 L354.0,16.5 L351.0,15.6 L348.0,17.6 L345.0,14.5 L342.0,22.0 L339.0,24.8 L336.0,25.2 L333.0,24.1 L330.0,21.8 L327.0,24.7 L324.0,24.8 L321.0,22.2 L318.0,22.7 L315.0,20.4 L312.0,19.2 L309.0,22.8 L306.0,20.5 L303.0,22.6 L300.0,20.7 L297.0,25.3 L294.0,21.0 L291.0,22.6 L288.0,21.1 L285.0,19.7 L282.0,21.5 L279.0,21.1 L276.0,20.9 L273.0,21.9 L270.0,21.5 L267.0,23.5 L264.0,24.6 L261.0,26.1 L258.0,25.7 L255.0,21.0 L252.0,23.1 L249.0,22.4 L246.0,17.1 L243.0,15.9 L240.0,14.3 L237.0,16.9 L234.0,13.4 L231.0,16.1 L228.0,12.2 L225.0,14.7 L222.0,14.0 L219.0,13.2 L216.0,16.2 L213.0,12.4 L210.0,14.1 L207.0,13.5 L204.0,11.1 L201.0,11.3 L198.0,12.4 L195.0,15.8 L192.0,14.6 L189.0,15.1 L186.0,20.5 L183.0,19.8 L180.0,21.2 L177.0,17.9 L174.0,20.3 L171.0,17.6 L168.0,18.2 L165.0,19.4 L162.0,18.8 L159.0,16.6 L156.0,13.7 L153.0,16.3 L150.0,15.4 L147.0,14.6 L144.0,17.8 L141.0,14.6 L138.0,18.3 L135.0,16.1 L132.0,14.6 L129.0,15.9 L126.0,15.4 L123.0,11.9 L120.0,13.3 L117.0,15.4 L114.0,15.1 L111.0,15.0 L108.0,16.2 L105.0,15.7 L102.0,16.0 L99.0,18.5 L96.0,14.9 L93.0,15.4 L90.0,15.5 L87.0,12.6 L84.0,9.3 L81.0,7.0 L78.0,6.0 L75.0,10.1 L72.0,5.9 L69.0,6.2 L66.0,5.6 L63.0,5.9 L60.0,4.4 L57.0,2.8 L54.0,2.3 L51.0,4.5 L48.0,1.9 L45.0,2.6 L42.0,1.2 L39.0,3.8 L36.0,4.6 L33.0,3.7 L30.0,8.0 L27.0,10.2 L24.0,11.6 L21.0,11.1 L18.0,9.9 L15.0,11.7 L12.0,11.6 L9.0,8.5 L6.0,10.2 L3.0,7.4 L0.0,9.7 Z' fill='%23000'/%3E%3C/svg%3E");
+  --paper-deckle-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='30' viewBox='0 0 900 30' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L900,0 L900,19.6 L900.0,19.6 L897.0,20.2 L894.0,22.9 L891.0,27.8 L888.0,21.3 L885.0,20.0 L882.0,16.8 L879.0,19.3 L876.0,19.5 L873.0,20.8 L870.0,20.3 L867.0,17.3 L864.0,16.3 L861.0,19.4 L858.0,15.3 L855.0,15.6 L852.0,10.3 L849.0,9.0 L846.0,15.4 L843.0,6.1 L840.0,7.4 L837.0,8.5 L834.0,9.9 L831.0,8.6 L828.0,8.0 L825.0,6.4 L822.0,9.9 L819.0,9.7 L816.0,6.3 L813.0,7.9 L810.0,9.6 L807.0,9.2 L804.0,9.3 L801.0,11.0 L798.0,10.3 L795.0,11.9 L792.0,13.0 L789.0,12.4 L786.0,12.8 L783.0,13.6 L780.0,11.5 L777.0,13.3 L774.0,14.0 L771.0,12.7 L768.0,9.2 L765.0,12.3 L762.0,8.8 L759.0,11.0 L756.0,11.8 L753.0,12.5 L750.0,13.4 L747.0,13.2 L744.0,11.7 L741.0,11.1 L738.0,9.8 L735.0,13.8 L732.0,13.6 L729.0,12.4 L726.0,9.4 L723.0,14.3 L720.0,12.3 L717.0,14.8 L714.0,13.1 L711.0,17.0 L708.0,17.2 L705.0,16.9 L702.0,13.8 L699.0,15.0 L696.0,12.8 L693.0,11.9 L690.0,10.6 L687.0,7.7 L684.0,9.3 L681.0,7.5 L678.0,6.9 L675.0,8.3 L672.0,5.9 L669.0,5.6 L666.0,5.0 L663.0,16.7 L660.0,6.6 L657.0,4.2 L654.0,8.2 L651.0,5.0 L648.0,5.3 L645.0,9.2 L642.0,7.6 L639.0,11.2 L636.0,15.4 L633.0,14.5 L630.0,13.6 L627.0,18.5 L624.0,18.6 L621.0,15.8 L618.0,17.5 L615.0,16.9 L612.0,17.2 L609.0,12.8 L606.0,14.5 L603.0,15.6 L600.0,15.8 L597.0,19.5 L594.0,18.9 L591.0,18.3 L588.0,20.8 L585.0,17.4 L582.0,18.5 L579.0,20.8 L576.0,18.2 L573.0,17.9 L570.0,20.2 L567.0,23.2 L564.0,24.1 L561.0,26.9 L558.0,23.1 L555.0,24.3 L552.0,26.9 L549.0,28.2 L546.0,27.4 L543.0,24.7 L540.0,23.9 L537.0,24.9 L534.0,22.5 L531.0,22.9 L528.0,23.1 L525.0,21.4 L522.0,18.8 L519.0,19.6 L516.0,19.5 L513.0,17.6 L510.0,21.6 L507.0,16.9 L504.0,18.3 L501.0,17.1 L498.0,16.1 L495.0,13.3 L492.0,14.5 L489.0,16.7 L486.0,13.7 L483.0,14.2 L480.0,18.6 L477.0,20.4 L474.0,18.4 L471.0,20.3 L468.0,18.6 L465.0,18.9 L462.0,18.3 L459.0,17.0 L456.0,19.0 L453.0,18.2 L450.0,14.4 L447.0,17.9 L444.0,18.4 L441.0,17.5 L438.0,18.5 L435.0,17.6 L432.0,18.2 L429.0,16.6 L426.0,14.6 L423.0,14.9 L420.0,16.4 L417.0,11.6 L414.0,16.8 L411.0,16.8 L408.0,16.7 L405.0,13.9 L402.0,19.5 L399.0,21.3 L396.0,19.8 L393.0,21.4 L390.0,22.1 L387.0,22.2 L384.0,19.0 L381.0,16.8 L378.0,16.1 L375.0,16.2 L372.0,15.9 L369.0,19.3 L366.0,18.0 L363.0,18.5 L360.0,14.6 L357.0,15.8 L354.0,15.3 L351.0,14.5 L348.0,9.3 L345.0,7.3 L342.0,7.4 L339.0,5.1 L336.0,7.4 L333.0,8.4 L330.0,8.9 L327.0,9.4 L324.0,7.9 L321.0,9.3 L318.0,7.6 L315.0,8.1 L312.0,9.7 L309.0,8.4 L306.0,6.7 L303.0,9.0 L300.0,9.4 L297.0,4.3 L294.0,6.1 L291.0,6.2 L288.0,8.0 L285.0,5.9 L282.0,4.9 L279.0,5.0 L276.0,6.4 L273.0,8.1 L270.0,4.4 L267.0,3.0 L264.0,7.0 L261.0,4.0 L258.0,2.5 L255.0,3.1 L252.0,6.3 L249.0,8.8 L246.0,9.3 L243.0,10.3 L240.0,11.5 L237.0,14.1 L234.0,14.3 L231.0,18.9 L228.0,14.5 L225.0,17.7 L222.0,15.6 L219.0,15.7 L216.0,14.7 L213.0,14.8 L210.0,15.8 L207.0,16.0 L204.0,19.3 L201.0,21.0 L198.0,16.4 L195.0,17.6 L192.0,17.1 L189.0,13.8 L186.0,16.9 L183.0,9.3 L180.0,14.2 L177.0,18.9 L174.0,12.8 L171.0,13.1 L168.0,16.5 L165.0,15.9 L162.0,16.3 L159.0,18.8 L156.0,19.3 L153.0,17.6 L150.0,16.4 L147.0,16.0 L144.0,16.0 L141.0,17.5 L138.0,18.5 L135.0,15.9 L132.0,19.2 L129.0,16.1 L126.0,15.7 L123.0,18.0 L120.0,18.5 L117.0,14.9 L114.0,14.5 L111.0,14.2 L108.0,21.1 L105.0,14.7 L102.0,12.9 L99.0,10.2 L96.0,11.8 L93.0,15.9 L90.0,16.1 L87.0,16.2 L84.0,17.8 L81.0,20.6 L78.0,19.0 L75.0,21.0 L72.0,22.6 L69.0,19.3 L66.0,19.6 L63.0,20.0 L60.0,23.3 L57.0,25.7 L54.0,23.8 L51.0,26.9 L48.0,28.8 L45.0,26.2 L42.0,25.5 L39.0,26.2 L36.0,25.9 L33.0,27.2 L30.0,21.6 L27.0,22.6 L24.0,21.0 L21.0,18.5 L18.0,19.3 L15.0,18.4 L12.0,18.4 L9.0,19.3 L6.0,21.0 L3.0,21.2 L0.0,19.6 Z' fill='%23000'/%3E%3C/svg%3E");
+  --paper-deckle-depth: 30px;
+  --paper-bleed: 24px;
+  --paper-gutter: max(clamp(28px, 4.2vw, 56px), calc((100vw - 1260px) / 2 + 56px));
+
   position: relative;
+  z-index: 10;
+  isolation: isolate;
+  box-sizing: border-box;
+  width: calc(100vw + var(--paper-bleed) * 2);
+  max-width: none;
+  margin: 26px 0 40px calc(50% - 50vw - var(--paper-bleed));
+  padding:
+    calc(clamp(34px, 4vw, 54px) + var(--paper-deckle-depth))
+    calc(var(--paper-gutter) + var(--paper-bleed))
+    calc(clamp(40px, 4.6vw, 64px) + var(--paper-deckle-depth));
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--ink-primary);
+  background-color: #FCF8F0;
+  background-image:
+    radial-gradient(130% 60% at 50% 0%, rgba(255, 254, 249, 0.55) 0%, transparent 62%),
+    linear-gradient(90deg, rgba(168, 132, 86, 0.11) 0%, transparent 7%, transparent 93%, rgba(168, 132, 86, 0.11) 100%),
+    linear-gradient(180deg, rgba(168, 132, 86, 0.08) 0%, transparent 6%, transparent 94%, rgba(168, 132, 86, 0.09) 100%),
+    var(--paper-mottle);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 900px 900px;
+  background-blend-mode: normal, multiply, multiply, multiply;
+  -webkit-mask-image: var(--paper-deckle-top), linear-gradient(#000, #000), var(--paper-deckle-bottom);
+  -webkit-mask-size: 900px var(--paper-deckle-depth), 100% calc(100% - var(--paper-deckle-depth) * 2 + 2px), 900px var(--paper-deckle-depth);
+  -webkit-mask-position: 0 0, 0 calc(var(--paper-deckle-depth) - 1px), 37% 100%;
+  -webkit-mask-repeat: repeat-x, no-repeat, repeat-x;
+  mask-image: var(--paper-deckle-top), linear-gradient(#000, #000), var(--paper-deckle-bottom);
+  mask-size: 900px var(--paper-deckle-depth), 100% calc(100% - var(--paper-deckle-depth) * 2 + 2px), 900px var(--paper-deckle-depth);
+  mask-position: 0 0, 0 calc(var(--paper-deckle-depth) - 1px), 37% 100%;
+  mask-repeat: repeat-x, no-repeat, repeat-x;
+}
+
+/* Paper tooth multiplied over paper AND ink, so type reads as printed into the fibre */
+.section-editorial-dossier::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--paper-tooth);
+  background-size: 360px 360px;
+  mix-blend-mode: multiply;
+  opacity: 0.82;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Folio registry line, set like a letterpress running head */
+.section-editorial-dossier::before {
+  content: "ARCHIVAL FOLIO // NO. IT-DXB-2026 // 100% COTTON RAG ARCHIVAL PAPER // 300 GSM // VERIFIED C.V. // P. 01 OF 01";
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  color: rgba(24, 23, 22, 0.44);
+  border-bottom: 1px dashed rgba(24, 23, 22, 0.2);
+  padding-bottom: 13px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
 }
 
 /* 3-Column Architectural Masthead */
@@ -319,14 +384,17 @@
   letter-spacing: 0.6px;
 }
 
-/* 4-Column Executive Impact Metrics Strip (Open Architectural Ruled Bar — No Cards) */
+/* 4-Column Executive Impact Metrics Strip (Ruled Ledger Printed on the Paper — No Box) */
 .dossier-impact-metrics-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
-  padding-bottom: 16px;
-  margin-bottom: 24px;
-  border-bottom: 1px solid rgba(24, 23, 22, 0.16);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(24, 23, 22, 0.18);
+  border-radius: 0;
+  padding: 4px 0 20px;
+  margin-bottom: 28px;
 }
 
 @media (max-width: 960px) {
@@ -531,6 +599,9 @@
   display: flex;
   flex-direction: column;
   gap: 22px;
+  position: relative !important;
+  z-index: 30 !important;
+  overflow: visible !important;
 }
 
 .dossier-tab-header-bar {
@@ -549,8 +620,8 @@
 }
 
 .dossier-tab-btn {
-  background: transparent;
-  border: 1px solid rgba(24, 23, 22, 0.18);
+  background: rgba(24, 23, 22, 0.04);
+  border: 1px solid rgba(24, 23, 22, 0.14);
   color: var(--ink-secondary);
   font-family: var(--font-mono);
   font-size: 9.5px;
@@ -571,6 +642,7 @@
   background: #181715;
   border-color: #181715;
   color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(24, 23, 22, 0.18);
 }
 
 .dossier-tab-panel {
@@ -748,19 +820,21 @@
   margin: 0;
 }
 
-/* Open Architectural Colophon Rule (Replaces Heavy Dark Footer Box) */
+/* Colophon Rubber Stamp (Terracotta Ink Pressed Into the Paper) */
 .dossier-footer-stamp {
-  margin-top: 8px;
-  padding: 8px 0 0;
+  margin-top: 22px;
+  padding: 10px 18px 10px 14px;
   background: transparent;
-  color: var(--ink-primary);
-  border-radius: 0;
-  border: none;
-  border-top: 2px solid var(--ink-primary);
-  display: flex;
+  color: #B9431F;
+  border-radius: 3px;
+  border: 1.5px solid rgba(185, 67, 31, 0.78);
+  display: inline-flex;
   align-items: center;
   gap: 12px;
-  box-shadow: none;
+  box-shadow: inset 0 0 0 3px rgba(252, 248, 240, 0), inset 0 0 0 4px rgba(185, 67, 31, 0.38);
+  transform: rotate(-1.4deg);
+  transform-origin: left center;
+  mix-blend-mode: multiply;
 }
 
 .dossier-footer-stamp .seal-icon {
@@ -772,14 +846,14 @@
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 800;
-  color: var(--ink-primary);
+  color: #B9431F;
   letter-spacing: 0.6px;
   display: block;
 }
 
 .dossier-footer-stamp p {
   font-size: 11.5px;
-  color: var(--ink-secondary);
+  color: rgba(150, 56, 28, 0.85);
   margin: 1px 0 0;
 }
 
@@ -842,18 +916,34 @@ body::-webkit-scrollbar {
 }
 
 
-/* ========= SECTOR 08 SIGNATORY LOCKUP (OPEN ARCHITECTURAL MASTHEAD — NO BOXED CARD) ========= */
+/* ========= SECTOR 08 SIGNATORY LOCKUP (PORTRAIT PRINT TAPED ONTO THE ROUGH PAPER) ========= */
 .dossier-signatory-card {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 0 24px 0 0;
+  padding: 8px 4px 0 8px;
   background: transparent;
-  border: none;
-  border-right: 1.5px solid rgba(24, 23, 22, 0.15);
+  border: 0;
   border-radius: 0;
   box-shadow: none;
   margin-bottom: 0;
+}
+
+/* Translucent paper tape holding the portrait print */
+.dossier-signatory-card::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 20px;
+  width: 58px;
+  height: 18px;
+  background: rgba(236, 224, 196, 0.62);
+  box-shadow: 0 1px 2px rgba(80, 60, 30, 0.12);
+  transform: rotate(-7deg);
+  clip-path: polygon(0 8%, 6% 0, 12% 10%, 20% 2%, 30% 8%, 42% 0, 55% 7%, 68% 1%, 80% 9%, 90% 2%, 100% 6%, 98% 50%, 100% 94%, 92% 100%, 82% 92%, 70% 100%, 58% 93%, 45% 100%, 33% 92%, 22% 100%, 10% 92%, 2% 100%, 0 55%);
+  z-index: 4;
+  pointer-events: none;
 }
 
 body.theme-dark-cinema .dossier-signatory-card {
@@ -865,10 +955,11 @@ body.theme-dark-cinema .dossier-signatory-card {
   position: relative;
   width: 72px;
   height: 86px;
-  border-radius: 8px;
+  border-radius: 2px;
   overflow: hidden;
-  border: 2px solid var(--accent-terracotta);
-  box-shadow: 0 6px 18px rgba(216, 78, 41, 0.24);
+  border: 4px solid #FFFDF7;
+  box-shadow: 0 1px 1px rgba(60, 40, 20, 0.16), 0 8px 16px -6px rgba(60, 40, 20, 0.38);
+  transform: rotate(-2.2deg);
   cursor: zoom-in;
   flex-shrink: 0;
 }
@@ -961,3 +1052,1271 @@ body.theme-dark-cinema .mini-contact-link {
 .mini-contact-sep {
   color: var(--ink-muted);
 }
+
+/* === V6_ATELIER_INK_MONOGRAPH_AND_CHOREOGRAPHY === */
+
+/* =========================================================================
+   SECTOR 08: WRINKLED ARCHIVAL COTTON PAPER, P22 CUSP TYPOGRAPHY,
+   HAND-PENNED MANUSCRIPT LEDGER & TEAR-OFF STUDIO NOTEPAD (V7)
+   ========================================================================= */
+
+@font-face {
+  font-family: 'P22 Cusp Square';
+  src: url('../assets/fonts/P22Cusp-Square.woff2') format('woff2'),
+       url('/assets/fonts/P22Cusp-Square.woff2') format('woff2'),
+       url('../assets/fonts/P22Cusp-Square.ttf') format('truetype'),
+       url('/assets/fonts/P22Cusp-Square.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'P22 Cusp Square Slant';
+  src: url('../assets/fonts/P22Cusp-SquareSlant.woff2') format('woff2'),
+       url('/assets/fonts/P22Cusp-SquareSlant.woff2') format('woff2'),
+       url('../assets/fonts/P22Cusp-SquareSlant.ttf') format('truetype'),
+       url('/assets/fonts/P22Cusp-SquareSlant.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'P22 Cusp Round';
+  src: url('../assets/fonts/P22Cusp-Round.woff2') format('woff2'),
+       url('/assets/fonts/P22Cusp-Round.woff2') format('woff2'),
+       url('../assets/fonts/P22Cusp-Round.ttf') format('truetype'),
+       url('/assets/fonts/P22Cusp-Round.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'P22 Cusp Round Slant';
+  src: url('../assets/fonts/P22Cusp-RoundSlant.woff2') format('woff2'),
+       url('/assets/fonts/P22Cusp-RoundSlant.woff2') format('woff2'),
+       url('../assets/fonts/P22Cusp-RoundSlant.ttf') format('truetype'),
+       url('/assets/fonts/P22Cusp-RoundSlant.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --fast-paper-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='pt' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch' result='t'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.16 0 0 0 0 0.12 0 0 0 0 0.09 0 0 0 0.095 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23pt)'/%3E%3C/svg%3E");
+  --font-cusp-sq: 'P22 Cusp Square', var(--font-mono), monospace;
+  --font-cusp-sq-slant: 'P22 Cusp Square Slant', var(--font-mono), monospace;
+  --font-cusp-rd: 'P22 Cusp Round', var(--font-mono), monospace;
+  --font-cusp-rd-slant: 'P22 Cusp Round Slant', var(--font-mono), monospace;
+  --font-hand-script: 'Caveat', 'Playfair Display', Georgia, cursive;
+  --font-hand-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
+
+/* 0. BOTTOM FOOTER HUGE NAME ("IRENE THOMAS") IN P22 CUSP SQUARE */
+.footer-huge-name {
+  font-family: 'P22 Cusp Square', var(--font-display), sans-serif !important;
+  font-weight: normal !important;
+  font-size: clamp(48px, 7.6vw, 102px) !important;
+  letter-spacing: 0.06em !important;
+  line-height: 1.05 !important;
+  color: #161310 !important;
+  text-shadow: 2px 3px 0 rgba(184, 59, 26, 0.22) !important;
+}
+
+/* 1. ZERO-LAG CURSOR & GPU ISOLATION IN SECTION 08 */
+.pinned-burn-layer-8 .layer-ambient-art-canvas,
+body[data-active-sector="resume"] #ambient-cursor-spotlight,
+body[data-active-sector="08"] #ambient-cursor-spotlight {
+  display: none !important;
+}
+
+body[data-active-sector="resume"] .bg-sector-hud,
+body[data-active-sector="08"] .bg-sector-hud {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(12px) !important;
+}
+
+/* 2. TACTILE WRINKLED, FOLDED & AGED ARCHIVAL COTTON PAPER SHEET */
+.section-editorial-dossier {
+  position: relative !important;
+  isolation: isolate !important;
+  contain: layout paint !important;
+  will-change: transform !important;
+  text-rendering: geometricPrecision !important;
+  -webkit-font-smoothing: antialiased !important;
+  color: #181411 !important;
+  padding:
+    calc(clamp(22px, 2.5vw, 34px) + var(--paper-deckle-depth))
+    calc(var(--paper-gutter) + var(--paper-bleed))
+    calc(clamp(28px, 3.2vw, 44px) + var(--paper-deckle-depth)) !important;
+  /* Multi-angle paper wrinkle shading + warm age-toned cotton rag gradients */
+  background:
+    /* Diagonal corner fold shading (top-left) */
+    linear-gradient(132deg, rgba(112, 82, 48, 0.18) 0%, rgba(255, 253, 247, 0.78) 7.5%, rgba(102, 74, 42, 0.11) 8.6%, transparent 18%),
+    /* Diagonal corner crinkle (bottom-right) */
+    linear-gradient(314deg, rgba(112, 82, 48, 0.19) 0%, rgba(255, 253, 247, 0.72) 6.5%, rgba(98, 70, 40, 0.12) 7.6%, transparent 17%),
+    /* Diagonal corner fold (top-right) */
+    linear-gradient(222deg, rgba(112, 82, 48, 0.15) 0%, rgba(255, 253, 247, 0.68) 6%, rgba(98, 70, 40, 0.09) 7.2%, transparent 15%),
+    /* Subtle diagonal paper buckle wave 1 */
+    linear-gradient(112deg, transparent 22%, rgba(118, 88, 54, 0.07) 31%, rgba(255, 252, 244, 0.65) 33.2%, rgba(105, 76, 44, 0.05) 35%, transparent 42%),
+    /* Subtle diagonal paper buckle wave 2 */
+    linear-gradient(64deg, transparent 54%, rgba(118, 88, 54, 0.075) 63%, rgba(255, 252, 244, 0.62) 65.2%, rgba(105, 76, 44, 0.05) 67%, transparent 74%),
+    /* Warm age-toned vignette at edges */
+    radial-gradient(ellipse at 50% 48%, rgba(252, 249, 241, 0.92) 35%, rgba(238, 228, 209, 0.96) 80%, rgba(220, 204, 176, 0.99) 100%),
+    #F3EDE0 !important;
+  box-shadow:
+    inset 0 0 74px rgba(128, 92, 50, 0.25),
+    inset 0 0 22px rgba(92, 64, 34, 0.16),
+    inset 1px 1px 0 rgba(255, 253, 248, 0.82) !important;
+}
+
+/* High-performance 300 GSM Cotton Paper Tooth Overlay */
+.section-editorial-dossier::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background-image: var(--fast-paper-tooth) !important;
+  background-size: 200px 200px !important;
+  mix-blend-mode: multiply !important;
+  opacity: 0.92 !important;
+  pointer-events: none !important;
+  z-index: 3 !important;
+}
+
+/* Running Top Folio Margin Header in P22 Cusp Square */
+.section-editorial-dossier::before {
+  font-family: var(--font-cusp-sq) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.12em !important;
+  color: rgba(42, 32, 22, 0.62) !important;
+  border-bottom: 1px dashed rgba(42, 32, 22, 0.26) !important;
+  background: none !important;
+  padding-bottom: 9px !important;
+  margin-bottom: 18px !important;
+}
+
+/* Physical Paper Wrinkles, Quarto Fold Creases & Crinkle Veins Layer */
+.paper-wrinkles-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  z-index: 1 !important;
+}
+
+/* Zero out middle creases — only subtle authentic perimeter handling wrinkles */
+.paper-crease-horiz,
+.paper-crease-vert {
+  display: none !important;
+}
+
+.paper-surface-wrinkles {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+.paper-crinkle-veins-svg {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.paper-decorative-watermark {
+  position: absolute !important;
+  bottom: 18px !important;
+  left: 28px !important;
+  font-family: var(--font-cusp-rd-slant) !important;
+  font-size: 22px !important;
+  letter-spacing: 0.1em !important;
+  color: rgba(118, 86, 54, 0.16) !important;
+  transform: rotate(-2deg) !important;
+  pointer-events: none !important;
+}
+
+/* 3. CRISP VECTOR HAND-DRAWN FOUNTAIN PEN SVG RULES */
+.atelier-ink-rule-svg {
+  display: block !important;
+  width: 100% !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.rule-full-masthead {
+  height: 14px !important;
+  margin: 4px 0 8px 0 !important;
+}
+
+.rule-full-metrics {
+  height: 14px !important;
+  margin: 6px 0 18px 0 !important;
+}
+
+.rule-col-header {
+  height: 10px !important;
+  margin-top: 5px !important;
+}
+
+.rule-entry-sep {
+  height: 10px !important;
+  margin-top: 12px !important;
+}
+
+/* 4. ASYMMETRIC SIDE-BY-SIDE POSTCARD + 2-LINE TITLE MASTHEAD (FIRST ROW PRESERVED) */
+.dossier-curator-header {
+  position: relative !important;
+  z-index: 2 !important;
+  display: grid !important;
+  grid-template-columns: 204px minmax(0, 1fr) !important;
+  gap: clamp(32px, 3.8vw, 54px) !important;
+  align-items: center !important;
+  padding: 2px 0 14px 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: none !important;
+}
+
+.dossier-postcard-col {
+  position: relative !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.dossier-portrait-wrap {
+  position: relative !important;
+  width: 194px !important;
+  height: 244px !important;
+  padding: 9px 9px 38px 9px !important;
+  box-sizing: border-box !important;
+  background: #FAF7F0 !important;
+  border: 1px solid rgba(28, 22, 18, 0.24) !important;
+  border-radius: 3px !important;
+  overflow: visible !important;
+  box-shadow:
+    0 2px 4px rgba(32, 24, 16, 0.14),
+    0 10px 26px -6px rgba(32, 24, 16, 0.24),
+    0 22px 48px -12px rgba(32, 24, 16, 0.18) !important;
+  transform: rotate(-2.2deg) !important;
+  transform-origin: center center !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease !important;
+  cursor: zoom-in !important;
+}
+
+.dossier-portrait-wrap:hover {
+  transform: rotate(-0.4deg) translateY(-4px) scale(1.02) !important;
+  box-shadow:
+    0 4px 10px rgba(32, 24, 16, 0.18),
+    0 18px 36px -6px rgba(32, 24, 16, 0.28) !important;
+}
+
+.dossier-portrait-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 1.5px !important;
+  border: 1px solid rgba(24, 20, 16, 0.12) !important;
+}
+
+.washi-tape {
+  position: absolute !important;
+  background: rgba(235, 221, 190, 0.8) !important;
+  box-shadow: 0 1px 3px rgba(45, 32, 18, 0.16), inset 0 0 4px rgba(255, 255, 255, 0.45) !important;
+  z-index: 6 !important;
+  pointer-events: none !important;
+  clip-path: polygon(0 8%, 6% 0, 14% 9%, 24% 2%, 36% 8%, 50% 1%, 64% 8%, 78% 2%, 90% 9%, 100% 4%, 98% 52%, 100% 94%, 90% 100%, 76% 92%, 62% 100%, 48% 92%, 34% 100%, 20% 92%, 8% 100%, 0 92%) !important;
+}
+
+.washi-tape.washi-tl {
+  top: -9px !important;
+  left: -14px !important;
+  width: 68px !important;
+  height: 20px !important;
+  transform: rotate(-28deg) !important;
+}
+
+.washi-tape.washi-br {
+  bottom: -7px !important;
+  right: -12px !important;
+  width: 58px !important;
+  height: 18px !important;
+  transform: rotate(-32deg) !important;
+}
+
+.postcard-cancel-stamp {
+  position: absolute !important;
+  bottom: 24px !important;
+  right: -24px !important;
+  width: 112px !important;
+  height: 60px !important;
+  opacity: 0.72 !important;
+  transform: rotate(-9deg) !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+}
+
+.dossier-portrait-caption {
+  position: absolute !important;
+  left: 10px !important;
+  right: 10px !important;
+  bottom: 7px !important;
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: space-between !important;
+  pointer-events: none !important;
+}
+
+.dossier-portrait-tag {
+  position: static !important;
+  background: none !important;
+  color: #4E463E !important;
+  font-family: var(--font-cusp-sq) !important;
+  font-size: 9px !important;
+  font-weight: normal !important;
+  letter-spacing: 0.08em !important;
+  padding: 0 !important;
+}
+
+.dossier-portrait-sign {
+  font-family: var(--font-hand-script) !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #B83B1A !important;
+}
+
+.dossier-masthead-col {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+}
+
+.dossier-eyebrow-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  margin-bottom: 6px !important;
+}
+
+.dossier-archive-stamp {
+  margin-bottom: 0 !important;
+  font-family: var(--font-cusp-sq-slant) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.09em !important;
+  color: #B83B1A !important;
+}
+
+.dossier-cusp-serial {
+  font-family: var(--font-cusp-sq) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.1em !important;
+  color: rgba(45, 34, 24, 0.58) !important;
+  border: 1px dashed rgba(45, 34, 24, 0.28) !important;
+  padding: 2px 8px !important;
+  border-radius: 2px !important;
+}
+
+.dossier-main-heading {
+  font-family: var(--font-display) !important;
+  font-size: clamp(28px, 2.75vw, 39px) !important;
+  font-weight: 800 !important;
+  line-height: 1.09 !important;
+  letter-spacing: -0.025em !important;
+  color: #161412 !important;
+  margin: 0 0 10px 0 !important;
+  max-width: 890px !important;
+}
+
+.dossier-sub-lead {
+  font-family: var(--font-sans) !important;
+  font-size: 14.5px !important;
+  line-height: 1.52 !important;
+  color: #36302A !important;
+  max-width: 780px !important;
+  margin: 0 0 12px 0 !important;
+}
+
+.rule-signatory-top {
+  height: 9px !important;
+  margin: 2px 0 8px 0 !important;
+}
+
+.dossier-signatory-bar {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 8px 10px !important;
+}
+
+.sig-primary-identity {
+  display: inline-flex !important;
+  align-items: baseline !important;
+  gap: 9px !important;
+  flex-wrap: nowrap !important;
+}
+
+.sig-name-wrap {
+  position: relative !important;
+  display: inline-block !important;
+  padding-bottom: 3px !important;
+  flex-shrink: 0 !important;
+}
+
+.dossier-name {
+  font-family: var(--font-serif) !important;
+  font-style: italic !important;
+  font-size: 20.5px !important;
+  font-weight: 700 !important;
+  color: #171513 !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.sig-flourish-svg {
+  position: absolute !important;
+  left: 0 !important;
+  bottom: -3px !important;
+  width: 100% !important;
+  height: 8px !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+}
+
+.dossier-role-eyebrow {
+  font-family: var(--font-mono) !important;
+  font-size: 8.8px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  color: #B83B1A !important;
+  white-space: nowrap !important;
+}
+
+.sig-bar-sep {
+  color: rgba(24, 20, 16, 0.26) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+}
+
+.dossier-location-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-family: var(--font-mono) !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  color: #3E3831 !important;
+  white-space: nowrap !important;
+}
+
+.dossier-contact-mini {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  margin: 0 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 9.8px !important;
+  white-space: nowrap !important;
+}
+
+.mini-contact-link {
+  color: #171513 !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
+.mini-contact-link:hover {
+  color: #B83B1A !important;
+  text-decoration: underline !important;
+}
+
+.dossier-avail-badge {
+  margin-left: auto !important;
+  font-family: var(--font-mono) !important;
+  font-size: 8.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  color: #1B6842 !important;
+  background: rgba(27, 104, 66, 0.07) !important;
+  border: 1px solid rgba(27, 104, 66, 0.26) !important;
+  padding: 3px 8px !important;
+  border-radius: 3px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+/* 5. HAND-PENNED EXECUTIVE IMPACT METRICS STRIP */
+.dossier-impact-metrics-strip {
+  position: relative !important;
+  z-index: 2 !important;
+  border: 0 !important;
+  background: none !important;
+  padding: 4px 4px !important;
+  margin: 0 !important;
+}
+
+.impact-metric-cell {
+  position: relative !important;
+  border: 0 !important;
+  background: none !important;
+  padding: 2px 20px 4px 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.impact-metric-cell:first-child {
+  padding-left: 6px !important;
+}
+
+.metric-vert-ink-svg {
+  position: absolute !important;
+  left: 0 !important;
+  top: 4% !important;
+  width: 9px !important;
+  height: 92% !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+}
+
+.metric-cusp-index {
+  position: absolute !important;
+  top: 2px !important;
+  right: 16px !important;
+  font-family: var(--font-cusp-rd) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+  color: rgba(184, 59, 26, 0.55) !important;
+}
+
+.impact-metric-val-wrap {
+  position: relative !important;
+  display: inline-flex !important;
+  flex-direction: column !important;
+  margin-bottom: 2px !important;
+}
+
+.impact-metric-val {
+  font-family: var(--font-hand-serif) !important;
+  font-style: italic !important;
+  font-weight: 700 !important;
+  font-size: clamp(28px, 2.5vw, 36px) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.01em !important;
+  color: #18130F !important;
+  text-shadow: 0.4px 0.5px 0 rgba(24, 18, 12, 0.18) !important;
+}
+
+.metric-hand-flourish {
+  width: 100% !important;
+  height: 8px !important;
+  margin-top: 1px !important;
+  overflow: visible !important;
+}
+
+.impact-metric-label {
+  font-family: var(--font-hand-script) !important;
+  font-size: 18.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  color: #3B2F25 !important;
+  transform: rotate(-0.4deg) !important;
+}
+
+/* 6. PART I, II, III HEADERS & ORNAMENTAL P22 CUSP BADGES */
+.editorial-dossier-grid {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.column-section-label {
+  border: 0 !important;
+  background: none !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.section-label-row {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+.cusp-part-badge {
+  font-family: var(--font-cusp-sq) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+  color: #FAF6EE !important;
+  background: #B83B1A !important;
+  padding: 2px 7px !important;
+  border-radius: 2px !important;
+  box-shadow: 1.5px 1.5px 0 #181411 !important;
+}
+
+.handwritten-section-heading {
+  font-family: var(--font-hand-script) !important;
+  font-size: 22.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  color: #1D1712 !important;
+}
+
+.cusp-margin-stamp {
+  margin-left: auto !important;
+  font-family: var(--font-cusp-sq-slant) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+  color: rgba(88, 66, 44, 0.58) !important;
+}
+
+/* 7. PART I: HAND-PENNED FIELD MANUSCRIPT CHRONOLOGY */
+.chronology-timeline-spine.manuscript-ruled-paper {
+  position: relative !important;
+  border: 0 !important;
+  padding: 6px 10px 8px 32px !important;
+  border-radius: 2px !important;
+  /* Ruled manuscript horizontal baselines */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 27px,
+    rgba(118, 94, 68, 0.13) 27px,
+    rgba(118, 94, 68, 0.13) 28px
+  ) !important;
+}
+
+.spine-vertical-ink-svg {
+  position: absolute !important;
+  left: 4px !important;
+  top: 4px !important;
+  width: 12px !important;
+  height: calc(100% - 8px) !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+}
+
+.chronology-node-dot {
+  width: 13px !important;
+  height: 13px !important;
+  left: -29px !important;
+  top: 7px !important;
+  background: #FAF6EE !important;
+  border: 2.2px solid #B83B1A !important;
+  box-shadow: 0 0 0 2px #FAF6EE, 0 1px 3px rgba(24, 20, 16, 0.25) !important;
+  z-index: 2 !important;
+}
+
+.chronology-entry.primary-role .chronology-node-dot {
+  background: #B83B1A !important;
+}
+
+.chronology-entry {
+  border: 0 !important;
+  background: none !important;
+  margin-bottom: 14px !important;
+  padding-bottom: 2px !important;
+}
+
+.chronology-entry:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.entry-period-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  margin-bottom: 1px !important;
+}
+
+.hand-date-script {
+  font-family: var(--font-hand-script) !important;
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  color: #B83B1A !important;
+  text-transform: none !important;
+}
+
+.cusp-ref-tag {
+  font-family: var(--font-cusp-rd-slant) !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.08em !important;
+  color: rgba(74, 56, 38, 0.56) !important;
+}
+
+.entry-role-title {
+  font-family: var(--font-hand-serif) !important;
+  font-size: 25px !important;
+  font-weight: 700 !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.01em !important;
+  color: #16120E !important;
+  margin: 0 0 2px 0 !important;
+  text-shadow: 0.3px 0.4px 0 rgba(24, 18, 12, 0.2) !important;
+}
+
+.entry-institution {
+  font-family: var(--font-hand-script) !important;
+  font-size: 19.5px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  color: #544335 !important;
+  margin-bottom: 4px !important;
+}
+
+.entry-narrative {
+  font-family: var(--font-hand-serif) !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  font-style: italic !important;
+  line-height: 1.52 !important;
+  color: #241D17 !important;
+  margin: 0 !important;
+}
+
+/* Hand-Brushed Ochre Marker Highlight & Fountain Pen Underline */
+.ink-highlight {
+  background: linear-gradient(104deg, rgba(238, 192, 92, 0) 1%, rgba(238, 192, 92, 0.42) 4%, rgba(235, 182, 78, 0.36) 95%, rgba(238, 192, 92, 0) 100%) !important;
+  color: #15110D !important;
+  padding: 0 4px !important;
+  border-radius: 3px !important;
+  box-decoration-break: clone !important;
+  -webkit-box-decoration-break: clone !important;
+}
+
+.ink-underline {
+  text-decoration: underline wavy rgba(184, 59, 26, 0.72) !important;
+  text-decoration-thickness: 1.3px !important;
+  text-underline-offset: 3px !important;
+}
+
+/* Hand-Sketched Fountain Pen Brand Custody Margin Box */
+.entry-brand-ledger {
+  position: relative !important;
+  background: rgba(249, 243, 230, 0.72) !important;
+  border: 1.5px solid rgba(42, 32, 22, 0.42) !important;
+  border-left: 3.5px solid #B83B1A !important;
+  border-radius: 4px 2px 5px 2px / 2px 5px 2px 4px !important;
+  padding: 6px 12px !important;
+  margin-top: 8px !important;
+  box-shadow: 2px 2px 0 rgba(42, 32, 22, 0.1) !important;
+  transform: rotate(-0.35deg) !important;
+}
+
+.entry-brand-ledger .ledger-k {
+  font-family: var(--font-hand-script) !important;
+  font-size: 18.5px !important;
+  font-weight: 700 !important;
+  color: #B83B1A !important;
+  text-transform: none !important;
+  margin-right: 6px !important;
+}
+
+.entry-brand-ledger .ledger-v {
+  font-family: var(--font-hand-script) !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: #1F1914 !important;
+}
+
+/* 8. PART II: PHYSICAL TEAR-OFF STUDIO NOTEPAD WITH PAGE-SHEDDING ANIMATION */
+.dossier-tab-header-bar {
+  border: 0 !important;
+  background: none !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 8px !important;
+}
+
+.notepad-tear-hint {
+  font-family: var(--font-cusp-sq) !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.08em !important;
+  color: #B83B1A !important;
+  background: rgba(184, 59, 26, 0.08) !important;
+  border: 1px dashed rgba(184, 59, 26, 0.42) !important;
+  padding: 2px 8px !important;
+  border-radius: 2px !important;
+}
+
+.atelier-notepad-stage {
+  position: relative !important;
+  z-index: 50 !important;
+  perspective: 1400px !important;
+  margin-bottom: 16px !important;
+  padding-bottom: 0 !important;
+  height: 400px !important;
+  min-height: 400px !important;
+  max-height: 400px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+/* Stacked Underlying Notepad Sheets for 3D Pad Depth */
+.notepad-backing-sheet {
+  position: absolute !important;
+  left: 2px !important;
+  right: 2px !important;
+  top: 46px !important;
+  bottom: 6px !important;
+  background: #F6F0E2 !important;
+  border: 1px solid rgba(62, 48, 34, 0.28) !important;
+  border-radius: 2px 2px 4px 4px !important;
+  pointer-events: none !important;
+}
+
+.notepad-backing-sheet.sheet-back-2 {
+  transform: translate(6px, 7px) rotate(1.15deg) !important;
+  background: #ECE3D0 !important;
+  box-shadow: 0 8px 20px rgba(28, 20, 12, 0.16) !important;
+  z-index: 1 !important;
+}
+
+.notepad-backing-sheet.sheet-back-1 {
+  transform: translate(-3px, 4px) rotate(-0.75deg) !important;
+  background: #F3EBDA !important;
+  box-shadow: 0 4px 12px rgba(28, 20, 12, 0.12) !important;
+  z-index: 2 !important;
+}
+
+/* Top Bookcloth & Brass Perforated Notepad Binding Rail */
+.notepad-binding-rail {
+  position: relative !important;
+  z-index: 25 !important;
+  background: linear-gradient(180deg, #27201B 0%, #171310 100%) !important;
+  border: 1px solid #110E0B !important;
+  border-radius: 4px 4px 0 0 !important;
+  padding: 7px 14px 9px 14px !important;
+  box-shadow:
+    0 3px 8px rgba(20, 14, 10, 0.28),
+    inset 0 1px 0 rgba(255, 248, 236, 0.16) !important;
+}
+
+/* Punched Spiral/Ring Holes Along Top of Notepad */
+.notepad-holes-strip {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 6px 6px 6px !important;
+  margin-bottom: 5px !important;
+  border-bottom: 1px dashed rgba(255, 245, 230, 0.18) !important;
+}
+
+.notepad-holes-strip span {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: #EAE0CE !important;
+  box-shadow:
+    inset 0 1.5px 2px rgba(18, 12, 8, 0.65),
+    0 0 0 1.5px #8C6D46 !important;
+}
+
+.notepad-rail-controls {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+.notepad-serial-cusp {
+  font-family: var(--font-cusp-sq) !important;
+  font-size: 10.5px !important;
+  letter-spacing: 0.1em !important;
+  color: #D8C7AE !important;
+}
+
+.notepad-index-tabs {
+  display: inline-flex !important;
+  gap: 6px !important;
+  background: none !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+.notepad-index-tabs .dossier-tab-btn {
+  font-family: var(--font-mono) !important;
+  font-size: 9.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.05em !important;
+  padding: 5px 11px !important;
+  border-radius: 3px !important;
+  background: rgba(255, 248, 236, 0.1) !important;
+  color: #D8CBB8 !important;
+  border: 1px solid rgba(255, 248, 236, 0.2) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.notepad-index-tabs .dossier-tab-btn:hover {
+  background: rgba(255, 248, 236, 0.2) !important;
+  color: #FFFFFF !important;
+}
+
+.notepad-index-tabs .dossier-tab-btn.active {
+  background: #C83E1B !important;
+  color: #FAF6EE !important;
+  border-color: #E86A48 !important;
+  box-shadow: 0 2px 6px rgba(200, 62, 27, 0.45) !important;
+}
+
+/* Perforated Tear Seam Teeth Under Binding Rail */
+.notepad-perforation-teeth {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: -4px !important;
+  height: 5px !important;
+  background-image: radial-gradient(circle at 5px 4px, transparent 3px, #171310 3.4px) !important;
+  background-size: 10px 5px !important;
+  background-repeat: repeat-x !important;
+  pointer-events: none !important;
+}
+
+/* Notepad Sheets Stack Container */
+.notepad-sheets-stack {
+  position: relative !important;
+  z-index: 10 !important;
+  height: 345px !important;
+  min-height: 345px !important;
+  max-height: 345px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  perspective: 1400px !important;
+  transform-style: preserve-3d !important;
+}
+
+/* Elevated above binding rail & surrounding elements during tearing */
+.notepad-sheets-stack.is-tearing-active,
+.notepad-sheets-stack:has(.is-shedding-page) {
+  z-index: 60 !important;
+}
+
+/* Individual Ruled Tear-Off Note Sheet */
+.notepad-sheet.dossier-tab-panel {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 345px !important;
+  min-height: 345px !important;
+  max-height: 345px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  display: none !important;
+  background:
+    /* Subtle corner paper crinkle on the notepad sheet */
+    linear-gradient(145deg, rgba(255, 255, 255, 0.65) 0%, transparent 25%),
+    /* Horizontal ruled notebook lines */
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 29px,
+      rgba(92, 118, 142, 0.16) 29px,
+      rgba(92, 118, 142, 0.16) 30px
+    ),
+    #FBF7EE !important;
+  border: 1px solid rgba(58, 44, 30, 0.3) !important;
+  border-top: 2px dashed rgba(58, 44, 30, 0.35) !important;
+  border-radius: 0 0 4px 4px !important;
+  padding: 8px 16px 8px 46px !important;
+  box-shadow:
+    0 5px 16px -4px rgba(28, 20, 12, 0.18),
+    inset 0 0 28px rgba(155, 120, 75, 0.1) !important;
+  transform-origin: 92% 0% !important;
+}
+
+.notepad-sheet.dossier-tab-panel:not(.is-shedding-page) {
+  animation: none !important;
+  transform: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.notepad-sheet.dossier-tab-panel.is-active {
+  display: block !important;
+  z-index: 10 !important;
+}
+
+.notepad-sheet.dossier-tab-panel:not(.is-shedding-page).is-active {
+  transform: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Vertical Red Left Margin Rule on Notepad Sheet */
+.notepad-sheet-margin-line {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 38px !important;
+  width: 3px !important;
+  border-left: 1.5px solid rgba(198, 64, 45, 0.42) !important;
+  border-right: 1px solid rgba(198, 64, 45, 0.18) !important;
+  pointer-events: none !important;
+}
+
+.notepad-sheet-watermark {
+  position: absolute !important;
+  top: 8px !important;
+  right: 14px !important;
+  font-family: var(--font-cusp-rd-slant) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+  color: rgba(145, 108, 72, 0.45) !important;
+  pointer-events: none !important;
+}
+
+/* Bottom-Right Curled Dog-Ear Corner on Notepad Sheet */
+.notepad-dog-ear {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 24px !important;
+  height: 24px !important;
+  background: linear-gradient(135deg, #EADFC9 0%, #F7F1E3 48%, rgba(42, 32, 22, 0.18) 50%, #EFE6D4 100%) !important;
+  box-shadow: -2px -2px 5px rgba(28, 20, 12, 0.14) !important;
+  border-top-left-radius: 3px !important;
+  pointer-events: none !important;
+}
+
+/* Handwritten Rows Inside the Notepad Sheet */
+.notepad-ruled-list {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.notepad-note-row {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  flex: 1 1 25% !important;
+  max-height: 25% !important;
+  padding: 2px 0 3px 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px dashed rgba(72, 56, 38, 0.18) !important;
+  background: none !important;
+  box-sizing: border-box !important;
+}
+
+.notepad-note-row:last-child {
+  border-bottom: 0 !important;
+}
+
+.note-margin-idx {
+  position: absolute !important;
+  left: -34px !important;
+  top: 6px !important;
+  width: 22px !important;
+  text-align: center !important;
+  font-family: var(--font-cusp-sq) !important;
+  font-size: 13px !important;
+  color: #B83B1A !important;
+}
+
+.note-row-body {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1px !important;
+}
+
+.notepad-sheet .tabular-category {
+  display: block !important;
+  font-family: var(--font-hand-script) !important;
+  font-size: 20.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  color: #9E2F12 !important;
+  margin: 0 !important;
+}
+
+.notepad-sheet .tabular-spec-line {
+  font-family: var(--font-hand-serif) !important;
+  font-size: 16.5px !important;
+  font-weight: 600 !important;
+  font-style: italic !important;
+  line-height: 1.38 !important;
+  color: #1E1813 !important;
+  margin: 0 !important;
+}
+
+.notepad-sheet .tabular-spec-accent {
+  color: #16110D !important;
+  background: linear-gradient(104deg, rgba(238, 192, 92, 0.34) 0%, rgba(238, 192, 92, 0.14) 100%) !important;
+  padding: 0 4px !important;
+  border-radius: 2px !important;
+}
+
+/* PAGE-BURN TRANSITION WHEN SWITCHING TABS
+   The outgoing sheet clone sits on top of the incoming one and is eaten away by an
+   SVG alpha-threshold filter (see NotepadBurn in js/modules/device-switcher.js). */
+.notepad-sheet.dossier-tab-panel.is-shedding-page {
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 345px !important;
+  z-index: 9999 !important;
+  pointer-events: none !important;
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+.notepad-sheet.dossier-tab-panel.is-shedding-page::before {
+  content: none !important;
+}
+
+/* Incoming sheet underneath sits flat at exact same depth — zero scale/brightness jump */
+.notepad-sheet.dossier-tab-panel.is-revealing-under {
+  animation: none !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.notepad-tear-hint {
+  display: none !important;
+}
+
+/* 9. PART III: HAND-PENNED ACADEMIC CREDENTIALS & FOOTER STAMP */
+.pedigree-academic-footer {
+  margin-top: 10px !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
+}
+
+.education-Tabular-entry,
+.education-tabular-entry {
+  border: 0 !important;
+  border-left: 2.5px solid #B83B1A !important;
+  background: rgba(249, 243, 230, 0.5) !important;
+  padding: 4px 10px 5px 12px !important;
+  margin-bottom: 4px !important;
+  border-radius: 0 3px 3px 0 !important;
+}
+
+.edu-year {
+  font-family: var(--font-cusp-rd) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+  color: #B83B1A !important;
+  margin-bottom: 1px !important;
+}
+
+.edu-body strong {
+  display: block !important;
+  font-family: var(--font-hand-serif) !important;
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  color: #16120E !important;
+}
+
+.edu-body p {
+  font-family: var(--font-hand-script) !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  color: #46382C !important;
+  margin: 0 !important;
+}
+
+/* 10. COMPACT RELOCATED DOWNLOAD BUTTON IN FOOTER STAMP */
+.dossier-footer-stamp {
+  margin-top: 10px !important;
+  padding: 8px 14px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: rgba(250, 246, 238, 0.62) !important;
+  border: 1.5px solid rgba(184, 59, 26, 0.72) !important;
+  border-radius: 3px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  flex-wrap: wrap !important;
+  transform: rotate(-0.45deg) !important;
+  box-shadow: inset 0 0 0 2px rgba(184, 59, 26, 0.18) !important;
+}
+
+.stamp-verified-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+}
+
+.btn-dossier-download-compact {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 7px 13px !important;
+  background: #181512 !important;
+  color: #FAF6EE !important;
+  font-family: var(--font-mono) !important;
+  font-size: 9.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  border-radius: 3px !important;
+  border: 1px solid #181512 !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  box-shadow: 2px 2px 0 rgba(184, 59, 26, 0.55) !important;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.btn-dossier-download-compact:hover {
+  background: #B83B1A !important;
+  border-color: #B83B1A !important;
+  color: #FFFFFF !important;
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 3px 3px 0 rgba(24, 21, 18, 0.85) !important;
+}
+
+@media (max-width: 900px) {
+  .dossier-curator-header {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .dossier-postcard-col {
+    justify-content: flex-start !important;
+  }
+  .dossier-signatory-bar {
+    flex-wrap: wrap !important;
+  }
+  .dossier-avail-badge {
+    margin-left: 0 !important;
+  }
+}
+

@@ -23,7 +23,7 @@ const BurningPaperEngine = (function() {
   }, { passive: true });
 
   // Mobile Device Detection & Mesh Configuration
-  const isMobileDevice = () => window.innerWidth <= 860;
+  const isMobileDevice = () => window.AtelierMode ? window.AtelierMode.isMobile() : (document.documentElement.dataset.mode === 'mobile');
   const getColStep = () => isMobileDevice() ? 14 : 10;
   const MAX_NOISE_AMP = 95; // Maximum peak excursion in pixels
   const SAFETY_MARGIN = 20; // Ensures peaks start and end completely offscreen

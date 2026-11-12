@@ -15,6 +15,7 @@
 @import "layout/footer.css";
 
 /* 3. Reusable Components & Modals */
+@import "components/splash-screen.css";
 @import "components/lightbox.css";
 @import "components/image-transitions.css";
 
@@ -31,3 +32,4 @@
 /* 5. Mobile Elevation Suite */
 @import "components/mobile-capsule.css";
 @import "responsive/mobile-experience.css";
+@import "components/atelier-gram.css";

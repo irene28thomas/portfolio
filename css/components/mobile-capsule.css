@@ -1,7 +1,7 @@
 /* =========================================================
        MOBILE ELEVATION SUITE: ERGONOMICS, SNAP PACING & CONSOLES
        ========================================================= */
-@media (max-width: 860px) {
+@media (orientation: portrait), (max-width: 768px) {
 
   /* Hide desktop grounded nav bar on mobile */
   .grounded-nav-system {
@@ -22,7 +22,7 @@
     font-size: 10px !important;
   }
 
-  /* Dynamic Floating Thumb Capsule (HUD) - Sleek, Non-Obtrusive */
+  /* Dynamic Floating Thumb Scrubber Capsule (HUD) - Main Fast-Nav Path */
   .mobile-thumb-capsule {
     position: fixed !important;
     bottom: max(12px, env(safe-area-inset-bottom, 12px)) !important;
@@ -31,18 +31,21 @@
     z-index: 990 !important;
     display: flex !important;
     align-items: center !important;
-    gap: 3px !important;
-    padding: 3px 6px !important;
-    height: 34px !important;
+    gap: 4px !important;
+    padding: 4px 6px !important;
+    min-height: 50px !important;
+    height: auto !important;
+    max-width: calc(100dvw - 24px) !important;
     box-sizing: border-box !important;
-    background: rgba(248, 246, 240, 0.92) !important;
+    background: rgba(248, 246, 240, 0.95) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    border: 1px solid rgba(24, 23, 22, 0.12) !important;
+    border: 1px solid rgba(24, 23, 22, 0.14) !important;
     border-radius: var(--radius-full) !important;
-    box-shadow: 0 8px 24px rgba(24, 23, 22, 0.12), 0 2px 6px rgba(24, 23, 22, 0.04) !important;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    opacity: 0.92;
+    box-shadow: 0 10px 28px rgba(24, 23, 22, 0.16), 0 2px 6px rgba(24, 23, 22, 0.06) !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, background 0.25s ease !important;
+    opacity: 0.98;
+    touch-action: manipulation;
   }
 
   .mobile-thumb-capsule:hover,
@@ -52,63 +55,82 @@
   }
 
   body.theme-dark-cinema .mobile-thumb-capsule {
-    background: rgba(18, 19, 23, 0.92) !important;
-    border-color: rgba(255, 255, 255, 0.16) !important;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 1px rgba(255, 255, 255, 0.25) !important;
+    background: rgba(18, 19, 23, 0.95) !important;
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.25) !important;
   }
 
   .thumb-cap-btn {
-    width: 28px;
-    height: 28px;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
     border-radius: 50%;
     border: none;
-    background: transparent;
-    color: var(--ink-secondary);
+    background: rgba(24, 23, 22, 0.04);
+    color: var(--ink-primary);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.15s ease, background 0.15s ease;
     flex-shrink: 0;
+    touch-action: manipulation;
   }
 
   .thumb-cap-btn:active {
-    transform: scale(0.9);
-    background: rgba(24, 23, 22, 0.08);
+    transform: scale(0.92);
+    background: rgba(216, 78, 41, 0.15);
+    color: var(--accent-terracotta);
   }
 
   body.theme-dark-cinema .thumb-cap-btn {
-    color: #A09E97;
+    background: rgba(255, 255, 255, 0.06);
+    color: #F3F0EA;
   }
 
   body.theme-dark-cinema .thumb-cap-btn:active {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(216, 78, 41, 0.25);
     color: #fff;
   }
 
   .thumb-cap-core {
     display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 6px 14px;
-    border-radius: var(--radius-full);
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    min-height: 44px;
+    min-width: 178px;
+    padding: 5px 14px;
+    border-radius: 22px;
     cursor: pointer;
     background: rgba(24, 23, 22, 0.04);
-    transition: all 0.2s ease;
+    transition: transform 0.18s ease, background 0.18s ease;
     user-select: none;
+    touch-action: none;
   }
 
-  .thumb-cap-core:active {
-    transform: scale(0.97);
-    background: rgba(24, 23, 22, 0.08);
+  .thumb-cap-core:active,
+  .thumb-cap-core.is-scrubbing {
+    transform: scale(0.98);
+    background: rgba(24, 23, 22, 0.09);
   }
 
   body.theme-dark-cinema .thumb-cap-core {
     background: rgba(255, 255, 255, 0.06);
   }
 
-  body.theme-dark-cinema .thumb-cap-core:active {
-    background: rgba(255, 255, 255, 0.1);
+  body.theme-dark-cinema .thumb-cap-core:active,
+  body.theme-dark-cinema .thumb-cap-core.is-scrubbing {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .thumb-cap-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
   }
 
   .thumb-cap-star {
@@ -119,27 +141,29 @@
 
   .thumb-cap-num {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 800;
+    letter-spacing: 0.02em;
     color: var(--accent-terracotta);
+    white-space: nowrap;
   }
 
   .thumb-cap-sep {
-    color: rgba(24, 23, 22, 0.2);
+    color: rgba(24, 23, 22, 0.22);
     font-size: 10px;
   }
 
   body.theme-dark-cinema .thumb-cap-sep {
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.24);
   }
 
   .thumb-cap-title {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 800;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
     color: var(--ink-primary);
-    max-width: 215px;
+    max-width: 128px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -149,16 +173,30 @@
     color: #FFFFFF;
   }
 
-  .thumb-cap-pct {
-    font-family: var(--font-mono);
-    font-size: 9.5px;
-    font-weight: 700;
-    color: var(--ink-muted);
-    margin-left: 2px;
+  .thumb-cap-scrubber {
+    width: 100%;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(24, 23, 22, 0.12);
+    overflow: hidden;
+    position: relative;
   }
 
-  body.theme-dark-cinema .thumb-cap-pct {
-    color: #8C8B94;
+  body.theme-dark-cinema .thumb-cap-scrubber {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .thumb-cap-scrubber-fill {
+    display: block;
+    height: 100%;
+    width: 12.5%;
+    border-radius: 999px;
+    background: var(--accent-terracotta);
+    transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .thumb-cap-pct {
+    display: none;
   }
 
   /* Expandable Sector Sheet */
@@ -246,8 +284,8 @@
   }
 
   .sheet-close-btn {
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: var(--canvas-subtle);
     border: 1px solid var(--border-light);
@@ -255,8 +293,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
+    font-size: 14px;
     cursor: pointer;
+    touch-action: manipulation;
   }
 
   body.theme-dark-cinema .sheet-close-btn {
@@ -268,19 +307,21 @@
   .sheet-sectors-list {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
   }
 
   .sheet-sector-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 14px;
+    min-height: 48px;
+    padding: 12px 16px;
     border-radius: var(--radius-md);
     text-decoration: none;
     border: 1px solid transparent;
     background: var(--canvas-subtle);
     transition: all 0.2s ease;
+    touch-action: manipulation;
   }
 
   .sheet-sector-row:active {
@@ -309,20 +350,14 @@
     padding-bottom: max(96px, calc(76px + env(safe-area-inset-bottom, 16px))) !important;
   }
 
-  /* Poster Filter Bar: Single-row horizontal scrollable strip */
+  /* Poster Filter Bar: Wrapped filter chip row (no horizontal scroll conflict) */
   .poster-filter-bar {
     display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
     gap: 8px !important;
     padding-bottom: 8px !important;
     margin-bottom: 16px !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;
-  }
-
-  .poster-filter-bar::-webkit-scrollbar {
-    display: none !important;
   }
 
   .btn-poster-filter {
@@ -334,30 +369,26 @@
 
   /* Poster Grid: Balanced 2-column editorial contact sheet */
   .poster-gallery-grid {
+    display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 12px !important;
+    overflow-x: visible !important;
   }
 
-  /* Retail Promos (Section 07): Horizontal Snap Peek Track */
+  /* Retail Promos (Section 07): Vertical 2-column grid (no horizontal carousel conflict) */
   .promo-gallery-grid {
-    display: flex !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    gap: 14px !important;
-    padding: 4px 4px 16px 4px !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;
-  }
-
-  .promo-gallery-grid::-webkit-scrollbar {
-    display: none !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    overflow-x: visible !important;
+    scroll-snap-type: none !important;
+    gap: 12px !important;
+    padding: 4px 0 16px 0 !important;
   }
 
   .promo-card {
-    flex: 0 0 85% !important;
-    max-width: 85% !important;
-    scroll-snap-align: center !important;
-    scroll-snap-stop: always !important;
+    flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
   }
 
@@ -387,19 +418,18 @@
     right: 8px !important;
   }
 
-  /* Barney Dale Storyboard: Horizontal Scrubber */
+  /* Barney Dale Storyboard: Full-width vertical view (no horizontal scroll conflict) */
   .storyboard-panoramic-view {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    max-height: 240px !important;
+    overflow-x: hidden !important;
+    max-height: none !important;
     border-radius: var(--radius-md) !important;
     padding: 4px !important;
   }
 
   .storyboard-panoramic-view img {
-    width: auto !important;
-    max-width: none !important;
-    height: 220px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
     display: block !important;
   }
 

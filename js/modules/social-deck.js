@@ -69,7 +69,7 @@ function selectSocialCampaign(key, btn) {
 
   let ticking = false;
   function updateScrollBloom() {
-    if (window.innerWidth > 960) {
+    if (document.documentElement.dataset.mode !== 'mobile') {
       stage.style.removeProperty('--scroll-scale');
       stage.style.removeProperty('--scroll-progress');
       stage.classList.remove('stage-expanded');
@@ -137,7 +137,10 @@ function selectSocialCampaign(key, btn) {
       if (!video) return;
 
       if (video.paused) {
-        video.play();
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+        }
         if (icon) icon.innerText = '⏸ PAUSE';
       } else {
         video.pause();
@@ -152,7 +155,7 @@ function selectSocialCampaign(key, btn) {
 
       video.muted = !video.muted;
       if (icon) {
-        icon.innerText = video.muted ? '🔇 UNMUTE' : '🔊 MUTED';
+        icon.innerText = video.muted ? '🔇 UNMUTE' : '🔊 MUTE';
       }
     }
 

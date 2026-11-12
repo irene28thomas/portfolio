@@ -1,14 +1,31 @@
-/* ========= HERO ATELIER ========= */
+/* ========= HERO ATELIER (SHARED VARIABLES FOR #ps-webpage-artboard & #hero / #sector-01) ========= */
+    :root {
+      --hero-min-height: 92dvh;
+      --hero-pad-top: 88px;
+      --hero-pad-bottom: 36px;
+      --hero-margin-bottom: 6dvh;
+      --hero-grid-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+      --hero-grid-gap: clamp(30px, 4vw, 70px);
+      --hero-visual-pad-right: 48px;
+      --hero-portrait-max-h: min(58dvh, 540px);
+    }
+
+    #ps-webpage-artboard .hero-atelier,
+    #sector-01,
+    #hero,
     .hero-atelier {
-      min-height: 92vh;
+      min-height: var(--hero-min-height);
       display: flex; flex-direction: column; justify-content: center;
-      padding: 88px 0 36px;
-      margin-bottom: 6vh;
+      padding: var(--hero-pad-top) 0 var(--hero-pad-bottom);
+      margin-bottom: var(--hero-margin-bottom);
       position: relative;
     }
+    #ps-webpage-artboard .hero-layout-split,
+    #sector-01 .hero-layout-split,
+    #hero .hero-layout-split,
     .hero-layout-split {
-      display: grid; grid-template-columns: 1.08fr 0.92fr;
-      gap: clamp(30px, 4vw, 70px);
+      display: grid; grid-template-columns: var(--hero-grid-columns);
+      gap: var(--hero-grid-gap);
       align-items: center; position: relative; z-index: 2;
     }
     .hero-text-col { display: flex; flex-direction: column; gap: 20px; }
@@ -42,15 +59,40 @@
     }
     .hero-pill:hover { border-color: var(--accent-terracotta); transform: translateY(-2px); }
 
-    .hero-visual-col { position: relative; display: flex; justify-content: flex-end; }
+    #ps-webpage-artboard .hero-visual-col,
+    #sector-01 .hero-visual-col,
+    #hero .hero-visual-col,
+    .hero-visual-col {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      overflow: visible !important;
+      padding-right: var(--hero-visual-pad-right) !important; /* Critical 48px safety clearance preventing right-edge clipping on rotated card */
+    }
+    #ps-webpage-artboard .portrait-image-crop,
+    #sector-01 .portrait-image-crop,
+    #hero .portrait-image-crop,
     .portrait-image-crop {
-      border-radius: var(--radius-lg); overflow: hidden;
-      aspect-ratio: 4 / 5; height: clamp(440px, 60vh, 580px); width: auto; max-width: 100%;
+      border-radius: var(--radius-lg);
+      aspect-ratio: 4 / 5;
+      width: min(100%, calc(var(--hero-portrait-max-h) * 0.8));
+      height: auto;
+      max-height: min(58dvh, 540px);
+      max-width: 100%;
       box-shadow: var(--shadow-dramatic);
       position: relative;
+      transform: rotate(0deg);
+      transform-origin: center center;
+      overflow: visible !important;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    }
+    .portrait-image-crop:hover {
+      transform: scale(1.02);
     }
     .portrait-image-crop img {
       width: 100%; height: 100%; object-fit: cover; display: block;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
     }
     .portrait-badge-overlay {
       position: absolute; bottom: 20px; left: 20px;

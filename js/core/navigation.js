@@ -50,6 +50,9 @@ let _lastSyncState = null;
 let _lastIgnitedStatus = false;
 
 function syncBurnWavefrontContact(status) {
+  if (document.getElementById('layer-1-4')) {
+    return; // PinnedBurnEngine / Lookbook2D manages theme-dark-cinema and navigation
+  }
   if (!status) return;
   const dom = getNavDom();
   if (!dom) return;
@@ -189,8 +192,10 @@ function onUnifiedScroll() {
     dom.wmMatrix.style.transform = `translate3d(${rect.top * 0.22}px, 0, 0)`;
   }
 
-  // 4. Diagonal Matrix Parallax (Desktop screens > 860px)
-  if (dom.streamSec && window.innerWidth > 860) {
+  const isMobile = window.AtelierMode ? window.AtelierMode.isMobile() : (document.documentElement.dataset.mode === 'mobile');
+
+  // 4. Diagonal Matrix Parallax (Desktop mode)
+  if (dom.streamSec && !isMobile) {
     const rect = dom.streamSec.getBoundingClientRect();
     if (rect.top < window.innerHeight + 200 && rect.bottom > -200) {
       const delta = (window.innerHeight / 2 - (rect.top + rect.height / 2)) * 0.08;
@@ -203,7 +208,6 @@ function onUnifiedScroll() {
   // 5. Scroll-Linked Burn Transition Calculation (Pinpoint Mobile-Responsive Window)
   let entryProgress = 0;
   let exitProgress = 0;
-  const isMobile = window.innerWidth <= 860;
 
   if (dom.barneySec) {
     const r = dom.barneySec.getBoundingClientRect();
@@ -265,7 +269,7 @@ function onUnifiedScroll() {
     const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
     const scrollPctVal = scrollMax > 0 ? Math.round((window.pageYOffset / scrollMax) * 100) : 0;
     dom.capNum.innerText = currentSec.code;
-    dom.capTitle.innerText = window.innerWidth <= 860 ? (currentSec.shortName || currentSec.name) : currentSec.name;
+    dom.capTitle.innerText = isMobile ? (currentSec.shortName || currentSec.name) : currentSec.name;
     dom.capPct.innerText = `${scrollPctVal}%`;
   }
 
@@ -402,7 +406,7 @@ window.handleRailClick = handleRailClick;
       if (!navSystem) return;
 
       function handleSpineNav(e, smooth = true) {
-        const isMobile = window.innerWidth <= 860;
+        const isMobile = window.AtelierMode ? window.AtelierMode.isMobile() : (document.documentElement.dataset.mode === 'mobile');
         const spine = document.getElementById('grounded-spine-track') || navSystem;
         const rect = spine.getBoundingClientRect();
         let pct = 0;

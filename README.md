@@ -35,3 +35,4 @@ Curated visual design monograph and interactive portfolio for **Irene Thomas**, 
 * **Email / Inquiries:** Available via the in-page contact dossier
 * **LinkedIn:** Irene Thomas
 * **Behance:** Irene Thomas
+

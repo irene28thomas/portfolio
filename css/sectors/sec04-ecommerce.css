@@ -971,11 +971,9 @@
       padding-top: 14px;
       min-height: 112px;
     }
-    @media (min-width: 861px) {
-      .device-switcher-footer {
-        height: 112px;
-        overflow: hidden;
-      }
+    html:not([data-mode="mobile"]) .device-switcher-footer {
+      height: 112px;
+      overflow: hidden;
     }
     .switcher-meta-left {
       max-width: 580px;

@@ -23,6 +23,77 @@
       background: var(--accent-terracotta); border-color: var(--accent-terracotta); transform: scale(1.08);
     }
 
+    /* Pinch-Zoom & Gallery Toolbar + Navigation Arrows */
+    .lightbox-toolbar-minimal {
+      position: fixed;
+      top: 28px;
+      left: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 105;
+    }
+    .lightbox-counter-pill,
+    .lightbox-zoom-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      padding: 8px 14px;
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
+    }
+    .lightbox-zoom-btn {
+      cursor: pointer;
+    }
+    .lightbox-zoom-btn:hover,
+    .lightbox-zoom-btn.is-zoomed {
+      background: var(--accent-terracotta);
+      border-color: var(--accent-terracotta);
+    }
+    .lightbox-nav-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+      font-size: 26px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 105;
+      transition: all 0.2s ease;
+    }
+    .lightbox-nav-arrow:hover {
+      background: var(--accent-terracotta);
+      border-color: var(--accent-terracotta);
+    }
+    .lightbox-nav-prev { left: 22px; }
+    .lightbox-nav-next { right: 22px; }
+    .lightbox-media-container {
+      touch-action: none;
+    }
+    .lightbox-media-container img {
+      transform-origin: center center;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
     /* Media Centered Stage with Zero-CLS Media Container & Skeleton Loader */
     .lightbox-stage-minimal {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -120,7 +191,7 @@
 
     /* Responsive Adjustments */
     @media (max-width: 1100px) {
-      .hero-layout-split, .brand-identity-grid, .cinema-split-stage, .dossier-layout-grid, .motion-gif-grid {
+      .brand-identity-grid, .cinema-split-stage, .dossier-layout-grid, .motion-gif-grid {
         grid-template-columns: 1fr;
       }
       .diagonal-tracks-container {

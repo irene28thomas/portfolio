@@ -1,51 +1,42 @@
 // =========================================================
-// CURSOR SPOTLIGHT & MAGNETIC BADGE
+// AMBIENT CURSOR LIGHTING CONTROLLER
+// Lightweight 60fps tracking for atmospheric spotlight
 // =========================================================
-// =========================================================
-(function initCursorInteraction() {
+(function initCursorSpotlight() {
   let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
   let currentX = mouseX, currentY = mouseY;
   const spotlight = document.getElementById('ambient-cursor-spotlight');
-  const badge = document.getElementById('magnetic-cursor-badge');
+  if (!spotlight) return;
+
+  let hasFineHover = window.AtelierMode ? window.AtelierMode.hasFineHover() : window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  window.addEventListener('atelier:cursorchange', (e) => {
+    hasFineHover = Boolean(e.detail && e.detail.hasFineHover);
+  });
 
   window.addEventListener('mousemove', (e) => {
+    if (!hasFineHover) return;
     mouseX = e.clientX;
     mouseY = e.clientY;
   }, { passive: true });
 
-  let badgeX = mouseX, badgeY = mouseY;
+  function loopSpotlight() {
+    if (hasFineHover) {
+      const diffX = mouseX - currentX;
+      const diffY = mouseY - currentY;
 
-  // Unified single-RAF loop with idle thresholding & translate3d
-  function loopCursor() {
-    const diffX = mouseX - currentX;
-    const diffY = mouseY - currentY;
-
-    if (Math.abs(diffX) > 0.08 || Math.abs(diffY) > 0.08) {
-      currentX += diffX * 0.1;
-      currentY += diffY * 0.1;
-      if (spotlight) {
+      if (Math.abs(diffX) > 0.1 || Math.abs(diffY) > 0.1) {
+        currentX += diffX * 0.1;
+        currentY += diffY * 0.1;
         spotlight.style.setProperty('--mouse-x', `${currentX.toFixed(1)}px`);
         spotlight.style.setProperty('--mouse-y', `${currentY.toFixed(1)}px`);
       }
     }
 
-    if (badge && badge.classList.contains('is-visible')) {
-      badgeX += (mouseX - badgeX) * 0.18;
-      badgeY += (mouseY - badgeY) * 0.18;
-      badge.style.transform = `translate3d(${badgeX.toFixed(1)}px, ${badgeY.toFixed(1)}px, 0) translate(-50%, -50%)`;
+    if (document.documentElement.dataset.mode === 'mobile') {
+      setTimeout(() => requestAnimationFrame(loopSpotlight), 1000);
+      return;
     }
-
-    requestAnimationFrame(loopCursor);
+    requestAnimationFrame(loopSpotlight);
   }
-  requestAnimationFrame(loopCursor);
-
-  document.querySelectorAll('[data-cursor], .stream-card, .poster-card, .promo-card, .img-upload-box').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      const txt = el.getAttribute('data-cursor') || 'EXAMINE';
-      if (badge) { badge.innerText = txt; badge.classList.add('is-visible'); }
-    }, { passive: true });
-    el.addEventListener('mouseleave', () => {
-      if (badge) badge.classList.remove('is-visible');
-    }, { passive: true });
-  });
+  requestAnimationFrame(loopSpotlight);
 })();

@@ -18,7 +18,7 @@
       background: radial-gradient(780px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(216, 78, 41, 0.14), rgba(243, 164, 39, 0.045), transparent 68%);
     }
 
-    /* ========= LIVING ART-INTEGRATED BACKGROUND INSIDE EACH PINNED LAYER ========= */
+    /* ========= LIVING ART-INTEGRATED DUAL-BUFFER BACKGROUND PLATES ========= */
     .layer-ambient-art-canvas {
       position: absolute;
       inset: 0;
@@ -30,21 +30,29 @@
     }
     .ambient-art-blur-plate {
       position: absolute;
-      inset: -12%;
-      width: 124%;
-      height: 124%;
+      inset: -14%;
+      width: 128%;
+      height: 128%;
       background-size: cover;
       background-position: center;
-      filter: blur(54px) saturate(1.45);
-      opacity: 0.18;
-      transform: translate3d(calc(var(--cursor-nx, 0) * -28px), calc(var(--cursor-ny, 0) * -28px), 0) scale(1.06);
-      transition: background-image 0.75s ease, opacity 0.5s ease, transform 0.25s ease-out;
+      filter: blur(64px) saturate(1.35) contrast(1.04);
+      opacity: 0;
+      transform: translate3d(calc(var(--cursor-nx, 0) * -22px), calc(var(--cursor-ny, 0) * -22px), 0);
+      transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.3s ease-out;
+      -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.25) 55%, transparent 85%);
+      mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.25) 55%, transparent 85%);
+      will-change: opacity, transform;
+    }
+    .ambient-art-blur-plate.is-active {
+      opacity: 0.20;
+    }
+    .pinned-burn-layer-57 .ambient-art-blur-plate {
+      filter: blur(60px) saturate(1.55) contrast(1.12);
       -webkit-mask-image: radial-gradient(ellipse 64% 62% at 50% 50%, rgba(0,0,0,0.22) 15%, rgba(0,0,0,0.95) 95%);
       mask-image: radial-gradient(ellipse 64% 62% at 50% 50%, rgba(0,0,0,0.22) 15%, rgba(0,0,0,0.95) 95%);
     }
-    .pinned-burn-layer-57 .ambient-art-blur-plate {
-      opacity: 0.26;
-      filter: blur(58px) saturate(1.55) contrast(1.1);
+    .pinned-burn-layer-57 .ambient-art-blur-plate.is-active {
+      opacity: 0.28;
     }
     .ambient-art-ghost-plate {
       position: absolute;
@@ -54,18 +62,26 @@
       height: 112vh;
       background-size: cover;
       background-position: center;
-      opacity: 0.065;
-      filter: grayscale(25%) contrast(1.15);
-      mix-blend-mode: multiply;
-      transform: translate3d(calc(var(--cursor-nx, 0) * 36px), calc(var(--cursor-ny, 0) * 26px), 0) rotate(-2deg);
-      transition: background-image 0.75s ease, opacity 0.5s ease, transform 0.35s ease-out;
+      opacity: 0;
+      filter: grayscale(35%) contrast(1.08);
+      mix-blend-mode: soft-light;
+      transform: translate3d(calc(var(--cursor-nx, 0) * 32px), calc(var(--cursor-ny, 0) * 22px), 0) rotate(-2deg);
+      transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s ease-out;
+      -webkit-mask-image: radial-gradient(circle at 72% 48%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 48%, transparent 78%);
+      mask-image: radial-gradient(circle at 72% 48%, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 48%, transparent 78%);
+      will-change: opacity, transform;
+    }
+    .ambient-art-ghost-plate.is-active {
+      opacity: 0.12;
+    }
+    .pinned-burn-layer-57 .ambient-art-ghost-plate {
+      mix-blend-mode: screen;
+      filter: grayscale(15%) contrast(1.2);
       -webkit-mask-image: radial-gradient(circle at 72% 48%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.25) 48%, transparent 78%);
       mask-image: radial-gradient(circle at 72% 48%, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.25) 48%, transparent 78%);
     }
-    .pinned-burn-layer-57 .ambient-art-ghost-plate {
+    .pinned-burn-layer-57 .ambient-art-ghost-plate.is-active {
       opacity: 0.095;
-      mix-blend-mode: screen;
-      filter: grayscale(15%) contrast(1.2);
     }
     .ambient-drafting-grid {
       position: absolute;
@@ -76,6 +92,7 @@
       background-size: 96px 96px;
       background-position: calc(var(--cursor-nx, 0) * 14px) calc(var(--cursor-ny, 0) * 14px);
       pointer-events: none;
+      z-index: 2;
     }
     .pinned-burn-layer-57 .ambient-drafting-grid {
       background-image:
@@ -152,22 +169,7 @@
       color: #A09E97;
     }
 
-    /* Floating Magnetic Cursor Pill */
-    #magnetic-cursor-badge {
-      position: fixed; pointer-events: none; z-index: 999999;
-      top: 0; left: 0;
-      transform: translate3d(-50%, -50%, 0);
-      will-change: transform, opacity;
-      background: var(--accent-terracotta); color: #fff;
-      font-family: var(--font-mono); font-size: 10px; font-weight: 800;
-      letter-spacing: 1px; padding: 6px 14px;
-      border-radius: var(--radius-full);
-      box-shadow: 0 10px 25px rgba(216, 78, 41, 0.45);
-      opacity: 0; scale: 0.7;
-      transition: opacity 0.25s ease, scale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      white-space: nowrap;
-    }
-    #magnetic-cursor-badge.is-visible { opacity: 1; scale: 1; }
+
 
 
     /* ========= HUD SMOOTH SWITCHING ANIMATION ========= */
@@ -193,14 +195,65 @@
   
 
     /* Desktop: Hide Mobile Floating Capsule & Sheet */
-    @media (min-width: 861px) {
-      .mobile-thumb-capsule,
-      .mobile-sector-sheet-overlay {
-        display: none !important;
+    html:not([data-mode="mobile"]) .mobile-thumb-capsule,
+    html:not([data-mode="mobile"]) .mobile-sector-sheet-overlay {
+      display: none !important;
+    }
+
+    /* ========= CURSOR VISIBILITY ARCHITECTURE ========= */
+    /* Mobile Mode: ALWAYS show native cursor when a cursor is present (arrows, pointers, grabs) */
+    html[data-mode="mobile"][data-cursor="fine"],
+    html[data-mode="mobile"][data-cursor="fine"] body,
+    html[data-mode="mobile"][data-cursor="fine"] #atelier-gram-root {
+      cursor: auto !important;
+    }
+    html[data-mode="mobile"][data-cursor="fine"] a,
+    html[data-mode="mobile"][data-cursor="fine"] button,
+    html[data-mode="mobile"][data-cursor="fine"] [role="button"],
+    html[data-mode="mobile"][data-cursor="fine"] .ag-story-node,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-story-bubble,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-story-item,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-rhombus-item,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-story-close-btn,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-modal-close,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-action-btn,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-audio-toggle,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-tab-btn,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-header-pill,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-curator-contact,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-dieline-view-btn,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-dieline-toggle-btn,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-comic-expand-btn,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-comic-frame,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-omni-wheel-card {
+      cursor: pointer !important;
+    }
+    html[data-mode="mobile"][data-cursor="fine"] .ag-story-carousel,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-strip-scroll,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-comic-strip-scroller,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-omni-wheel-track {
+      cursor: grab !important;
+    }
+    html[data-mode="mobile"][data-cursor="fine"] .ag-story-carousel:active,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-strip-scroll:active,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-comic-strip-scroller:active,
+    html[data-mode="mobile"][data-cursor="fine"] .ag-omni-wheel-track:active {
+      cursor: grabbing !important;
+    }
+
+    /* Desktop Mode: Hide native OS cursor ONLY on Photoshop workspace when custom reticle is active */
+    @media (hover: hover) and (pointer: fine) {
+      html[data-mode="desktop"][data-cursor="fine"] #ps-workspace-window,
+      html[data-mode="desktop"][data-cursor="fine"] #ps-workspace-window * {
+        cursor: none !important;
+      }
+      html[data-mode="desktop"][data-cursor="fine"] input,
+      html[data-mode="desktop"][data-cursor="fine"] textarea {
+        cursor: text !important;
       }
     }
 
-    /* ========= CUSTOM INTERACTIVE DRAFTING RETICLE CURSOR ========= */
+    /* ========= UNIFIED 3-STATE MORPHING ATELIER CURSOR ========= */
     #custom-atelier-cursor {
       position: fixed;
       top: 0;
@@ -208,67 +261,209 @@
       width: 0;
       height: 0;
       pointer-events: none;
-      z-index: 999998;
+      z-index: 100000000;
     }
-    .cursor-reticle-ring {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 34px;
-      height: 34px;
-      margin-left: -17px;
-      margin-top: -17px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(216, 78, 41, 0.65);
-      background: rgba(216, 78, 41, 0.03);
-      transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1), height 0.28s cubic-bezier(0.16, 1, 0.3, 1), margin 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, background 0.25s ease, border-radius 0.28s ease;
-      will-change: transform, width, height;
-    }
-    .reticle-tick {
-      position: absolute;
-      background: var(--accent-terracotta);
-      opacity: 0.75;
-    }
-    .reticle-tick.tick-t { top: -4px; left: 50%; width: 1.5px; height: 5px; transform: translateX(-50%); }
-    .reticle-tick.tick-b { bottom: -4px; left: 50%; width: 1.5px; height: 5px; transform: translateX(-50%); }
-    .reticle-tick.tick-l { left: -4px; top: 50%; width: 5px; height: 1.5px; transform: translateY(-50%); }
-    .reticle-tick.tick-r { right: -4px; top: 50%; width: 5px; height: 1.5px; transform: translateY(-50%); }
 
+    /* Central Terracotta Ink Dot (Visible in Default State) */
     .cursor-reticle-dot {
       position: fixed;
       top: 0;
       left: 0;
-      width: 6px;
-      height: 6px;
-      margin-left: -3px;
-      margin-top: -3px;
+      width: 4px;
+      height: 4px;
+      margin-left: -2px;
+      margin-top: -2px;
       border-radius: 50%;
       background: var(--accent-terracotta);
-      box-shadow: 0 0 8px rgba(216, 78, 41, 0.8);
+      box-shadow: 0 0 8px rgba(216, 78, 41, 0.9);
+      pointer-events: none;
       will-change: transform;
-      transition: transform 0.15s ease, background 0.2s ease;
+      opacity: 1;
+      transform: scale(1);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, background 0.2s ease;
     }
-    body.cursor-on-interactive .cursor-reticle-ring {
-      width: 52px;
-      height: 52px;
-      margin-left: -26px;
-      margin-top: -26px;
+
+    /* Follower Lens (Fluidly morphs between Precision Reticle -> Magnetic Button Brackets -> Crop Loupe) */
+    .cursor-reticle-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      border-radius: 4px;
+      border: 1px solid rgba(216, 78, 41, 0.25);
+      background: transparent;
+      pointer-events: none;
+      box-sizing: border-box;
+      will-change: transform, width, height;
+      transition: border-radius 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.22s ease,
+                  background 0.22s ease,
+                  box-shadow 0.22s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Action Arrow for Interactive Buttons (↗) */
+    .cursor-action-arrow {
+      position: absolute;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1;
+      color: #FFFFFF;
+      opacity: 0;
+      transform: scale(0.3) translate(-2px, 2px);
+      transition: opacity 0.2s ease, transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    /* Iconic Atelier Star Badge (✦) */
+    .cursor-star-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      font-size: 9px;
+      line-height: 1;
+      color: var(--accent-terracotta);
+      opacity: 0;
+      transform: scale(0.3);
+      transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, color 0.2s ease;
+    }
+
+    /* Micro Mode Label ("VIEW") */
+    .cursor-mode-label {
+      font-family: var(--font-mono);
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      color: #FFFFFF;
+      opacity: 0;
+      transform: translateY(3px);
+      transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      text-transform: uppercase;
+    }
+
+    /* Graphic Designer Registration Crop Marks */
+    .crop-corner {
+      position: absolute;
+      width: 4px;
+      height: 4px;
       border-color: var(--accent-terracotta);
-      background: rgba(216, 78, 41, 0.1);
+      border-style: solid;
+      opacity: 0.75;
+      transition: border-color 0.22s ease, opacity 0.22s ease, width 0.22s ease, height 0.22s ease;
     }
+    .corner-tl { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+    .corner-tr { top: -1px; right: -1px; border-width: 1px 1px 0 0; }
+    .corner-bl { bottom: -1px; left: -1px; border-width: 0 0 1px 1px; }
+    .corner-br { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+    /* ===== STATE 2: INTERACTIVE BUTTONS / LINKS / NAVIGATION (TRUE MAGNETIC BUTTON-HUGGING BRACKETS) ===== */
+    body.cursor-on-interactive .cursor-reticle-ring {
+      margin: 0;
+      border-radius: 4px;
+      border: 1px dashed rgba(216, 78, 41, 0.22);
+      background: rgba(216, 78, 41, 0.02);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-shadow: none;
+    }
+    body.cursor-on-interactive .crop-corner {
+      width: 10px;
+      height: 10px;
+      opacity: 1;
+      border-color: var(--accent-terracotta);
+      filter: drop-shadow(0 0 4px rgba(216, 78, 41, 0.45));
+    }
+    body.cursor-on-interactive .corner-tl { top: -1px; left: -1px; border-width: 2.5px 0 0 2.5px; }
+    body.cursor-on-interactive .corner-tr { top: -1px; right: -1px; border-width: 2.5px 2.5px 0 0; }
+    body.cursor-on-interactive .corner-bl { bottom: -1px; left: -1px; border-width: 0 0 2.5px 2.5px; }
+    body.cursor-on-interactive .corner-br { bottom: -1px; right: -1px; border-width: 0 2.5px 2.5px 0; }
+
+    body.cursor-on-interactive .cursor-action-arrow {
+      opacity: 1;
+      font-size: 11px;
+      color: var(--accent-terracotta);
+      top: -14px;
+      right: -2px;
+      transform: scale(1);
+    }
+    body.cursor-on-interactive .cursor-reticle-dot {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+    body.cursor-on-interactive .cursor-star-badge {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+    body.cursor-on-interactive .cursor-mode-label {
+      opacity: 0;
+    }
+
+    body.theme-dark-cinema.cursor-on-interactive .crop-corner {
+      border-color: #F4F1EA;
+      filter: drop-shadow(0 0 5px rgba(244, 241, 234, 0.6));
+    }
+    body.theme-dark-cinema.cursor-on-interactive .cursor-action-arrow {
+      color: #F4F1EA;
+    }
+
+    /* ===== STATE 3: ARTWORK / MEDIA CROP LOUPE ===== */
     body.cursor-on-art .cursor-reticle-ring {
-      width: 66px;
-      height: 66px;
-      margin-left: -33px;
-      margin-top: -33px;
-      border-color: #FFFFFF;
-      background: rgba(216, 78, 41, 0.18);
-      box-shadow: 0 0 24px rgba(216, 78, 41, 0.35);
+      margin: 0;
+      border-radius: 6px;
+      border: 1px dashed rgba(255, 255, 255, 0.45);
+      background: rgba(24, 23, 22, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
     }
-    @media (max-width: 860px), (hover: none) {
-      #custom-atelier-cursor {
-        display: none !important;
-      }
+    body.cursor-on-art .crop-corner {
+      opacity: 1;
+      border-color: var(--accent-terracotta);
+      width: 9px;
+      height: 9px;
+    }
+    body.cursor-on-art .cursor-star-badge {
+      top: -9px;
+      right: -9px;
+      font-size: 13px;
+      color: #FFFFFF;
+      filter: drop-shadow(0 0 6px var(--accent-terracotta));
+      opacity: 1;
+      transform: scale(1);
+    }
+    body.cursor-on-art .cursor-mode-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    body.cursor-on-art .cursor-action-arrow {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    body.cursor-on-art .cursor-reticle-dot {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+
+    body.theme-dark-cinema .cursor-reticle-ring {
+      border-color: rgba(244, 241, 234, 0.6);
+    }
+    body.theme-dark-cinema .cursor-star-badge {
+      color: #F4F1EA;
+    }
+
+    /* Only display the Photoshop custom reticle cursor in desktop mode when a cursor is present */
+    #custom-atelier-cursor,
+    #ambient-cursor-spotlight {
+      display: none !important;
+    }
+    html[data-mode="desktop"][data-cursor="fine"] #custom-atelier-cursor,
+    html[data-mode="desktop"][data-cursor="fine"] #ambient-cursor-spotlight {
+      display: block !important;
     }
 
     /* ========= LEFT MARGIN CURATORIAL GALLERY RAIL & TELEMETRY ========= */

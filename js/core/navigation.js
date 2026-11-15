@@ -50,9 +50,6 @@ let _lastSyncState = null;
 let _lastIgnitedStatus = false;
 
 function syncBurnWavefrontContact(status) {
-  if (document.getElementById('layer-1-4')) {
-    return; // PinnedBurnEngine / Lookbook2D manages theme-dark-cinema and navigation
-  }
   if (!status) return;
   const dom = getNavDom();
   if (!dom) return;

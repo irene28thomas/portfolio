@@ -30,4 +30,5 @@
 @import "sectors/sec08-dossier.css";
 
 /* 5. Mobile Elevation Suite */
-@import "components/atelier-gram.css";
+@import "components/mobile-capsule.css";
+@import "responsive/mobile-experience.css";

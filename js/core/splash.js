@@ -625,7 +625,7 @@
     // Only the internal subject begins softly out of focus and rack-focuses to 4K sharp.
     let currentPct = 8;
     if (fill) fill.style.width = '8%';
-    if (statusText) statusText.textContent = 'Opening Atelier... 8%';
+    if (statusText) statusText.textContent = 'ACQUIRING FOCUS... 8%';
 
     const startTime = Date.now();
     const minFocusDuration = 1100; // 1.1s minimum so the optical lens focus is perceptible
@@ -635,7 +635,7 @@
       const pct = Math.max(currentPct, Math.round(10 + ratio * 90));
       currentPct = pct;
       if (fill) fill.style.width = `${pct}%`;
-      if (statusText) statusText.textContent = `Opening Atelier... ${pct}%`;
+      if (statusText) statusText.textContent = `ACQUIRING FOCUS... ${pct}%`;
       psSfx.click(420 + ratio * 280, 0.012, 0.015);
     });
 
@@ -955,200 +955,10 @@
     }, 3260);
   }
 
-  // =========================================================================
-  // PHASE 5: DEDICATED HIGH-PERFORMANCE MOBILE ENTRY ANIMATION (<= 2s TOTAL)
-  // =========================================================================
-  function runMobileViewfinderEntry() {
-    const stage = document.getElementById('atelier-viewfinder-stage');
-    const frame = document.getElementById('viewfinder-frame');
-    const subject = document.getElementById('viewfinder-subject');
-    const centerTarget = document.getElementById('vf-center-target');
-    const fill = document.getElementById('viewfinder-progress-fill');
-    const statusText = document.getElementById('viewfinder-status-text');
-    const flash = document.getElementById('viewfinder-shutter-flash');
-    const photoCard = document.getElementById('vf-mobile-photo-card');
-    const splashEl = document.getElementById('atelier-splash-screen') || document.getElementById('atelier-splash');
-    const workspaceWindow = document.getElementById('ps-workspace-window');
-
-    if (workspaceWindow) workspaceWindow.style.display = 'none';
-
-    if (!stage || !frame) {
-      if (splashEl) {
-        splashEl.classList.add('is-loaded');
-        splashEl.style.display = 'none';
-      }
-      return;
-    }
-
-    let isSkipped = false;
-    let timerIds = [];
-
-    function addTimer(fn, ms) {
-      const id = setTimeout(fn, ms);
-      timerIds.push(id);
-      return id;
-    }
-
-    function cleanupTimers() {
-      timerIds.forEach(id => clearTimeout(id));
-      timerIds = [];
-    }
-
-    function triggerMobileChapter2Peek() {
-      const root = document.getElementById('portfolio-lookbook-root');
-      if (!root) return;
-      const PEEK_STORAGE_KEY = 'atelier_mobile_peek_count';
-      let count = 0;
-      try {
-        count = parseInt(localStorage.getItem(PEEK_STORAGE_KEY) || '0', 10);
-      } catch (_) {}
-      if (count >= 2) return;
-      try {
-        localStorage.setItem(PEEK_STORAGE_KEY, String(count + 1));
-      } catch (_) {}
-
-      // Gentle 16px glance of chapter 02 on first visits
-      setTimeout(() => {
-        root.classList.add('is-edge-peeking');
-        setTimeout(() => {
-          root.classList.remove('is-edge-peeking');
-        }, 380);
-      }, 120);
-    }
-
-    function completeMobileHandoff(skipPeek = false) {
-      if (stage) {
-        stage.classList.add('is-hidden');
-        stage.style.display = 'none';
-      }
-      if (splashEl) {
-        splashEl.classList.add('is-loaded');
-        splashEl.style.display = 'none';
-      }
-      if (!skipPeek) {
-        triggerMobileChapter2Peek();
-      }
-    }
-
-    function skipToLiveChapter01() {
-      if (isSkipped) return;
-      isSkipped = true;
-      cleanupTimers();
-      completeMobileHandoff(true);
-    }
-
-    window.dismissSplash = skipToLiveChapter01;
-
-    // Tap to skip
-    stage.addEventListener('click', skipToLiveChapter01, { once: true });
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') skipToLiveChapter01();
-    }, { once: true });
-
-    // Honor prefers-reduced-motion with simple fade
-    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      stage.style.transition = 'opacity 0.22s ease';
-      if (splashEl) splashEl.style.transition = 'opacity 0.22s ease';
-      addTimer(() => {
-        stage.style.opacity = '0';
-        if (splashEl) splashEl.style.opacity = '0';
-        addTimer(() => completeMobileHandoff(true), 220);
-      }, 150);
-      return;
-    }
-
-    // 1. Preload PP.jpg immediately so the reveal NEVER shows an empty frame
-    const portraitPreloadPromise = new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = () => resolve(null);
-      img.src = 'assets/optimized/new_additions/PP.jpg';
-      if (img.complete) resolve(img);
-    });
-
-    // 2. Rack focus 0% -> 100% over ~650ms (snappy curatorial mobile budget)
-    const focusDuration = 650;
-    const startTime = performance.now();
-
-    function updateFocusTick() {
-      if (isSkipped) return;
-      const elapsed = performance.now() - startTime;
-      const progress = Math.min(1, elapsed / focusDuration);
-      const pct = Math.round(progress * 100);
-
-      if (fill) fill.style.width = `${pct}%`;
-      if (statusText) statusText.textContent = `Opening Atelier... ${pct}%`;
-
-      if (progress < 1) {
-        requestAnimationFrame(updateFocusTick);
-      }
-    }
-    requestAnimationFrame(updateFocusTick);
-
-    // Audio clicks during focus
-    [120, 320, 520].forEach(ms => {
-      addTimer(() => {
-        if (!isSkipped) psSfx.click(520 + ms * 0.4, 0.012, 0.015);
-      }, ms);
-    });
-
-    // When focus finishes AND portrait is loaded:
-    const focusCompletePromise = new Promise(resolve => addTimer(resolve, focusDuration));
-
-    Promise.all([focusCompletePromise, portraitPreloadPromise]).then(() => {
-      if (isSkipped) return;
-
-      // 3. Focus Lock & Shutter Flash: Reveal PP.jpg already at final mobile card size
-      if (fill) fill.style.width = '100%';
-      if (statusText) statusText.textContent = '● FOCUS LOCKED // EXPOSURE READY';
-      if (subject) {
-        subject.classList.remove('is-focusing');
-        subject.classList.add('is-locked');
-      }
-      if (frame) frame.classList.add('is-locked');
-      if (centerTarget) centerTarget.classList.add('is-locked');
-
-      psSfx.shutter();
-
-      if (flash) {
-        flash.classList.add('is-flashing');
-        addTimer(() => flash.classList.remove('is-flashing'), 180);
-      }
-
-      // Reveal PP.jpg in the frame already at final mobile card size (no jump/resize)
-      if (photoCard) {
-        photoCard.classList.add('is-revealed');
-      }
-
-      // 4. Hold captured photograph for 160ms so user registers the razor-sharp capture
-      addTimer(() => {
-        if (isSkipped) return;
-
-        // 5. Peel open horizontally (right-to-left) into Chapter 01
-        stage.classList.add('is-peeling-mobile');
-        psSfx.click(740, 0.016, 0.02);
-
-        // 6. Complete peel handoff into Chapter 01 (~360ms)
-        addTimer(() => {
-          if (isSkipped) return;
-          completeMobileHandoff(false);
-        }, 360);
-      }, 160);
-    });
-  }
-
   function initSplashSequence() {
-    const isMobile = (window.AtelierMode && window.AtelierMode.isMobile()) ||
-      document.documentElement.dataset.mode === 'mobile';
-
-    if (isMobile) {
-      runMobileViewfinderEntry();
-    } else {
-      calibrateArtboardScale();
-      window.addEventListener('resize', calibrateArtboardScale);
-      runViewfinderFocusAndLaunch(startChoreographedBuild);
-    }
+    calibrateArtboardScale();
+    window.addEventListener('resize', calibrateArtboardScale);
+    runViewfinderFocusAndLaunch(startChoreographedBuild);
   }
 
   // Start sequence once DOM is ready

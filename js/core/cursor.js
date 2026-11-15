@@ -32,10 +32,6 @@
       }
     }
 
-    if (document.documentElement.dataset.mode === 'mobile') {
-      setTimeout(() => requestAnimationFrame(loopSpotlight), 1000);
-      return;
-    }
     requestAnimationFrame(loopSpotlight);
   }
   requestAnimationFrame(loopSpotlight);

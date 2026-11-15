@@ -137,10 +137,7 @@ function selectSocialCampaign(key, btn) {
       if (!video) return;
 
       if (video.paused) {
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {});
-        }
+        video.play();
         if (icon) icon.innerText = '⏸ PAUSE';
       } else {
         video.pause();
@@ -155,7 +152,7 @@ function selectSocialCampaign(key, btn) {
 
       video.muted = !video.muted;
       if (icon) {
-        icon.innerText = video.muted ? '🔇 UNMUTE' : '🔊 MUTE';
+        icon.innerText = video.muted ? '🔇 UNMUTE' : '🔊 MUTED';
       }
     }
 

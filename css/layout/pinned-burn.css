@@ -1,11 +1,9 @@
 /* =========================================================================
-   SILVER PALACE 8-SECTION PINNED MULTI-HOLE BURN TRANSITION STYLES (DESKTOP)
-   & 8-CHAPTER 2D SIDEWAYS LOOKBOOK ARCHITECTURE (MOBILE)
+   SILVER PALACE 8-SECTION PINNED MULTI-HOLE BURN TRANSITION STYLES
+   Inverted Themes: Sections 1-4 & 8 (Light Parchment), Sections 5-7 (Dark Noir)
    ========================================================================= */
 
-/* --- DESKTOP VIRTUAL PINNED-BURN ENGINE (html[data-mode="desktop"]) --- */
-html[data-mode="desktop"],
-html[data-mode="desktop"] body {
+html, body {
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
@@ -15,12 +13,7 @@ html[data-mode="desktop"] body {
   background-color: #f3efe6 !important;
 }
 
-html[data-mode="desktop"] .portfolio-lookbook-root,
-html[data-mode="desktop"] .lookbook-chapter {
-  display: contents;
-}
-
-html[data-mode="desktop"] .pinned-burn-layer {
+.pinned-burn-layer {
   position: fixed;
   inset: 0;
   width: 100%;
@@ -51,47 +44,43 @@ html[data-mode="desktop"] .pinned-burn-layer {
   color: #181512;
 }
 
-html[data-mode="desktop"] .pinned-burn-track {
+.pinned-burn-track {
   position: relative;
   z-index: 2;
   width: 100%;
   will-change: transform;
 }
 
-html[data-mode="desktop"] #track-1-4 {
+#track-1-4 {
   padding-bottom: 10vh !important;
 }
 
-html[data-mode="desktop"] #track-5-7 {
+#track-5-7 {
   padding-bottom: 10vh !important;
 }
 
-html[data-mode="desktop"] .layer-masked {
+.layer-masked {
   mask: url(#silver-palace-burn-mask) !important;
   -webkit-mask: url(#silver-palace-burn-mask) !important;
 }
 
-/* --- MOBILE MODE ISOLATION (Atelier Mobile handles html[data-mode="mobile"]) --- */
-html[data-mode="mobile"],
-html[data-mode="mobile"] body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
-  overflow-x: hidden;
-  background-color: #0A0B0E;
-}
-
-/* Ensure fixed navigation, header, and overlays stay above all pinned burn layers */
+/* Ensure fixed navigation, header, capsule, and overlays stay above all pinned burn layers */
 .grounded-atelier-header {
-  z-index: 100;
+  z-index: 100 !important;
 }
 
 .grounded-nav-system {
-  z-index: 100;
+  z-index: 100 !important;
+}
+
+.mobile-thumb-capsule {
+  z-index: 110 !important;
+}
+
+.mobile-sector-sheet-overlay {
+  z-index: 120 !important;
 }
 
 .storyboard-lightbox {
-  z-index: 9999;
+  z-index: 9999 !important;
 }
-

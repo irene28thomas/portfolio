@@ -200,56 +200,10 @@
       display: none !important;
     }
 
-    /* ========= CURSOR VISIBILITY ARCHITECTURE ========= */
-    /* Mobile Mode: ALWAYS show native cursor when a cursor is present (arrows, pointers, grabs) */
-    html[data-mode="mobile"][data-cursor="fine"],
-    html[data-mode="mobile"][data-cursor="fine"] body,
-    html[data-mode="mobile"][data-cursor="fine"] #atelier-gram-root {
-      cursor: auto !important;
-    }
-    html[data-mode="mobile"][data-cursor="fine"] a,
-    html[data-mode="mobile"][data-cursor="fine"] button,
-    html[data-mode="mobile"][data-cursor="fine"] [role="button"],
-    html[data-mode="mobile"][data-cursor="fine"] .ag-story-node,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-story-bubble,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-story-item,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-rhombus-item,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-story-close-btn,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-modal-close,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-action-btn,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-audio-toggle,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-tab-btn,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-header-pill,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-curator-contact,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-dieline-view-btn,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-dieline-toggle-btn,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-comic-expand-btn,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-comic-frame,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-omni-wheel-card {
-      cursor: pointer !important;
-    }
-    html[data-mode="mobile"][data-cursor="fine"] .ag-story-carousel,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-strip-scroll,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-comic-strip-scroller,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-omni-wheel-track {
-      cursor: grab !important;
-    }
-    html[data-mode="mobile"][data-cursor="fine"] .ag-story-carousel:active,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-strip-scroll:active,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-comic-strip-scroller:active,
-    html[data-mode="mobile"][data-cursor="fine"] .ag-omni-wheel-track:active {
-      cursor: grabbing !important;
-    }
-
-    /* Desktop Mode: Hide native OS cursor ONLY on Photoshop workspace when custom reticle is active */
+    /* ========= HIDE NATIVE OS CURSOR ON FINE HOVER POINTERS ========= */
     @media (hover: hover) and (pointer: fine) {
-      html[data-mode="desktop"][data-cursor="fine"] #ps-workspace-window,
-      html[data-mode="desktop"][data-cursor="fine"] #ps-workspace-window * {
+      html, body, a, button, input, select, textarea, [role="button"], * {
         cursor: none !important;
-      }
-      html[data-mode="desktop"][data-cursor="fine"] input,
-      html[data-mode="desktop"][data-cursor="fine"] textarea {
-        cursor: text !important;
       }
     }
 
@@ -456,14 +410,15 @@
       color: #F4F1EA;
     }
 
-    /* Only display the Photoshop custom reticle cursor in desktop mode when a cursor is present */
-    #custom-atelier-cursor,
-    #ambient-cursor-spotlight {
-      display: none !important;
+    @media (hover: none), (pointer: coarse) {
+      #custom-atelier-cursor,
+      #ambient-cursor-spotlight {
+        display: none !important;
+      }
     }
-    html[data-mode="desktop"][data-cursor="fine"] #custom-atelier-cursor,
-    html[data-mode="desktop"][data-cursor="fine"] #ambient-cursor-spotlight {
-      display: block !important;
+    html[data-cursor="none"] #custom-atelier-cursor,
+    html[data-cursor="none"] #ambient-cursor-spotlight {
+      display: none !important;
     }
 
     /* ========= LEFT MARGIN CURATORIAL GALLERY RAIL & TELEMETRY ========= */

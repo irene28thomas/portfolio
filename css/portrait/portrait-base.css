@@ -1,0 +1,399 @@
+/* ==========================================================================
+   SPATIAL PORTRAIT BASE ARCHITECTURE (100DVH ZERO-SCROLL)
+   Locks portrait viewports (mobile, tablet, and portrait desktop windows)
+   into an exhibition aperture with directional & Act-Curtain transitions.
+   ========================================================================== */
+
+:root {
+  --p-hud-h: 48px;
+  --p-dock-h: 62px;
+  --p-safe-top: env(safe-area-inset-top, 0px);
+  --p-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --p-pad-x: 20px;
+  --p-col-max: 560px;
+
+  --wl-numeral: clamp(3.5rem, 15vw, 5.5rem);
+  --wl-title: clamp(1.35rem, 5.6vw, 1.95rem);
+  --wl-accent: clamp(1.45rem, 6vw, 2.1rem);
+  --wl-deck: clamp(0.76rem, 3.1vw, 0.86rem);
+  --wl-meta: 0.62rem;
+
+  --p-ink: var(--ink-primary);
+  --p-ink-sub: rgba(24, 23, 22, 0.72);
+  --p-ink-muted-token: rgba(24, 23, 22, 0.48);
+  --p-stroke-alpha: rgba(17, 19, 24, 0.14);
+
+  --p-noir-bg: #07080c;
+  --p-noir-card: #11131a;
+  --p-noir-border: rgba(255, 255, 255, 0.14);
+  --p-noir-ink: #f4f1ea;
+  --p-noir-muted: #a6a39b;
+
+  --p-paper-bg: #efece6;
+  --p-paper-card: #fbf9f4;
+  --p-paper-ink: #181512;
+
+  --p-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --p-spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+}
+
+/* Custom Trackless Thumb-Only Scrollbars Across Portrait Scrollers (Hidden in Exhibition Atlas) */
+body.portrait-body * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(24, 23, 22, 0.28) transparent;
+}
+
+body.portrait-body *::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background: transparent;
+}
+
+body.portrait-body *::-webkit-scrollbar-track,
+body.portrait-body *::-webkit-scrollbar-track-piece,
+body.portrait-body *::-webkit-scrollbar-corner {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body.portrait-body *::-webkit-scrollbar-thumb {
+  background: rgba(24, 23, 22, 0.26);
+  border-radius: 999px;
+}
+
+body.portrait-body *::-webkit-scrollbar-thumb:hover {
+  background: rgba(216, 78, 41, 0.7);
+}
+
+.p-atlas-overlay *,
+#p-atlas-grid,
+#p-salon-scroll {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.p-atlas-overlay *::-webkit-scrollbar,
+#p-atlas-grid::-webkit-scrollbar,
+#p-salon-scroll::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+body.portrait-body[data-act="noir"] *::-webkit-scrollbar-thumb,
+.p-landing-scroll::-webkit-scrollbar-thumb,
+.p-sprocket-rail::-webkit-scrollbar-thumb,
+.p-crm-reader-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.34);
+}
+
+body.portrait-body[data-act="noir"] * {
+  scrollbar-color: rgba(255, 255, 255, 0.32) transparent;
+}
+
+/* Hide scrollbars cleanly where custom indicators or touch-fade tracks replace them */
+body.portrait-body .p-arch-track,
+body.portrait-body .p-sprocket-rail,
+body.portrait-body .p-poster-rail-thumbs,
+body.portrait-body .p-cover-stage,
+body.portrait-body .p-dossier-page {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body.portrait-body .p-arch-track::-webkit-scrollbar,
+body.portrait-body .p-sprocket-rail::-webkit-scrollbar,
+body.portrait-body .p-poster-rail-thumbs::-webkit-scrollbar,
+body.portrait-body .p-cover-stage::-webkit-scrollbar,
+body.portrait-body .p-dossier-page::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+html.p-spatial-html,
+body.portrait-body {
+  width: 100%;
+  height: 100dvh;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background-color: var(--canvas-bg);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.portrait-body[data-act="noir"] {
+  background-color: var(--p-noir-bg);
+  color: var(--p-noir-ink);
+  --p-ink: var(--p-noir-ink);
+  --p-ink-sub: rgba(244, 241, 234, 0.74);
+  --p-ink-muted-token: rgba(244, 241, 234, 0.52);
+  --p-stroke-alpha: rgba(244, 241, 234, 0.16);
+}
+
+body.portrait-body[data-act="paper"] {
+  background-color: var(--p-paper-bg);
+  color: var(--p-paper-ink);
+  --p-ink: var(--p-paper-ink);
+  --p-ink-sub: rgba(24, 21, 18, 0.74);
+  --p-ink-muted-token: rgba(24, 21, 18, 0.5);
+  --p-stroke-alpha: rgba(24, 21, 18, 0.14);
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+a {
+  font-family: inherit;
+  touch-action: manipulation;
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   100DVH EXHIBITION VIEWPORT & DIRECTIONAL SCENE CHOREOGRAPHY
+   ========================================================================== */
+.p-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  transition: transform 0.34s var(--p-ease), filter 0.34s var(--p-ease);
+}
+
+body.portrait-body.is-atlas-open .p-viewport {
+  transform: scale(0.93);
+  filter: blur(4px) brightness(0.86);
+  pointer-events: none;
+}
+
+.p-chapter {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--canvas-bg);
+  color: var(--ink-primary);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 1;
+  backface-visibility: hidden;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+.p-chapter[data-act="noir"] {
+  background-color: var(--p-noir-bg);
+  color: var(--p-noir-ink);
+  --p-ink: var(--p-noir-ink);
+  --p-ink-sub: rgba(244, 241, 234, 0.74);
+  --p-ink-muted-token: rgba(244, 241, 234, 0.52);
+  --p-stroke-alpha: rgba(244, 241, 234, 0.16);
+}
+
+.p-chapter[data-act="paper"] {
+  background-color: var(--p-paper-bg);
+  color: var(--p-paper-ink);
+  --p-ink: var(--p-paper-ink);
+  --p-ink-sub: rgba(24, 21, 18, 0.74);
+  --p-ink-muted-token: rgba(24, 21, 18, 0.5);
+  --p-stroke-alpha: rgba(24, 21, 18, 0.14);
+}
+
+.p-chapter.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 5;
+}
+
+.p-chapter.is-entering-fwd {
+  animation: p-enter-fwd 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.p-chapter.is-entering-bwd {
+  animation: p-enter-bwd 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.p-chapter.is-exiting-fwd {
+  visibility: visible;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+  animation: p-exit-fwd 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.p-chapter.is-exiting-bwd {
+  visibility: visible;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+  animation: p-exit-bwd 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes p-enter-fwd {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8.5%, 0) scale(0.965);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes p-enter-bwd {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -8.5%, 0) scale(0.965);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes p-exit-fwd {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -7%, 0) scale(0.955);
+  }
+}
+
+@keyframes p-exit-bwd {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 7%, 0) scale(0.955);
+  }
+}
+
+/* Polarity Act curtain disabled to prevent full-screen flash between chapters */
+.p-act-curtain {
+  display: none;
+}
+
+.p-stage-inner {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: var(--p-col-max);
+  height: 100%;
+  margin: 0 auto;
+  padding:
+    calc(var(--p-hud-h) + var(--p-safe-top) + 4px)
+    var(--p-pad-x)
+    calc(var(--p-dock-h) + var(--p-safe-bottom) + 6px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.p-stage-head,
+.p-section-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.p-title-cluster,
+.p-stage-head > div:first-child {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.p-eyebrow,
+.p-kicker {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--accent-terracotta);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.p-stage-title,
+.p-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 3.85vw, 18.5px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.p-stage-head.is-noir .p-stage-title,
+body.portrait-body[data-act="noir"] .p-section-title {
+  color: #ffffff;
+}
+
+.p-accent-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  color: var(--accent-terracotta);
+}
+
+/* Tablet & Wide Portrait Scaling */
+@media (min-width: 600px) {
+  :root {
+    --p-col-max: 680px;
+    --p-pad-x: 24px;
+    --p-hud-h: 50px;
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --p-col-max: 780px;
+    --p-pad-x: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-chapter,
+  .p-act-curtain,
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

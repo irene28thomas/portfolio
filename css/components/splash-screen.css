@@ -1902,21 +1902,6 @@
   pointer-events: none !important;
 }
 
-/* Mobile Mode: bypass desktop splash completely so Act 1 renders immediately */
-html[data-mode="mobile"] #atelier-splash-screen,
-html[data-mode="mobile"] .atelier-splash-screen {
-  display: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .atelier-splash-screen,
-  .atelier-splash-screen * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
 /* Responsive adjustments */
 @media (max-width: 960px) {
   .ps-right-dock,
@@ -1928,7 +1913,7 @@ html[data-mode="mobile"] .atelier-splash-screen {
   }
 }
 
-@media (max-width: 820px) {
+@media (max-width: 720px) {
   .ps-toolbar,
   .ps-options-bar {
     display: none;

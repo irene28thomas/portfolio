@@ -166,7 +166,6 @@ function updateCarouselPositions(activeIdx) {
         let touchStartX = 0;
         let touchStartY = 0;
         stage.addEventListener('touchstart', (e) => {
-          if (window.AtelierMode && window.AtelierMode.isMobile()) return;
           if (e.touches.length === 1) {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
@@ -174,7 +173,6 @@ function updateCarouselPositions(activeIdx) {
         }, { passive: true });
 
         stage.addEventListener('touchend', (e) => {
-          if (window.AtelierMode && window.AtelierMode.isMobile()) return;
           if (e.changedTouches.length === 1) {
             const diffX = e.changedTouches[0].clientX - touchStartX;
             const diffY = e.changedTouches[0].clientY - touchStartY;
@@ -189,75 +187,16 @@ function updateCarouselPositions(activeIdx) {
         document.addEventListener('DOMContentLoaded', () => {
           attachGestures();
           updateCarouselPositions(0);
-          renderMobileStorefrontStack();
         });
       } else {
         attachGestures();
         updateCarouselPositions(0);
-        renderMobileStorefrontStack();
       }
     })();
-
-    function openStorefrontMasterLightbox(brandKey) {
-      const key = brandKey || activeSliderBrand;
-      const data = sliderCampaigns[key];
-      if (!data) return;
-      const masterSrc = data.desktop_native || data.desktop;
-      const galleryList = sliderBrandKeys.map(k => {
-        const item = sliderCampaigns[k];
-        return {
-          src: item.desktop_native || item.desktop,
-          title: `${item.title} [1920×600 DESKTOP MASTER]`,
-          sub: 'OMNICHANNEL STOREFRONT MASTER',
-          aspectRatio: '1920 / 600'
-        };
-      });
-      const idx = Math.max(0, sliderBrandKeys.indexOf(key));
-      openLightboxWithImage(
-        masterSrc,
-        `${data.title} [1920×600 DESKTOP MASTER]`,
-        'OMNICHANNEL STOREFRONT MASTER',
-        '1920 / 600',
-        galleryList,
-        idx
-      );
-    }
-
-    function renderMobileStorefrontStack() {
-      const container = document.getElementById('mobile-storefront-stack');
-      if (!container || typeof sliderCampaigns === 'undefined') return;
-      if (container.children.length === sliderBrandKeys.length) return;
-
-      container.innerHTML = sliderBrandKeys.map((key, idx) => {
-        const item = sliderCampaigns[key];
-        const num = String(idx + 1).padStart(2, '0');
-        const total = String(sliderBrandKeys.length).padStart(2, '0');
-        return `
-          <article class="mobile-storefront-card" data-brand="${key}" onclick="openStorefrontMasterLightbox('${key}')">
-            <div class="mobile-storefront-card-header">
-              <span class="mobile-storefront-index">${num} / ${total} // 640×427 MOBILE</span>
-              <span class="mobile-storefront-master-pill">TAP FOR 1920×600 MASTER ⤢</span>
-            </div>
-            <div class="mobile-storefront-media-wrap">
-              <img src="${item.mobile}" alt="${item.title} — 640×427 Mobile Storefront Banner" width="640" height="427" loading="lazy" decoding="async">
-            </div>
-            <div class="mobile-storefront-card-meta">
-              <h4 class="mobile-storefront-title">${item.title}</h4>
-              <p class="mobile-storefront-desc">${item.desc}</p>
-            </div>
-          </article>
-        `;
-      }).join('');
-    }
 
     function openActiveDeviceSliderLightbox() {
       const data = sliderCampaigns[activeSliderBrand];
       if (!data) return;
-      const isMobile = (window.AtelierMode && window.AtelierMode.isMobile()) || document.documentElement.dataset.mode === 'mobile';
-      if (isMobile) {
-        openStorefrontMasterLightbox(activeSliderBrand);
-        return;
-      }
       const nativeSrc = data[`${activeSliderDevice}_native`] || data[activeSliderDevice];
       const ratios = {
         desktop: '1920 / 600',
@@ -739,8 +678,6 @@ window.selectSliderCampaignByIndex = selectSliderCampaignByIndex;
 window.cycleSliderCampaign = cycleSliderCampaign;
 window.setSliderDevice = setSliderDevice;
 window.openActiveDeviceSliderLightbox = openActiveDeviceSliderLightbox;
-window.openStorefrontMasterLightbox = openStorefrontMasterLightbox;
-window.renderMobileStorefrontStack = renderMobileStorefrontStack;
 window.switchBannerSlider = switchBannerSlider;
 window.openLightboxFromSlider = openLightboxFromSlider;
 window.updateDeviceSliderDisplay = updateDeviceSliderDisplay;
@@ -748,121 +685,9 @@ window.scrollEcomSandbox = scrollEcomSandbox;
 window.switchDossierTab = switchDossierTab;
 window.stepPortfolioStage = stepPortfolioStage;
 
-function isMobilePortfolioMode() {
-  return (window.AtelierMode && window.AtelierMode.isMobile()) ||
-    document.documentElement.dataset.mode === 'mobile';
-}
-
-function handleAiConceptCardTap(e, cardEl, src, title, sub) {
-  if (!isMobilePortfolioMode()) {
-    openLightboxWithImage(src, title, sub);
-    return;
-  }
-  if (!cardEl) {
-    openLightboxWithImage(src, title, sub);
-    return;
-  }
-  const alreadyRevealed = cardEl.classList.contains('is-revealed');
-  if (!alreadyRevealed) {
-    cardEl.classList.add('is-revealed');
-    const badge = cardEl.querySelector('.ai-mobile-tap-badge');
-    if (badge) badge.textContent = 'TAP AGAIN TO ENLARGE ⤢';
-  } else {
-    openLightboxWithImage(src, title, sub);
-  }
-}
-
-function toggleMobileDossierSection(secId, headerEl) {
-  if (!isMobilePortfolioMode()) return;
-  const sec = document.getElementById(secId);
-  if (!sec) return;
-  const isCollapsed = sec.classList.contains('is-collapsed');
-  if (isCollapsed) {
-    sec.classList.remove('is-collapsed');
-    sec.classList.add('is-expanded');
-    if (headerEl) headerEl.setAttribute('aria-expanded', 'true');
-  } else {
-    sec.classList.remove('is-expanded');
-    sec.classList.add('is-collapsed');
-    if (headerEl) headerEl.setAttribute('aria-expanded', 'false');
-  }
-}
-
-function initMobileDossierCollapsibles() {
-  if (!isMobilePortfolioMode()) {
-    ['dossier-sec-career', 'dossier-sec-capabilities', 'dossier-sec-academic'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.classList.remove('is-collapsed');
-        el.classList.add('is-expanded');
-      }
-    });
-    return;
-  }
-  // On mobile: keep Career Trajectory expanded initially, collapse Capabilities & Academic
-  const cap = document.getElementById('dossier-sec-capabilities');
-  const acad = document.getElementById('dossier-sec-academic');
-  [cap, acad].forEach(sec => {
-    if (sec && !sec.dataset.mobileInit) {
-      sec.dataset.mobileInit = '1';
-      sec.classList.remove('is-expanded');
-      sec.classList.add('is-collapsed');
-      const hdr = sec.querySelector('[onclick*="toggleMobileDossierSection"]');
-      if (hdr) hdr.setAttribute('aria-expanded', 'false');
-    }
-  });
-}
-
-// Single-video playback coordinator on mobile (only one video playing at a time)
-(function initMobileVideoCoordinator() {
-  document.addEventListener('play', (e) => {
-    if (!isMobilePortfolioMode()) return;
-    const playingVideo = e.target;
-    if (!playingVideo || playingVideo.tagName !== 'VIDEO') return;
-    document.querySelectorAll('video').forEach(v => {
-      if (v !== playingVideo && !v.paused) {
-        try { v.pause(); } catch (_) {}
-      }
-    });
-  }, true);
-
-  function initSwitcherOnReady() {
-    initMobileDossierCollapsibles();
-    renderMobileStorefrontStack();
-    if (isMobilePortfolioMode()) {
-      // Ensure only the first visible video plays initially on mobile
-      const videos = Array.from(document.querySelectorAll('video'));
-      let keptOne = false;
-      videos.forEach(v => {
-        if (!v.paused) {
-          if (!keptOne) {
-            keptOne = true;
-          } else {
-            try { v.pause(); } catch (_) {}
-          }
-        }
-      });
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    window.addEventListener('DOMContentLoaded', initSwitcherOnReady);
-  } else {
-    initSwitcherOnReady();
-  }
-
-  window.addEventListener('atelier:modechange', () => {
-    initMobileDossierCollapsibles();
-    renderMobileStorefrontStack();
-  });
-})();
-
-window.handleAiConceptCardTap = handleAiConceptCardTap;
-window.toggleMobileDossierSection = toggleMobileDossierSection;
-
 // Auto-detect mobile mode and default to mobile aspect ratio
 if (typeof document !== 'undefined' && document.documentElement.dataset.mode === 'mobile') {
-  const applyMobileSliderRatio = () => {
+  window.addEventListener('DOMContentLoaded', () => {
     const viewport = document.getElementById('slider-device-viewport');
     if (viewport) viewport.className = 'device-stage-viewport device-mobile';
     const mobileBtn = document.querySelector('#device-mode-toggle-group .device-toggle-btn[onclick*="mobile"]');
@@ -870,10 +695,5 @@ if (typeof document !== 'undefined' && document.documentElement.dataset.mode ===
       document.querySelectorAll('#device-mode-toggle-group .device-toggle-btn').forEach(b => b.classList.remove('active'));
       mobileBtn.classList.add('active');
     }
-  };
-  if (document.readyState === 'loading') {
-    window.addEventListener('DOMContentLoaded', applyMobileSliderRatio);
-  } else {
-    applyMobileSliderRatio();
-  }
+  });
 }

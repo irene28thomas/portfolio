@@ -122,19 +122,6 @@
     vh = window.innerHeight;
     isMobile = window.AtelierMode ? window.AtelierMode.isMobile() : (document.documentElement.dataset.mode === 'mobile');
 
-    if (isMobile) {
-      [layer14, layer57, layer8].forEach((layer) => {
-        if (!layer) return;
-        layer.style.visibility = '';
-        layer.style.pointerEvents = '';
-        layer.classList.remove('layer-masked');
-      });
-      [track14, track57, track8].forEach((track) => {
-        if (!track) return;
-        track.style.transform = '';
-      });
-    }
-
     maskEl.setAttribute('width', vw);
     maskEl.setAttribute('height', vh);
 
@@ -484,13 +471,9 @@
     }
   }
 
-  // Override handleRailClick to drive our virtual scroll engine on desktop or 2D lookbook on mobile
+  // Override handleRailClick to drive our virtual scroll engine
   window.handleRailClick = function(e, sectorId) {
     if (e && e.preventDefault) e.preventDefault();
-    if (isMobile && window.Lookbook2D && typeof window.Lookbook2D.goToSector === 'function') {
-      window.Lookbook2D.goToSector(sectorId, { updateHash: true, smooth: true });
-      return;
-    }
     targetY = getSectorTargetY(sectorId);
     if (typeof playUiSound === 'function') {
       playUiSound(900, 'triangle', 0.08);
@@ -563,14 +546,8 @@
         // Update mobile thumb capsule & collapsed header micro-beacon
         const capNum = document.getElementById('thumb-cap-num');
         const capTitle = document.getElementById('thumb-cap-title');
-        const capScrubberFill = document.getElementById('thumb-cap-scrubber-fill');
-        const totalSecs = String(dockSectorsList.length || 8).padStart(2, '0');
-        if (capNum) capNum.innerText = `${secData.code} / ${totalSecs}`;
-        if (capTitle) capTitle.innerText = isMobile ? (secData.shortName || secData.name) : secData.name;
-        if (capScrubberFill) {
-          const pctFill = ((secIdx + 1) / Math.max(1, dockSectorsList.length)) * 100;
-          capScrubberFill.style.width = `${pctFill.toFixed(1)}%`;
-        }
+        if (capNum) capNum.innerText = secData.code;
+        if (capTitle) capTitle.innerText = secData.name;
         const collapsedPillSec = document.getElementById('collapsed-pill-sector');
         if (collapsedPillSec) collapsedPillSec.innerText = `SEC ${secData.code} • ${secData.name}`;
       }
@@ -723,7 +700,6 @@
   let lastInnerScrollTime = 0;
 
   function applyScrollDelta(delta) {
-    if (isMobile) return;
     const now = performance.now();
     lastScrollInputTime = now;
     if (Math.abs(delta) > 0.5) {
@@ -749,10 +725,6 @@
   // MASTER 5-PHASE SCROLL & BURN STATE MACHINE (INVERTED THEMES)
   // =========================================================================
   function renderLoop(now) {
-    if (isMobile) {
-      setTimeout(() => requestAnimationFrame(renderLoop), 1000);
-      return;
-    }
     const timeSec = now * 0.001;
 
     const p1Start = maxScroll14;
@@ -1021,7 +993,6 @@
   // INPUT HANDLERS: Wheel, Touch with Inertial Momentum Fling, Keyboard, Cursor
   // =========================================================================
   window.addEventListener('wheel', (e) => {
-    if (isMobile) return;
     const now = performance.now();
     const scrollable = e.target.closest('.crm-browser-scroll, .browser-scroll-viewport, .manual-thumbnail-strip');
     if (scrollable && scrollable.scrollHeight > scrollable.clientHeight + 4) {
@@ -1168,7 +1139,7 @@
 
     function updateCursorRing() {
       if (!hasFineHover) {
-        setTimeout(() => requestAnimationFrame(updateCursorRing), 1000);
+        requestAnimationFrame(updateCursorRing);
         return;
       }
       let targetX = curX - 9;
@@ -1231,7 +1202,6 @@
   let touchMomentumVel = 0;
 
   function handleDragStart(clientX, clientY) {
-    if (isMobile) return;
     isDragging = true;
     dragLastX = clientX;
     dragLastY = clientY;
@@ -1339,7 +1309,6 @@
   })();
 
   window.addEventListener('keydown', (e) => {
-    if (isMobile) return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
       const step = e.key === 'ArrowDown' ? 140 : vh * 0.65;
       applyScrollDelta(step);
@@ -1349,32 +1318,20 @@
     }
   });
 
-  // Start engine on load (or immediately if hydrated dynamically after load)
-  let engineStarted = false;
-  function startBurnEngine() {
-    if (engineStarted) return;
-    engineStarted = true;
-    isMobile = window.AtelierMode ? window.AtelierMode.isMobile() : (document.documentElement.dataset.mode === 'mobile');
+  // Start engine on load (Initial theme: LIGHT)
+  window.addEventListener('load', () => {
     measureLayout();
     document.body.classList.remove('theme-dark-cinema');
     requestAnimationFrame(renderLoop);
-  }
+  });
 
-  if (document.readyState === 'complete') {
-    startBurnEngine();
-  } else {
-    window.addEventListener('load', startBurnEngine);
-  }
-
-  window.addEventListener('atelier:modechange', (e) => {
-    isMobile = e && e.detail ? (e.detail.mode === 'mobile') : (window.AtelierMode ? window.AtelierMode.isMobile() : (document.documentElement.dataset.mode === 'mobile'));
+  window.addEventListener('atelier:modechange', () => {
     measureLayout();
   });
 
   // Public API
   window.PinnedBurnEngine = {
     measureLayout,
-    updatePortfolioNav,
     getSectorTargetY,
     getSpineProgressPx,
     getYFromSpinePx,

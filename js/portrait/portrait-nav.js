@@ -253,23 +253,120 @@
     });
   }
 
+  function bindMediaSkeleton(box) {
+    var img = box.querySelector('img');
+    if (!img) return;
+    if (!img.dataset.baseSrc) {
+      img.dataset.baseSrc = img.getAttribute('src') || '';
+    }
+
+    function nextToken() {
+      var n = Number(img.dataset.skelToken || 0) + 1;
+      img.dataset.skelToken = String(n);
+      return n;
+    }
+
+    function showSkeleton() {
+      box.classList.add('is-loading');
+      box.classList.remove('is-loaded');
+    }
+
+    function markLoaded(token) {
+      if (token !== Number(img.dataset.skelToken || 0)) return;
+      if (!img.complete || img.naturalWidth === 0) {
+        showSkeleton();
+        return;
+      }
+      img.dataset.retryCount = '0';
+      box.classList.remove('is-loading');
+      box.classList.add('is-loaded');
+    }
+
+    function settleWhenDecoded(token) {
+      if (token !== Number(img.dataset.skelToken || 0)) return;
+      if (!img.complete || img.naturalWidth === 0) {
+        showSkeleton();
+        return;
+      }
+      if (typeof img.decode === 'function') {
+        img.decode().then(function () {
+          markLoaded(token);
+        }, function () {
+          markLoaded(token);
+        });
+      } else {
+        markLoaded(token);
+      }
+    }
+
+    function scheduleRetry() {
+      showSkeleton();
+      var count = Number(img.dataset.retryCount || 0);
+      if (count >= 4 || !img.isConnected) return;
+      count += 1;
+      img.dataset.retryCount = String(count);
+      var baseSrc = img.dataset.baseSrc || img.getAttribute('src') || '';
+      if (!baseSrc) return;
+      var delay = Math.min(6000, 850 * Math.pow(2, count - 1));
+      window.clearTimeout(Number(img.dataset.retryTimer || 0));
+      img.dataset.retryTimer = String(window.setTimeout(function () {
+        if (!img.isConnected) return;
+        showSkeleton();
+        var cleanBase = baseSrc.split('?')[0];
+        img.src = cleanBase + '?skretry=' + count;
+      }, delay));
+    }
+
+    var token = nextToken();
+
+    if (!img.dataset.skelBound) {
+      img.dataset.skelBound = '1';
+      img.addEventListener('loadstart', function () {
+        nextToken();
+        showSkeleton();
+      });
+      img.addEventListener('load', function () {
+        var currentTok = Number(img.dataset.skelToken || 0);
+        settleWhenDecoded(currentTok);
+      });
+      img.addEventListener('error', function () {
+        nextToken();
+        scheduleRetry();
+      });
+      if (typeof MutationObserver === 'function') {
+        var obs = new MutationObserver(function (muts) {
+          for (var i = 0; i < muts.length; i++) {
+            if (muts[i].attributeName === 'src') {
+              var newAttr = img.getAttribute('src') || '';
+              if (newAttr && newAttr.indexOf('skretry=') === -1) {
+                img.dataset.baseSrc = newAttr;
+                img.dataset.retryCount = '0';
+              }
+              var tok = nextToken();
+              if (!img.complete || img.naturalWidth === 0) {
+                showSkeleton();
+              } else {
+                settleWhenDecoded(tok);
+              }
+            }
+          }
+        });
+        obs.observe(img, { attributes: true, attributeFilter: ['src'] });
+      }
+    }
+
+    if (img.complete && img.naturalWidth > 0) {
+      settleWhenDecoded(token);
+    } else {
+      showSkeleton();
+    }
+  }
+
   function hydrateMediaSkeletons(rootEl, boxSelector) {
     if (!rootEl) return;
-    rootEl.querySelectorAll(boxSelector).forEach(function (box) {
-      var img = box.querySelector('img');
-      if (!img) return;
-      function markLoaded() {
-        box.classList.remove('is-loading');
-        box.classList.add('is-loaded');
-      }
-      if (img.complete && img.naturalWidth > 0) {
-        markLoaded();
-      } else {
-        img.addEventListener('load', markLoaded, { once: true });
-        img.addEventListener('error', markLoaded, { once: true });
-      }
-    });
+    rootEl.querySelectorAll(boxSelector).forEach(bindMediaSkeleton);
   }
+  window.hydratePortraitSkeletons = hydrateMediaSkeletons;
 
   function setActiveAtlasActPill(act) {
     document.querySelectorAll('#p-atlas-act-bar [data-act-jump]').forEach(function (pill) {
@@ -674,6 +771,8 @@
       var masonry = document.getElementById('p-salon-masonry');
       if (masonry && !masonry.children.length) {
         renderSalonGallery(activeSalonFilter);
+      } else if (masonry) {
+        hydrateMediaSkeletons(masonry, '.p-salon-media');
       }
     } else {
       buildAtlasGrid();

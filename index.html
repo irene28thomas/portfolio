@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Irene Thomas — Graphic Designer &amp; Art Director | Creative Showcase</title>
   <meta name="description" content="Visual portfolio of Irene Thomas, Graphic Designer &amp; Art Director in Dubai. Adaptive landscape studio and 100dvh spatial portrait exhibition.">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261115v52">
-  <link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png?v=20261115v52">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png?v=20261115v52">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon-180.png?v=20261115v52">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261115v54">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png?v=20261115v54">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png?v=20261115v54">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon-180.png?v=20261115v54">
   <meta name="theme-color" content="#F4EFE6">
 
   <!-- SINGLE-PAGE ADAPTIVE VIEWPORT ROUTER (Computes portrait vs landscape before first paint) -->
@@ -75,10 +75,10 @@
   <link rel="stylesheet" href="css/theme-dark.css" data-view-css="portrait">
   <link rel="stylesheet" href="css/components/image-transitions.css" data-view-css="portrait">
   <link rel="stylesheet" href="css/components/lightbox.css" data-view-css="portrait">
-  <link rel="stylesheet" href="css/portrait/portrait-base.css?v=20261115v52" data-view-css="portrait">
-  <link rel="stylesheet" href="css/portrait/portrait-chrome.css?v=20261115v52" data-view-css="portrait">
-  <link rel="stylesheet" href="css/portrait/portrait-hero.css?v=20261115v52" data-view-css="portrait">
-  <link rel="stylesheet" href="css/portrait/portrait-sectors.css?v=20261115v52" data-view-css="portrait">
+  <link rel="stylesheet" href="css/portrait/portrait-base.css?v=20261115v54" data-view-css="portrait">
+  <link rel="stylesheet" href="css/portrait/portrait-chrome.css?v=20261115v54" data-view-css="portrait">
+  <link rel="stylesheet" href="css/portrait/portrait-hero.css?v=20261115v54" data-view-css="portrait">
+  <link rel="stylesheet" href="css/portrait/portrait-sectors.css?v=20261115v54" data-view-css="portrait">
   <script>window.__applyAtelierCssGate && window.__applyAtelierCssGate();</script>
 </head>
 <body>
@@ -3295,13 +3295,15 @@
                   </div>
                 </div>
                 <div class="p-landing-scroll" id="p-ecom-sandbox">
-                  <img loading="lazy" id="p-dispatch-img" src="assets/optimized/New_Arrivals_Landing_Page_V1.jpg" alt="eGolf Megastore New Arrivals 5,286px Landing Page" decoding="async">
+                  <img loading="eager" id="p-dispatch-img" src="assets/optimized/New_Arrivals_Landing_Page_V1.jpg" alt="eGolf Megastore New Arrivals 5,286px Landing Page" decoding="async">
                 </div>
               </div>
             </div>
 
             <div class="p-landing-minimap" id="p-landing-minimap" data-crm-scroll-lock="true" aria-label="Blueprint Section Scrubber">
-              <img loading="lazy" id="p-dispatch-minimap-img" src="assets/optimized/New_Arrivals_Landing_Page_V1.jpg" alt="Mini Blueprint Map" decoding="async">
+              <img loading="eager" id="p-dispatch-minimap-img" src="assets/optimized/New_Arrivals_Landing_Page_V1.jpg" alt="Mini Blueprint Map" decoding="async">
+              <div class="p-minimap-scrim is-top" id="p-minimap-scrim-top" aria-hidden="true"></div>
+              <div class="p-minimap-scrim is-bottom" id="p-minimap-scrim-bottom" aria-hidden="true"></div>
               <div class="p-minimap-lens" id="p-minimap-lens">
                 <span class="p-minimap-lens-pct" id="p-minimap-lens-pct">0%</span>
               </div>
@@ -3663,7 +3665,9 @@
       <!-- ROOM 12 // FULL-BLEED SCROLLABLE EXECUTIVE EDITORIAL DOSSIER -->
       <section class="p-chapter" id="resume" data-chapter-idx="11" data-act="paper">
         <div class="p-stage-inner p-dossier-page" id="p-atelier-resume-scroll" data-scroll-handoff="true" aria-label="Scrollable Executive CV Dossier">
-          <div class="p-wall-label is-top-left">
+          <div class="p-resume-quilt-wrap">
+            <div class="p-resume-quilt-bg" id="p-resume-quilt-bg" aria-hidden="true"></div>
+            <div class="p-wall-label is-top-left">
             <span class="p-wall-numeral" aria-hidden="true">12</span>
             <div class="p-wall-kicker">
               <span>12 / CURRICULUM VITAE</span>
@@ -3792,6 +3796,7 @@
               <div class="p-dossier-seal">AL KHAIL GATE, DUBAI · READY FOR ART DIRECTION</div>
               <button type="button" class="p-cta-btn is-outline p-dossier-top-btn" onclick="goToPortraitChapter(0)">↑ RETURN TO COVER</button>
             </footer>
+          </div>
           </div>
         </div>
       </section>
@@ -3956,10 +3961,10 @@
       var activeMode = window.__ATELIER_VIEW__ === 'portrait' ? 'portrait' : 'landscape';
       var viewScripts = activeMode === 'portrait'
         ? [
-            'js/portrait/portrait-nav.js?v=20261115v52',
-            'js/portrait/portrait-petal-wheel.js?v=20261115v52',
-            'js/portrait/portrait-widgets.js?v=20261115v52',
-            'js/portrait/portrait-app.js?v=20261115v52'
+            'js/portrait/portrait-nav.js?v=20261115v54',
+            'js/portrait/portrait-petal-wheel.js?v=20261115v54',
+            'js/portrait/portrait-widgets.js?v=20261115v54',
+            'js/portrait/portrait-app.js?v=20261115v54'
           ]
         : [
             'js/core/splash.js',

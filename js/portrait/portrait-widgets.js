@@ -602,16 +602,23 @@
 
     var minimapImg = document.getElementById('p-dispatch-minimap-img');
     var lensPctEl = document.getElementById('p-minimap-lens-pct');
+    var scrimTop = document.getElementById('p-minimap-scrim-top');
+    var scrimBottom = document.getElementById('p-minimap-scrim-bottom');
     if (minimapImg) minimapImg.style.objectPosition = '50% 0%';
 
     var pad = 3;
+    var cachedTrackH = 0;
     var cachedMaxScroll = 1;
     var cachedLensPx = 0;
     var cachedMaxTravel = 0;
     var currentProgress = 0;
     var targetProgress = 0;
+    var velProgress = 0;
     var animRaf = null;
     var lastFrameTime = 0;
+    var followActiveUntil = 0;
+    var pointerTouching = false;
+    var scrubbing = false;
     var lastPctText = '';
 
     function measureLensGeometry() {
@@ -619,9 +626,9 @@
       var fullH = scroller.scrollHeight;
       cachedMaxScroll = Math.max(1, fullH - viewH);
       var ratioPct = Math.max(18, Math.min(30, (viewH / Math.max(viewH, fullH)) * 100));
-      var trackH = minimap.clientHeight;
-      if (trackH > 20) {
-        var availH = Math.max(20, trackH - pad * 2);
+      cachedTrackH = minimap.clientHeight;
+      if (cachedTrackH > 20) {
+        var availH = Math.max(20, cachedTrackH - pad * 2);
         var nextLensPx = Math.max(28, Math.round(availH * (ratioPct / 100)));
         cachedMaxTravel = Math.max(0, availH - nextLensPx);
         if (nextLensPx !== cachedLensPx) {
@@ -638,91 +645,139 @@
     }
 
     function applyLensRender(progress) {
-      var yPx = progress * cachedMaxTravel;
+      var clamped = Math.max(0, Math.min(1, progress));
+      var yPx = clamped * cachedMaxTravel;
       lens.style.transform = 'translate3d(0, ' + yPx.toFixed(2) + 'px, 0)';
-      var pctText = Math.round(progress * 100) + '%';
+      if (cachedTrackH > 20 && cachedLensPx > 0) {
+        var topRatio = Math.max(0, Math.min(1, (pad + yPx) / cachedTrackH));
+        var botRatio = Math.max(0, Math.min(1, (cachedTrackH - (pad + yPx + cachedLensPx)) / cachedTrackH));
+        if (scrimTop) scrimTop.style.transform = 'translate3d(0, 0, 0) scaleY(' + topRatio.toFixed(4) + ')';
+        if (scrimBottom) scrimBottom.style.transform = 'translate3d(0, 0, 0) scaleY(' + botRatio.toFixed(4) + ')';
+      }
+      var pctText = Math.round(clamped * 100) + '%';
       if (pctText !== lastPctText) {
         lastPctText = pctText;
-        lens.setAttribute('data-lens-pct', pctText);
         if (lensPctEl) lensPctEl.textContent = pctText;
         if (pctEl) pctEl.textContent = pctText;
       }
     }
 
-    function stepLensAnimation(now) {
+    function stepLensLoop(now) {
       animRaf = null;
-      if (!lastFrameTime) lastFrameTime = now;
-      var dt = Math.min(48, Math.max(4, now - lastFrameTime));
-      lastFrameTime = now;
-
-      var diff = targetProgress - currentProgress;
-      var pxDiff = cachedMaxTravel > 0 ? Math.abs(diff) * cachedMaxTravel : Math.abs(diff) * 200;
-      if (pxDiff < 0.20) {
-        currentProgress = targetProgress;
-        applyLensRender(currentProgress);
-        lastFrameTime = 0;
-        return;
-      }
-
-      var alpha = 1 - Math.pow(1 - 0.42, dt / 16.67);
-      currentProgress += diff * alpha;
-      applyLensRender(currentProgress);
-      animRaf = window.requestAnimationFrame(stepLensAnimation);
-    }
-
-    function startLensLoop() {
-      if (animRaf) return;
-      lastFrameTime = 0;
-      animRaf = window.requestAnimationFrame(stepLensAnimation);
-    }
-
-    function syncLensNow() {
-      measureLensGeometry();
-      targetProgress = Math.max(0, Math.min(1, scroller.scrollTop / cachedMaxScroll));
-      currentProgress = targetProgress;
-      if (animRaf) {
-        window.cancelAnimationFrame(animRaf);
-        animRaf = null;
-      }
-      lastFrameTime = 0;
-      applyLensRender(currentProgress);
-    }
-
-    function handleMainCrmScroll() {
-      if (!animRaf || cachedMaxScroll <= 1 || cachedMaxTravel <= 0) {
+      if (scrubbing) return;
+      if (cachedTrackH <= 20 || cachedMaxScroll <= 1 || cachedMaxTravel <= 0) {
         measureLensGeometry();
       }
       targetProgress = Math.max(0, Math.min(1, scroller.scrollTop / cachedMaxScroll));
-      if (Math.abs(targetProgress - currentProgress) > 0.65) {
+
+      if (!lastFrameTime) lastFrameTime = now;
+      var dtSec = Math.min(0.032, Math.max(0.004, (now - lastFrameTime) / 1000));
+      lastFrameTime = now;
+
+      // Critically damped spring (~24 rad/s) keeps touch flings & wheel ticks glass-smooth without jumps
+      var omega = 24;
+      var h = dtSec * 0.5;
+      for (var s = 0; s < 2; s++) {
+        var accel = omega * omega * (targetProgress - currentProgress) - 2 * omega * velProgress;
+        velProgress += accel * h;
+        currentProgress += velProgress * h;
+      }
+      currentProgress = Math.max(0, Math.min(1, currentProgress));
+
+      var distPx = cachedMaxTravel > 0
+        ? Math.abs(targetProgress - currentProgress) * cachedMaxTravel
+        : Math.abs(targetProgress - currentProgress) * 200;
+      var velPx = cachedMaxTravel > 0
+        ? Math.abs(velProgress) * cachedMaxTravel
+        : Math.abs(velProgress) * 200;
+
+      if (distPx < 0.25 && velPx < 1.5) {
         currentProgress = targetProgress;
+        velProgress = 0;
+        applyLensRender(currentProgress);
+        if (pointerTouching || now < followActiveUntil) {
+          animRaf = window.requestAnimationFrame(stepLensLoop);
+        } else {
+          lastFrameTime = 0;
+        }
+        return;
+      }
+
+      applyLensRender(currentProgress);
+      animRaf = window.requestAnimationFrame(stepLensLoop);
+    }
+
+    function ensureLensLoop(holdMs) {
+      var until = performance.now() + (holdMs || 550);
+      if (until > followActiveUntil) followActiveUntil = until;
+      if (!animRaf && !scrubbing) {
+        lastFrameTime = 0;
+        animRaf = window.requestAnimationFrame(stepLensLoop);
+      }
+    }
+
+    function syncLensNow() {
+      var prevMax = cachedMaxScroll;
+      var prevTrack = cachedTrackH;
+      measureLensGeometry();
+      if (Math.abs(cachedMaxScroll - prevMax) > 2 || Math.abs(cachedTrackH - prevTrack) > 2 || !animRaf) {
+        targetProgress = Math.max(0, Math.min(1, scroller.scrollTop / cachedMaxScroll));
+        currentProgress = targetProgress;
+        velProgress = 0;
         if (animRaf) {
           window.cancelAnimationFrame(animRaf);
           animRaf = null;
         }
         lastFrameTime = 0;
         applyLensRender(currentProgress);
-        return;
       }
-      startLensLoop();
     }
 
-    syncDispatchLensFn = syncLensNow;
+    function handleMainCrmScroll() {
+      if (scrubbing) return;
+      ensureLensLoop(650);
+    }
+
+    syncDispatchLensFn = function () {
+      measureLensGeometry();
+      targetProgress = Math.max(0, Math.min(1, scroller.scrollTop / cachedMaxScroll));
+      currentProgress = targetProgress;
+      velProgress = 0;
+      if (animRaf) {
+        window.cancelAnimationFrame(animRaf);
+        animRaf = null;
+      }
+      lastFrameTime = 0;
+      applyLensRender(currentProgress);
+    };
+
     scroller.addEventListener('scroll', handleMainCrmScroll, { passive: true });
-    scroller.addEventListener('touchstart', measureLensGeometry, { passive: true });
-    scroller.addEventListener('pointerdown', measureLensGeometry, { passive: true });
+    scroller.addEventListener('wheel', function () { ensureLensLoop(650); }, { passive: true });
+    scroller.addEventListener('touchstart', function () {
+      pointerTouching = true;
+      ensureLensLoop(900);
+    }, { passive: true });
+    scroller.addEventListener('touchmove', function () { ensureLensLoop(900); }, { passive: true });
+    scroller.addEventListener('touchend', function () {
+      pointerTouching = false;
+      ensureLensLoop(850);
+    }, { passive: true });
+    scroller.addEventListener('touchcancel', function () {
+      pointerTouching = false;
+    }, { passive: true });
     window.addEventListener('resize', syncLensNow, { passive: true });
 
-    var scrubbing = false;
     function scrubAtClientY(cy) {
       var rect = minimap.getBoundingClientRect();
       var lensH = cachedLensPx || lens.offsetHeight || Math.round((rect.height - pad * 2) * 0.22);
       var travel = Math.max(1, rect.height - pad * 2 - lensH);
       var relY = cy - rect.top - pad - lensH * 0.5;
       var ratio = Math.max(0, Math.min(1, relY / travel));
-      measureLensGeometry();
+      if (cachedTrackH <= 20 || cachedMaxScroll <= 1) measureLensGeometry();
       scroller.scrollTop = ratio * cachedMaxScroll;
       targetProgress = ratio;
       currentProgress = ratio;
+      velProgress = 0;
       if (animRaf) {
         window.cancelAnimationFrame(animRaf);
         animRaf = null;
@@ -1888,12 +1943,16 @@
     }
     posterLastListKey = key;
     stack.innerHTML = list.map(function (item, idx) {
-      return '<div class="p-deck-card" data-poster-idx="' + idx + '">' +
+      return '<div class="p-deck-card is-loading" data-poster-idx="' + idx + '">' +
+        '<span class="p-salon-skeleton" aria-hidden="true"></span>' +
         '<img src="' + item.src + '" alt="' + item.title + '" decoding="async">' +
         '<span class="p-deck-card-tag">' + item.tag + '</span>' +
         '<button type="button" class="p-deck-hd-btn" onclick="event.stopPropagation(); openActivePosterLightbox();">⛶ HD</button>' +
         '</div>';
     }).join('');
+    if (typeof window.hydratePortraitSkeletons === 'function') {
+      window.hydratePortraitSkeletons(stack, '.p-deck-card');
+    }
     posterCardEls = Array.prototype.slice.call(stack.querySelectorAll('.p-deck-card'));
     posterCardEls.forEach(function (cardEl, idx) {
       cardEl.addEventListener('click', function (e) {
@@ -2097,9 +2156,15 @@
       miniGrid.dataset.builtKey = posterFilter;
       miniGrid.innerHTML = list.map(function (p, i) {
         return '<button type="button" class="p-poster-mini-item" onclick="jumpToPosterInDeck(' + i + ')">' +
-          '<img loading="lazy" src="' + p.src + '" alt="' + p.title + '" decoding="async">' +
+          '<div class="p-poster-mini-media is-loading">' +
+            '<span class="p-salon-skeleton" aria-hidden="true"></span>' +
+            '<img loading="lazy" src="' + p.src + '" alt="' + p.title + '" decoding="async">' +
+          '</div>' +
           '<span>' + p.title + '</span></button>';
       }).join('');
+      if (typeof window.hydratePortraitSkeletons === 'function') {
+        window.hydratePortraitSkeletons(miniGrid, '.p-poster-mini-media');
+      }
     }
 
     if (titleEl) titleEl.textContent = current.title;
@@ -2765,48 +2830,16 @@
 
   function initActiveDossierPatchwork() {
     var resume = document.getElementById('resume');
-    var scroller = document.getElementById('p-atelier-resume-scroll');
-    if (!resume || !scroller) return;
+    if (!resume) return;
 
     var patchSelector = '.p-dossier-masthead, .p-dossier-summary, .p-kpi-box, .p-role-card, .p-arsenal-row, .p-edu-card, .p-dossier-seal';
-    var focalSelector = '.p-dossier-masthead, .p-dossier-summary, .p-role-card, .p-arsenal-row, .p-edu-card';
     var patches = Array.prototype.slice.call(resume.querySelectorAll(patchSelector));
-    var focalPatches = Array.prototype.slice.call(resume.querySelectorAll(focalSelector));
     if (!patches.length) return;
 
-    var activePatch = focalPatches[0] || patches[0];
+    // Quilt background lives inside #p-atelier-resume-scroll for zero-lag native compositor scrolling.
+    // Highlight changes only on direct tap/click so scroll frames perform zero layout or repaint work.
+    var activePatch = patches[0];
     if (activePatch) activePatch.classList.add('is-active-patch');
-
-    var rafId = null;
-    function updateFocalPatch() {
-      rafId = null;
-      resume.style.setProperty('--p-quilt-scroll', (-(scroller.scrollTop * 0.22)).toFixed(1) + 'px');
-      var sr = scroller.getBoundingClientRect();
-      var focusY = sr.top + sr.height * 0.36;
-      var best = null;
-      var bestDist = Infinity;
-      for (var i = 0; i < focalPatches.length; i++) {
-        var r = focalPatches[i].getBoundingClientRect();
-        var cy = (r.top + r.bottom) * 0.5;
-        var d = Math.abs(cy - focusY);
-        if (d < bestDist) {
-          bestDist = d;
-          best = focalPatches[i];
-        }
-      }
-      if (best && best !== activePatch) {
-        for (var j = 0; j < patches.length; j++) {
-          patches[j].classList.remove('is-active-patch');
-        }
-        best.classList.add('is-active-patch');
-        activePatch = best;
-      }
-    }
-
-    scroller.addEventListener('scroll', function () {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(updateFocalPatch);
-    }, { passive: true });
 
     resume.addEventListener('click', function (e) {
       var target = e.target && e.target.closest ? e.target.closest(patchSelector) : null;

@@ -648,8 +648,8 @@ body.portrait-body[data-act="noir"] .p-ring-node.is-active {
   --atlas-tile-active-ink: #ffffff;
   --atlas-tile-active-border: rgba(216, 78, 41, 0.72);
   --atlas-media-bg: #141720;
-  --atlas-skeleton-a: #171a23;
-  --atlas-skeleton-b: #242937;
+  --atlas-skeleton-a: #1a1f2c;
+  --atlas-skeleton-b: #313952;
   --atlas-accent: var(--accent-marigold);
   --atlas-spec-ink: rgba(243, 164, 39, 0.9);
   --atlas-tab-active-bg: #f4f1ea;
@@ -695,8 +695,8 @@ body.portrait-body[data-act="daylight"] .p-atlas-overlay,
   --atlas-tile-active-ink: #181716;
   --atlas-tile-active-border: rgba(216, 78, 41, 0.68);
   --atlas-media-bg: #e4dfd4;
-  --atlas-skeleton-a: #e7e1d5;
-  --atlas-skeleton-b: #f3efe6;
+  --atlas-skeleton-a: #dcd4c5;
+  --atlas-skeleton-b: #f7f4ed;
   --atlas-accent: var(--accent-terracotta);
   --atlas-spec-ink: rgba(188, 62, 30, 0.92);
   --atlas-tab-active-bg: #181716;
@@ -729,8 +729,8 @@ body.portrait-body[data-act="paper"] .p-atlas-overlay,
   --atlas-tile-active-ink: #181512;
   --atlas-tile-active-border: rgba(216, 78, 41, 0.68);
   --atlas-media-bg: #dfd8ca;
-  --atlas-skeleton-a: #e1dacb;
-  --atlas-skeleton-b: #f0eadf;
+  --atlas-skeleton-a: #d6cebe;
+  --atlas-skeleton-b: #f4efe4;
   --atlas-accent: var(--accent-terracotta);
   --atlas-spec-ink: rgba(188, 62, 30, 0.92);
   --atlas-tab-active-bg: #181512;
@@ -1235,10 +1235,31 @@ body.portrait-body[data-act="paper"] .p-atlas-overlay,
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(110deg, var(--atlas-skeleton-a) 22%, var(--atlas-skeleton-b) 42%, var(--atlas-skeleton-a) 64%);
+  background: linear-gradient(110deg, var(--atlas-skeleton-a, #dcd4c5) 14%, var(--atlas-skeleton-b, #f7f4ed) 42%, var(--atlas-skeleton-a, #dcd4c5) 70%);
   background-size: 220% 100%;
-  animation: p-salon-shimmer 1.35s ease-in-out infinite;
-  transition: opacity 0.32s ease;
+  animation: p-salon-shimmer 1.15s ease-in-out infinite;
+  transition: opacity 0.26s ease;
+}
+
+.p-salon-skeleton::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 28%;
+  bottom: 10px;
+  height: 7px;
+  border-radius: 99px;
+  background: rgba(130, 130, 138, 0.24);
+  pointer-events: none;
+}
+
+.p-salon-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 6px;
+  border: 1px dashed rgba(130, 130, 138, 0.28);
+  pointer-events: none;
 }
 
 @keyframes p-salon-shimmer {
@@ -1255,7 +1276,19 @@ body.portrait-body[data-act="paper"] .p-atlas-overlay,
   object-fit: cover;
   opacity: 0;
   transform: scale(1.03);
-  transition: opacity 0.38s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.34s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.p-atlas-thumb.is-loading img,
+.p-salon-media.is-loading .p-salon-img {
+  opacity: 0;
+  transition: none;
+}
+
+.p-atlas-thumb.is-loading .p-salon-skeleton,
+.p-salon-media.is-loading .p-salon-skeleton {
+  opacity: 1;
+  transition: none;
 }
 
 .p-salon-media.is-loaded .p-salon-img {

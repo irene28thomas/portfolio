@@ -4,17 +4,21 @@
    floating Spatial Atlas wayfinder + room-native portal exit triggers.
    ========================================================================== */
 
-/* ---- Fast Portfolio Splash Intro ---- */
+/* ---- Architectural Pencil & Brush Sketch Splash Intro ---- */
 .p-splash {
   position: fixed;
   inset: 0;
   z-index: 9000;
-  background: var(--canvas-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  transition: opacity 0.36s var(--p-ease), visibility 0s linear 0.36s;
+  background: var(--canvas-bg, #F4EFE6);
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: opacity 0.24s var(--p-ease), visibility 0s linear 0.24s;
+}
+
+.p-splash.is-canvas-ready {
+  background: transparent;
 }
 
 .p-splash.is-done {
@@ -23,80 +27,102 @@
   pointer-events: none;
 }
 
-.p-splash-card {
+.p-sketch-canvas {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  max-width: 310px;
-  text-align: center;
-  padding: 28px 22px;
-  border-radius: 22px;
-  background: var(--canvas-card);
-  border: 1px solid var(--border-card);
-  box-shadow: var(--shadow-dramatic);
-}
-
-.p-splash-mark {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 12px;
-  border-radius: 13px;
-  background: var(--ink-primary);
-  color: var(--canvas-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 18px;
-}
-
-.p-splash-kicker {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  color: var(--accent-terracotta);
-  margin-bottom: 6px;
-}
-
-.p-splash-name {
-  font-family: var(--font-display);
-  font-size: 23px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-.p-splash-sub {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 14px;
-  color: var(--ink-secondary);
-  margin: 2px 0 16px;
-}
-
-.p-splash-track {
-  height: 3px;
-  border-radius: 99px;
-  background: rgba(24, 23, 22, 0.1);
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-
-.p-splash-fill {
   height: 100%;
-  width: 0;
-  background: var(--accent-terracotta);
-  animation: p-splash-load 0.78s var(--p-ease) forwards;
+  display: block;
+  pointer-events: none;
 }
 
-@keyframes p-splash-load {
-  to { width: 100%; }
+.p-sketch-tool {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 54px;
+  height: 54px;
+  pointer-events: none;
+  z-index: 9002;
+  transform-origin: 4.2px 49.8px;
+  will-change: transform, opacity;
+  opacity: 0;
+  filter: drop-shadow(0 6px 10px rgba(24, 23, 22, 0.16));
+  transition: opacity 0.16s ease;
 }
 
-.p-splash-hint {
+.p-sketch-tool.is-visible {
+  opacity: 1;
+}
+
+.p-sketch-pencil-svg,
+.p-sketch-brush-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.14s ease, transform 0.14s ease;
+}
+
+.p-sketch-brush-svg {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.p-sketch-tool.is-brush .p-sketch-pencil-svg {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.p-sketch-tool.is-brush .p-sketch-brush-svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.p-sketch-footer {
+  position: fixed;
+  left: 50%;
+  bottom: calc(23px + var(--p-safe-bottom, env(safe-area-inset-bottom, 0px)));
+  transform: translate3d(-50%, 0, 0);
+  z-index: 9003;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: calc(100% - 132px);
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(244, 239, 230, 0.90);
+  border: 1px solid rgba(24, 23, 22, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(24, 23, 22, 0.08);
   font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--ink-muted);
-  letter-spacing: 1.1px;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.p-splash.is-blooming .p-sketch-footer,
+.p-splash.is-done .p-sketch-footer {
+  opacity: 0;
+  transform: translate3d(-50%, 6px, 0);
+}
+
+.p-sketch-phase {
+  color: var(--ink-primary, #181716);
+}
+
+.p-sketch-dot {
+  color: var(--accent-terracotta, #D84E29);
+}
+
+.p-sketch-skip {
+  color: var(--accent-terracotta, #D84E29);
+  font-weight: 800;
 }
 
 /* ---- Architectural Crop-Mark Frame & Act Stamp ---- */
@@ -162,6 +188,7 @@
   -webkit-backdrop-filter: blur(12px);
   -webkit-mask-image: linear-gradient(180deg, #000 68%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 68%, transparent 100%);
+  transition: opacity 0.38s ease, background 0.42s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
 }
 
@@ -170,7 +197,7 @@ body.portrait-body[data-act="noir"] .p-hud::before {
 }
 
 body.portrait-body[data-act="paper"] .p-hud::before {
-  background: linear-gradient(180deg, rgba(239, 236, 230, 0.90) 0%, rgba(239, 236, 230, 0.54) 72%, rgba(239, 236, 230, 0) 100%);
+  background: linear-gradient(180deg, rgba(244, 239, 230, 0.92) 0%, rgba(244, 239, 230, 0.56) 72%, rgba(244, 239, 230, 0) 100%);
 }
 
 .p-chapter-ticks {
@@ -373,8 +400,9 @@ body.portrait-body[data-act="noir"] .p-thumb-dock {
 }
 
 body.portrait-body[data-act="paper"] .p-thumb-dock {
-  background: rgba(239, 236, 230, 0.68);
-  border-color: rgba(24, 21, 18, 0.12);
+  background: rgba(248, 246, 240, 0.72);
+  border-color: rgba(24, 23, 22, 0.14);
+  box-shadow: 0 10px 28px rgba(24, 23, 22, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.72);
 }
 
 .p-dock-prev {

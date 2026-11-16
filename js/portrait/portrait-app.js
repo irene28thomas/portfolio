@@ -29,6 +29,11 @@
       return;
     }
 
+    if (typeof window.initPortraitSketchSplash === 'function') {
+      window.initPortraitSketchSplash(dismiss);
+      return;
+    }
+
     splash.addEventListener('pointerdown', dismiss, { passive: true });
     window.setTimeout(dismiss, 850);
   }

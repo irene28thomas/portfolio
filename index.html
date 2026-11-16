@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Irene Thomas — Graphic Designer &amp; Art Director | Creative Showcase</title>
   <meta name="description" content="Visual portfolio of Irene Thomas, Graphic Designer &amp; Art Director in Dubai. Adaptive landscape studio and 100dvh spatial portrait exhibition.">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261115v54">
-  <link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png?v=20261115v54">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png?v=20261115v54">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon-180.png?v=20261115v54">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261116v55">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/brand/favicon-48.png?v=20261116v55">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png?v=20261116v55">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon-180.png?v=20261116v55">
   <meta name="theme-color" content="#F4EFE6">
 
   <!-- SINGLE-PAGE ADAPTIVE VIEWPORT ROUTER (Computes portrait vs landscape before first paint) -->
@@ -75,10 +75,10 @@
   <link rel="stylesheet" href="css/theme-dark.css" data-view-css="portrait">
   <link rel="stylesheet" href="css/components/image-transitions.css" data-view-css="portrait">
   <link rel="stylesheet" href="css/components/lightbox.css" data-view-css="portrait">
-  <link rel="stylesheet" href="css/portrait/portrait-base.css?v=20261115v54" data-view-css="portrait">
-  <link rel="stylesheet" href="css/portrait/portrait-chrome.css?v=20261115v54" data-view-css="portrait">
-  <link rel="stylesheet" href="css/portrait/portrait-hero.css?v=20261115v54" data-view-css="portrait">
-  <link rel="stylesheet" href="css/portrait/portrait-sectors.css?v=20261115v54" data-view-css="portrait">
+  <link rel="stylesheet" href="css/portrait/portrait-base.css?v=20261116v57" data-view-css="portrait">
+  <link rel="stylesheet" href="css/portrait/portrait-chrome.css?v=20261116v57" data-view-css="portrait">
+  <link rel="stylesheet" href="css/portrait/portrait-hero.css?v=20261116v57" data-view-css="portrait">
+  <link rel="stylesheet" href="css/portrait/portrait-sectors.css?v=20261116v57" data-view-css="portrait">
   <script>window.__applyAtelierCssGate && window.__applyAtelierCssGate();</script>
 </head>
 <body>
@@ -2700,15 +2700,31 @@
   <template id="atelier-portrait-tpl">
     <div class="p-act-curtain" id="p-act-curtain" aria-hidden="true"></div>
 
-    <!-- FAST PORTRAIT SPLASH INTRO (<= 850ms or instant tap dismiss) -->
-    <div class="p-splash" id="p-splash" role="dialog" aria-label="Portfolio Introduction">
-      <div class="p-splash-card">
-        <div class="p-splash-mark">IT</div>
-        <div class="p-splash-kicker">SPATIAL PORTRAIT EDITION // DUBAI</div>
-        <div class="p-splash-name">IRENE THOMAS</div>
-        <div class="p-splash-sub">Graphic Designer &amp; Art Director</div>
-        <div class="p-splash-track"><div class="p-splash-fill"></div></div>
-        <div class="p-splash-hint">TAP ANYWHERE TO ENTER</div>
+    <!-- ARCHITECTURAL PENCIL & BRUSH SKETCH INTRO (<= 2.3s or instant tap dismiss) -->
+    <div class="p-splash p-sketch-splash" id="p-splash" role="dialog" aria-label="Sketching Portfolio Cover">
+      <canvas class="p-sketch-canvas" id="p-sketch-canvas" aria-hidden="true"></canvas>
+      <div class="p-sketch-tool" id="p-sketch-tool" aria-hidden="true">
+        <svg class="p-sketch-pencil-svg" viewBox="0 0 64 64" width="54" height="54" fill="none">
+          <path d="M9 57 L18 52 L53 17 L47 11 L12 46 Z" fill="rgba(24,23,22,0.12)" transform="translate(2,4)" />
+          <path d="M16 42 L48 10 L55 17 L23 49 Z" fill="#1C1B19" stroke="#0D0C0B" stroke-width="1.2" stroke-linejoin="round" />
+          <path d="M13 45 L18 40 L25 47 L20 52 Z" fill="#C9A25B" stroke="#8E6E33" stroke-width="0.9" />
+          <path d="M44 14 L48 10 L55 17 L51 21 Z" fill="#D84E29" />
+          <path d="M8 56 L13 45 L20 52 Z" fill="#E3C7A0" stroke="#A68255" stroke-width="0.9" stroke-linejoin="round" />
+          <path d="M5 59 L8.2 52.2 L12.8 56.8 Z" fill="#23211E" />
+          <circle cx="5.2" cy="58.8" r="1.1" fill="#181716" />
+        </svg>
+        <svg class="p-sketch-brush-svg" viewBox="0 0 64 64" width="56" height="56" fill="none">
+          <path d="M11 54 L19 47 L53 13 L48 8 L14 42 Z" fill="rgba(24,23,22,0.12)" transform="translate(2,4)" />
+          <path d="M21 37 L50 8 L56 14 L27 43 Z" fill="#2A2623" stroke="#141210" stroke-width="1.1" />
+          <path d="M15 43 L22 36 L28 42 L21 49 Z" fill="#D4B475" stroke="#8E6E33" stroke-width="0.9" />
+          <path d="M4 59 C6 51, 11 45, 16 43 L21 48 C19 53, 13 58, 4 59 Z" fill="#D84E29" stroke="#9B3014" stroke-width="0.9" />
+          <path d="M4.5 58.5 C7 54, 11 49, 15 46" stroke="#FF8B68" stroke-width="1" stroke-linecap="round" opacity="0.65" />
+        </svg>
+      </div>
+      <div class="p-sketch-footer" aria-hidden="true">
+        <span class="p-sketch-phase" id="p-sketch-phase">01 // ARCHITECTURAL GRID</span>
+        <span class="p-sketch-dot">·</span>
+        <span class="p-sketch-skip">TAP TO SKIP</span>
       </div>
     </div>
 
@@ -3662,11 +3678,18 @@
         </div>
       </section>
 
-      <!-- ROOM 12 // FULL-BLEED SCROLLABLE EXECUTIVE EDITORIAL DOSSIER -->
+      <!-- ROOM 12 // 300 GSM ARCHIVAL COTTON MONOGRAPH DOSSIER -->
       <section class="p-chapter" id="resume" data-chapter-idx="11" data-act="paper">
+        <div class="p-ambient-layer p-dossier-ambient" aria-hidden="true">
+          <div class="p-ambient-plate is-active" style="background-image:url('assets/optimized/new_additions/PP.jpg');"></div>
+          <div class="p-ambient-scrim is-dossier-paper"></div>
+        </div>
         <div class="p-stage-inner p-dossier-page" id="p-atelier-resume-scroll" data-scroll-handoff="true" aria-label="Scrollable Executive CV Dossier">
-          <div class="p-resume-quilt-wrap">
-            <div class="p-resume-quilt-bg" id="p-resume-quilt-bg" aria-hidden="true"></div>
+          <div class="p-dossier-monograph">
+            <div class="p-dossier-running-head" aria-hidden="true">
+              <span>ARCHIVAL FOLIO // NO. IT-DXB-2026</span>
+              <span>300 GSM COTTON RAG</span>
+            </div>
             <div class="p-wall-label is-top-left">
             <span class="p-wall-numeral" aria-hidden="true">12</span>
             <div class="p-wall-kicker">
@@ -3961,10 +3984,11 @@
       var activeMode = window.__ATELIER_VIEW__ === 'portrait' ? 'portrait' : 'landscape';
       var viewScripts = activeMode === 'portrait'
         ? [
-            'js/portrait/portrait-nav.js?v=20261115v54',
-            'js/portrait/portrait-petal-wheel.js?v=20261115v54',
-            'js/portrait/portrait-widgets.js?v=20261115v54',
-            'js/portrait/portrait-app.js?v=20261115v54'
+            'js/portrait/portrait-nav.js?v=20261116v57',
+            'js/portrait/portrait-petal-wheel.js?v=20261116v57',
+            'js/portrait/portrait-widgets.js?v=20261116v57',
+            'js/portrait/portrait-sketch-intro.js?v=20261116v57',
+            'js/portrait/portrait-app.js?v=20261116v57'
           ]
         : [
             'js/core/splash.js',

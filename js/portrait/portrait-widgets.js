@@ -604,21 +604,24 @@
     var lensPctEl = document.getElementById('p-minimap-lens-pct');
     var scrimTop = document.getElementById('p-minimap-scrim-top');
     var scrimBottom = document.getElementById('p-minimap-scrim-bottom');
+    var layoutEl = minimap.closest('.p-landing-layout') || minimap.parentElement;
     if (minimapImg) minimapImg.style.objectPosition = '50% 0%';
+
+    var usesCssTimeline = !!(window.CSS && typeof window.CSS.supports === 'function' &&
+      window.CSS.supports('animation-timeline: scroll()') &&
+      window.CSS.supports('timeline-scope: --crm-scroll'));
 
     var pad = 3;
     var cachedTrackH = 0;
     var cachedMaxScroll = 1;
     var cachedLensPx = 0;
     var cachedMaxTravel = 0;
+    var lastLayoutW = 0;
+    var lastLayoutH = 0;
     var currentProgress = 0;
-    var targetProgress = 0;
-    var velProgress = 0;
     var animRaf = null;
-    var lastFrameTime = 0;
-    var followActiveUntil = 0;
-    var pointerTouching = false;
-    var scrubbing = false;
+    var pctTimer = null;
+    var pctEndTimer = null;
     var lastPctText = '';
 
     function measureLensGeometry() {
@@ -630,31 +633,28 @@
       if (cachedTrackH > 20) {
         var availH = Math.max(20, cachedTrackH - pad * 2);
         var nextLensPx = Math.max(28, Math.round(availH * (ratioPct / 100)));
-        cachedMaxTravel = Math.max(0, availH - nextLensPx);
-        if (nextLensPx !== cachedLensPx) {
+        var nextMaxTravel = Math.max(0, availH - nextLensPx);
+        if (nextLensPx !== cachedLensPx || nextMaxTravel !== cachedMaxTravel) {
           cachedLensPx = nextLensPx;
-          lens.style.top = pad + 'px';
-          lens.style.height = cachedLensPx + 'px';
+          cachedMaxTravel = nextMaxTravel;
+          if (layoutEl) {
+            layoutEl.style.setProperty('--lens-pad', pad + 'px');
+            layoutEl.style.setProperty('--lens-h', cachedLensPx + 'px');
+            layoutEl.style.setProperty('--lens-max-travel', cachedMaxTravel + 'px');
+          }
+          lens.style.height = '';
         }
       } else {
         cachedLensPx = 0;
         cachedMaxTravel = 0;
-        lens.style.top = pad + 'px';
         lens.style.height = ratioPct.toFixed(1) + '%';
       }
+      lastLayoutW = minimap.clientWidth;
+      lastLayoutH = cachedTrackH;
     }
 
-    function applyLensRender(progress) {
-      var clamped = Math.max(0, Math.min(1, progress));
-      var yPx = clamped * cachedMaxTravel;
-      lens.style.transform = 'translate3d(0, ' + yPx.toFixed(2) + 'px, 0)';
-      if (cachedTrackH > 20 && cachedLensPx > 0) {
-        var topRatio = Math.max(0, Math.min(1, (pad + yPx) / cachedTrackH));
-        var botRatio = Math.max(0, Math.min(1, (cachedTrackH - (pad + yPx + cachedLensPx)) / cachedTrackH));
-        if (scrimTop) scrimTop.style.transform = 'translate3d(0, 0, 0) scaleY(' + topRatio.toFixed(4) + ')';
-        if (scrimBottom) scrimBottom.style.transform = 'translate3d(0, 0, 0) scaleY(' + botRatio.toFixed(4) + ')';
-      }
-      var pctText = Math.round(clamped * 100) + '%';
+    function updatePctBadges(progress) {
+      var pctText = Math.round(Math.max(0, Math.min(1, progress)) * 100) + '%';
       if (pctText !== lastPctText) {
         lastPctText = pctText;
         if (lensPctEl) lensPctEl.textContent = pctText;
@@ -662,111 +662,101 @@
       }
     }
 
-    function stepLensLoop(now) {
-      animRaf = null;
-      if (scrubbing) return;
-      if (cachedTrackH <= 20 || cachedMaxScroll <= 1 || cachedMaxTravel <= 0) {
-        measureLensGeometry();
-      }
-      targetProgress = Math.max(0, Math.min(1, scroller.scrollTop / cachedMaxScroll));
-
-      if (!lastFrameTime) lastFrameTime = now;
-      var dtSec = Math.min(0.032, Math.max(0.004, (now - lastFrameTime) / 1000));
-      lastFrameTime = now;
-
-      // Critically damped spring (~24 rad/s) keeps touch flings & wheel ticks glass-smooth without jumps
-      var omega = 24;
-      var h = dtSec * 0.5;
-      for (var s = 0; s < 2; s++) {
-        var accel = omega * omega * (targetProgress - currentProgress) - 2 * omega * velProgress;
-        velProgress += accel * h;
-        currentProgress += velProgress * h;
-      }
-      currentProgress = Math.max(0, Math.min(1, currentProgress));
-
-      var distPx = cachedMaxTravel > 0
-        ? Math.abs(targetProgress - currentProgress) * cachedMaxTravel
-        : Math.abs(targetProgress - currentProgress) * 200;
-      var velPx = cachedMaxTravel > 0
-        ? Math.abs(velProgress) * cachedMaxTravel
-        : Math.abs(velProgress) * 200;
-
-      if (distPx < 0.25 && velPx < 1.5) {
-        currentProgress = targetProgress;
-        velProgress = 0;
-        applyLensRender(currentProgress);
-        if (pointerTouching || now < followActiveUntil) {
-          animRaf = window.requestAnimationFrame(stepLensLoop);
-        } else {
-          lastFrameTime = 0;
-        }
-        return;
-      }
-
-      applyLensRender(currentProgress);
-      animRaf = window.requestAnimationFrame(stepLensLoop);
+    function applyLegacyTransforms(progress) {
+      if (usesCssTimeline) return;
+      var clamped = Math.max(0, Math.min(1, progress));
+      var yPx = clamped * cachedMaxTravel;
+      var tf = 'translate3d(0, ' + yPx.toFixed(2) + 'px, 0)';
+      lens.style.transform = tf;
+      if (scrimTop) scrimTop.style.transform = tf;
+      if (scrimBottom) scrimBottom.style.transform = tf;
     }
 
-    function ensureLensLoop(holdMs) {
-      var until = performance.now() + (holdMs || 550);
-      if (until > followActiveUntil) followActiveUntil = until;
-      if (!animRaf && !scrubbing) {
-        lastFrameTime = 0;
-        animRaf = window.requestAnimationFrame(stepLensLoop);
+    function renderAllNow() {
+      currentProgress = Math.max(0, Math.min(1, scroller.scrollTop / cachedMaxScroll));
+      applyLegacyTransforms(currentProgress);
+      updatePctBadges(currentProgress);
+    }
+
+    function scheduleLegacyFrame() {
+      if (animRaf) return;
+      animRaf = window.requestAnimationFrame(function () {
+        animRaf = null;
+        if (cachedTrackH <= 20 || cachedMaxScroll <= 1) measureLensGeometry();
+        renderAllNow();
+      });
+    }
+
+    function handleMainCrmScroll() {
+      if (usesCssTimeline) {
+        // Compositor-driven ScrollTimeline handles 100% of lens + scrim motion at 0ms JS lag.
+        // Coalesce badge text updates inside strict-contained fixed pills so Layout cost stays minimal.
+        window.clearTimeout(pctEndTimer);
+        pctEndTimer = window.setTimeout(function () {
+          if (cachedMaxScroll <= 1) measureLensGeometry();
+          updatePctBadges(scroller.scrollTop / cachedMaxScroll);
+        }, 140);
+        if (pctTimer) return;
+        pctTimer = window.setTimeout(function () {
+          pctTimer = null;
+          if (cachedMaxScroll <= 1) measureLensGeometry();
+          updatePctBadges(scroller.scrollTop / cachedMaxScroll);
+        }, 85);
+        return;
       }
+      scheduleLegacyFrame();
     }
 
     function syncLensNow() {
       var prevMax = cachedMaxScroll;
       var prevTrack = cachedTrackH;
       measureLensGeometry();
-      if (Math.abs(cachedMaxScroll - prevMax) > 2 || Math.abs(cachedTrackH - prevTrack) > 2 || !animRaf) {
-        targetProgress = Math.max(0, Math.min(1, scroller.scrollTop / cachedMaxScroll));
-        currentProgress = targetProgress;
-        velProgress = 0;
-        if (animRaf) {
-          window.cancelAnimationFrame(animRaf);
-          animRaf = null;
-        }
-        lastFrameTime = 0;
-        applyLensRender(currentProgress);
+      if (Math.abs(cachedMaxScroll - prevMax) > 1 || Math.abs(cachedTrackH - prevTrack) > 1 || lastLayoutW !== minimap.clientWidth || lastLayoutH !== minimap.clientHeight) {
+        renderAllNow();
+      } else {
+        updatePctBadges(scroller.scrollTop / cachedMaxScroll);
       }
-    }
-
-    function handleMainCrmScroll() {
-      if (scrubbing) return;
-      ensureLensLoop(650);
     }
 
     syncDispatchLensFn = function () {
       measureLensGeometry();
-      targetProgress = Math.max(0, Math.min(1, scroller.scrollTop / cachedMaxScroll));
-      currentProgress = targetProgress;
-      velProgress = 0;
-      if (animRaf) {
-        window.cancelAnimationFrame(animRaf);
-        animRaf = null;
-      }
-      lastFrameTime = 0;
-      applyLensRender(currentProgress);
+      renderAllNow();
     };
 
     scroller.addEventListener('scroll', handleMainCrmScroll, { passive: true });
-    scroller.addEventListener('wheel', function () { ensureLensLoop(650); }, { passive: true });
-    scroller.addEventListener('touchstart', function () {
-      pointerTouching = true;
-      ensureLensLoop(900);
-    }, { passive: true });
-    scroller.addEventListener('touchmove', function () { ensureLensLoop(900); }, { passive: true });
-    scroller.addEventListener('touchend', function () {
-      pointerTouching = false;
-      ensureLensLoop(850);
-    }, { passive: true });
-    scroller.addEventListener('touchcancel', function () {
-      pointerTouching = false;
+    scroller.addEventListener('scrollend', function () {
+      if (pctTimer) {
+        window.clearTimeout(pctTimer);
+        pctTimer = null;
+      }
+      if (cachedMaxScroll <= 1) measureLensGeometry();
+      renderAllNow();
     }, { passive: true });
     window.addEventListener('resize', syncLensNow, { passive: true });
 
+    var touchPollRaf = null;
+    var touchActive = false;
+    function pollTouchFallback() {
+      touchPollRaf = null;
+      if (usesCssTimeline || !touchActive) return;
+      renderAllNow();
+      touchPollRaf = window.requestAnimationFrame(pollTouchFallback);
+    }
+    if (!usesCssTimeline) {
+      scroller.addEventListener('touchstart', function () {
+        touchActive = true;
+        if (!touchPollRaf) touchPollRaf = window.requestAnimationFrame(pollTouchFallback);
+      }, { passive: true });
+      scroller.addEventListener('touchend', function () {
+        touchActive = false;
+        window.setTimeout(function () { renderAllNow(); }, 250);
+      }, { passive: true });
+      scroller.addEventListener('touchcancel', function () {
+        touchActive = false;
+      }, { passive: true });
+    }
+
+    var scrubbing = false;
     function scrubAtClientY(cy) {
       var rect = minimap.getBoundingClientRect();
       var lensH = cachedLensPx || lens.offsetHeight || Math.round((rect.height - pad * 2) * 0.22);
@@ -775,15 +765,7 @@
       var ratio = Math.max(0, Math.min(1, relY / travel));
       if (cachedTrackH <= 20 || cachedMaxScroll <= 1) measureLensGeometry();
       scroller.scrollTop = ratio * cachedMaxScroll;
-      targetProgress = ratio;
-      currentProgress = ratio;
-      velProgress = 0;
-      if (animRaf) {
-        window.cancelAnimationFrame(animRaf);
-        animRaf = null;
-      }
-      lastFrameTime = 0;
-      applyLensRender(currentProgress);
+      renderAllNow();
     }
 
     minimap.addEventListener('pointerdown', function (e) { scrubbing = true; scrubAtClientY(e.clientY); });
@@ -2832,12 +2814,11 @@
     var resume = document.getElementById('resume');
     if (!resume) return;
 
-    var patchSelector = '.p-dossier-masthead, .p-dossier-summary, .p-kpi-box, .p-role-card, .p-arsenal-row, .p-edu-card, .p-dossier-seal';
+    var patchSelector = '.p-dossier-masthead, .p-dossier-summary, .p-kpi-box, .p-role-card, .p-arsenal-row, .p-edu-card';
     var patches = Array.prototype.slice.call(resume.querySelectorAll(patchSelector));
     if (!patches.length) return;
 
-    // Quilt background lives inside #p-atelier-resume-scroll for zero-lag native compositor scrolling.
-    // Highlight changes only on direct tap/click so scroll frames perform zero layout or repaint work.
+    // Tactile monograph card highlight toggles only on direct tap/click so scroll frames stay compositor-pure.
     var activePatch = patches[0];
     if (activePatch) activePatch.classList.add('is-active-patch');
 
